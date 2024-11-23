@@ -13,7 +13,7 @@ License: For each use you must have a valid license purchased only from above li
 <html lang="en">
 	<!--begin::Head-->
 	<head>
-<base href="../../../" />
+<base href="../" />
 		<title>FusionOCR</title>
 		<meta charset="utf-8" />
 		<meta name="description" content="FusionOCR is a cutting-edge OCR system designed to streamline data extraction from medical records. Transforming complex documents into actionable insights with precision and speed." />
@@ -268,9 +268,6 @@ License: For each use you must have a valid license purchased only from above li
 									<li class="breadcrumb-item text-gray-600">
 										<a href="/" class="text-gray-600 text-hover-primary">Home</a>
 									</li>
-									<li class="breadcrumb-item text-gray-600">Apps</li>
-									<li class="breadcrumb-item text-gray-600">User Management</li>
-									<li class="breadcrumb-item text-gray-600">Users</li>
 									<li class="breadcrumb-item text-gray-500">Users List</li>
 								</ul>
 								<!--end::Breadcrumb-->
@@ -492,60 +489,70 @@ License: For each use you must have a valid license purchased only from above li
 															<!--begin::Scroll-->
 															<div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
 																<!--begin::Input group-->
-																<div class="fv-row mb-7">
+																<!-- <div class="fv-row mb-7"> -->
 																	<!--begin::Label-->
-																	<label class="d-block fw-semibold fs-6 mb-5">Avatar</label>
+																	<!-- <label class="d-block fw-semibold fs-6 mb-5">Avatar</label> -->
 																	<!--end::Label-->
 																	<!--begin::Image placeholder-->
-																	<style>.image-input-placeholder { background-image: url('assets/media/svg/files/blank-image.svg'); } [data-bs-theme="dark"] .image-input-placeholder { background-image: url('assets/media/svg/files/blank-image-dark.svg'); }</style>
+																	<!-- <style>.image-input-placeholder { background-image: url('assets/media/svg/files/blank-image.svg'); } [data-bs-theme="dark"] .image-input-placeholder { background-image: url('assets/media/svg/files/blank-image-dark.svg'); }</style> -->
 																	<!--end::Image placeholder-->
 																	<!--begin::Image input-->
-																	<div class="image-input image-input-outline image-input-placeholder" data-kt-image-input="true">
+																	<!-- <div class="image-input image-input-outline image-input-placeholder" data-kt-image-input="true"> -->
 																		<!--begin::Preview existing avatar-->
-																		<div class="image-input-wrapper w-125px h-125px" style="background-image: url(assets/media/avatars/300-6.jpg);"></div>
+																		<!-- <div class="image-input-wrapper w-125px h-125px" style="background-image: url(assets/media/avatars/300-6.jpg);"></div> -->
 																		<!--end::Preview existing avatar-->
 																		<!--begin::Label-->
-																		<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-																			<i class="ki-duotone ki-pencil fs-7">
-																				<span class="path1"></span>
-																				<span class="path2"></span>
-																			</i>
+																		<!-- <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar"> -->
+																			<!-- <i class="ki-duotone ki-pencil fs-7"> -->
+																				<!-- <span class="path1"></span> -->
+																				<!-- <span class="path2"></span> -->
+																			<!-- </i> -->
 																			<!--begin::Inputs-->
-																			<input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
-																			<input type="hidden" name="avatar_remove" />
+																			<!-- <input type="file" name="avatar" accept=".png, .jpg, .jpeg" /> -->
+																			<!-- <input type="hidden" name="avatar_remove" /> -->
 																			<!--end::Inputs-->
-																		</label>
+																		<!-- </label> -->
 																		<!--end::Label-->
 																		<!--begin::Cancel-->
-																		<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+																		<!-- <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
 																			<i class="ki-duotone ki-cross fs-2">
 																				<span class="path1"></span>
 																				<span class="path2"></span>
 																			</i>
-																		</span>
+																		</span> -->
 																		<!--end::Cancel-->
 																		<!--begin::Remove-->
-																		<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+																		<!-- <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
 																			<i class="ki-duotone ki-cross fs-2">
 																				<span class="path1"></span>
 																				<span class="path2"></span>
 																			</i>
-																		</span>
+																		</span> -->
 																		<!--end::Remove-->
-																	</div>
+																	<!-- </div> -->
 																	<!--end::Image input-->
 																	<!--begin::Hint-->
-																	<div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+																	<!-- <div class="form-text">Allowed file types: png, jpg, jpeg.</div> -->
 																	<!--end::Hint-->
+																<!-- </div> -->
+																<!--end::Input group-->
+																<!--begin::Input group-->
+																<div class="fv-row mb-7">
+																	<!--begin::Label-->
+																	<label class="required fw-semibold fs-6 mb-2">First Name</label>
+																	<!--end::Label-->
+																	<!--begin::Input-->
+																	<input type="text" name="fname" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="First name" value="Emma" />
+																	<!--end::Input-->
 																</div>
 																<!--end::Input group-->
 																<!--begin::Input group-->
 																<div class="fv-row mb-7">
 																	<!--begin::Label-->
-																	<label class="required fw-semibold fs-6 mb-2">Full Name</label>
+																	<label class="required fw-semibold fs-6 mb-2">Last Name</label>
 																	<!--end::Label-->
 																	<!--begin::Input-->
-																	<input type="text" name="user_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name" value="Emma Smith" />
+																	<input type="text" name="lname" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Last name" value="Smith" />
 																	<!--end::Input-->
 																</div>
 																<!--end::Input group-->
@@ -559,102 +566,15 @@ License: For each use you must have a valid license purchased only from above li
 																	<!--end::Input-->
 																</div>
 																<!--end::Input group-->
+
 																<!--begin::Input group-->
-																<div class="mb-5">
+																<div class="fv-row mb-7">
 																	<!--begin::Label-->
-																	<label class="required fw-semibold fs-6 mb-5">Role</label>
+																	<label class="fw-semibold fs-6 mb-2">Password</label>
 																	<!--end::Label-->
-																	<!--begin::Roles-->
-																	<!--begin::Input row-->
-																	<div class="d-flex fv-row">
-																		<!--begin::Radio-->
-																		<div class="form-check form-check-custom form-check-solid">
-																			<!--begin::Input-->
-																			<input class="form-check-input me-3" name="user_role" type="radio" value="0" id="kt_modal_update_role_option_0" checked='checked' />
-																			<!--end::Input-->
-																			<!--begin::Label-->
-																			<label class="form-check-label" for="kt_modal_update_role_option_0">
-																				<div class="fw-bold text-gray-800">Administrator</div>
-																				<div class="text-gray-600">Best for business owners and company administrators</div>
-																			</label>
-																			<!--end::Label-->
-																		</div>
-																		<!--end::Radio-->
-																	</div>
-																	<!--end::Input row-->
-																	<div class='separator separator-dashed my-5'></div>
-																	<!--begin::Input row-->
-																	<div class="d-flex fv-row">
-																		<!--begin::Radio-->
-																		<div class="form-check form-check-custom form-check-solid">
-																			<!--begin::Input-->
-																			<input class="form-check-input me-3" name="user_role" type="radio" value="1" id="kt_modal_update_role_option_1" />
-																			<!--end::Input-->
-																			<!--begin::Label-->
-																			<label class="form-check-label" for="kt_modal_update_role_option_1">
-																				<div class="fw-bold text-gray-800">Developer</div>
-																				<div class="text-gray-600">Best for developers or people primarily using the API</div>
-																			</label>
-																			<!--end::Label-->
-																		</div>
-																		<!--end::Radio-->
-																	</div>
-																	<!--end::Input row-->
-																	<div class='separator separator-dashed my-5'></div>
-																	<!--begin::Input row-->
-																	<div class="d-flex fv-row">
-																		<!--begin::Radio-->
-																		<div class="form-check form-check-custom form-check-solid">
-																			<!--begin::Input-->
-																			<input class="form-check-input me-3" name="user_role" type="radio" value="2" id="kt_modal_update_role_option_2" />
-																			<!--end::Input-->
-																			<!--begin::Label-->
-																			<label class="form-check-label" for="kt_modal_update_role_option_2">
-																				<div class="fw-bold text-gray-800">Analyst</div>
-																				<div class="text-gray-600">Best for people who need full access to analytics data, but don't need to update business settings</div>
-																			</label>
-																			<!--end::Label-->
-																		</div>
-																		<!--end::Radio-->
-																	</div>
-																	<!--end::Input row-->
-																	<div class='separator separator-dashed my-5'></div>
-																	<!--begin::Input row-->
-																	<div class="d-flex fv-row">
-																		<!--begin::Radio-->
-																		<div class="form-check form-check-custom form-check-solid">
-																			<!--begin::Input-->
-																			<input class="form-check-input me-3" name="user_role" type="radio" value="3" id="kt_modal_update_role_option_3" />
-																			<!--end::Input-->
-																			<!--begin::Label-->
-																			<label class="form-check-label" for="kt_modal_update_role_option_3">
-																				<div class="fw-bold text-gray-800">Support</div>
-																				<div class="text-gray-600">Best for employees who regularly refund payments and respond to disputes</div>
-																			</label>
-																			<!--end::Label-->
-																		</div>
-																		<!--end::Radio-->
-																	</div>
-																	<!--end::Input row-->
-																	<div class='separator separator-dashed my-5'></div>
-																	<!--begin::Input row-->
-																	<div class="d-flex fv-row">
-																		<!--begin::Radio-->
-																		<div class="form-check form-check-custom form-check-solid">
-																			<!--begin::Input-->
-																			<input class="form-check-input me-3" name="user_role" type="radio" value="4" id="kt_modal_update_role_option_4" />
-																			<!--end::Input-->
-																			<!--begin::Label-->
-																			<label class="form-check-label" for="kt_modal_update_role_option_4">
-																				<div class="fw-bold text-gray-800">Trial</div>
-																				<div class="text-gray-600">Best for people who need to preview content data, but don't need to make any updates</div>
-																			</label>
-																			<!--end::Label-->
-																		</div>
-																		<!--end::Radio-->
-																	</div>
-																	<!--end::Input row-->
-																	<!--end::Roles-->
+																	<!--begin::Input-->
+																	<input type="password" name="user_password" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Leave Empty to Use Default: fusionOCRPass" />
+																	<!--end::Input-->
 																</div>
 																<!--end::Input group-->
 															</div>
@@ -695,7 +615,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 												</th>
 												<th class="min-w-125px">User</th>
-												<th class="min-w-125px">Role</th>
+												<!-- <th class="min-w-125px">Role</th> -->
 												<th class="min-w-125px">Last login</th>
 												<th class="min-w-125px"></th>
 												<th class="min-w-125px">Joined Date</th>
@@ -726,7 +646,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Administrator</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">Yesterday</div>
 												</td>
@@ -755,7 +675,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Analyst</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">20 mins ago</div>
 												</td>
@@ -788,7 +708,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Developer</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">3 days ago</div>
 												</td>
@@ -819,7 +739,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Support</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">5 hours ago</div>
 												</td>
@@ -852,7 +772,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Developer</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">2 days ago</div>
 												</td>
@@ -883,7 +803,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Administrator</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">5 days ago</div>
 												</td>
@@ -914,7 +834,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Trial</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">3 weeks ago</div>
 												</td>
@@ -943,7 +863,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Administrator</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">Yesterday</div>
 												</td>
@@ -972,7 +892,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Analyst</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">20 mins ago</div>
 												</td>
@@ -1005,7 +925,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Developer</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">3 days ago</div>
 												</td>
@@ -1034,7 +954,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Support</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">5 hours ago</div>
 												</td>
@@ -1067,7 +987,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Developer</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">2 days ago</div>
 												</td>
@@ -1098,7 +1018,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Administrator</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">5 days ago</div>
 												</td>
@@ -1129,7 +1049,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Trial</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">3 weeks ago</div>
 												</td>
@@ -1158,7 +1078,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Administrator</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">Yesterday</div>
 												</td>
@@ -1187,7 +1107,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Analyst</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">20 mins ago</div>
 												</td>
@@ -1220,7 +1140,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Developer</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">3 days ago</div>
 												</td>
@@ -1251,7 +1171,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Support</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">5 hours ago</div>
 												</td>
@@ -1284,7 +1204,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Developer</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">2 days ago</div>
 												</td>
@@ -1315,7 +1235,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Administrator</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">5 days ago</div>
 												</td>
@@ -1346,7 +1266,7 @@ License: For each use you must have a valid license purchased only from above li
 													</div>
 													<!--begin::User details-->
 												</td>
-												<td>Trial</td>
+												
 												<td>
 													<div class="badge badge-light fw-bold">3 weeks ago</div>
 												</td>
