@@ -44,6 +44,7 @@ var KTFileManagerList = function () {
                 { data: 'name' },
                 { data: 'size' },
                 { data: 'date' },
+                { data: 'status' },
                 { data: 'action' },
             ],
             'language': {
@@ -66,6 +67,7 @@ var KTFileManagerList = function () {
                 { data: 'name' },
                 { data: 'size' },
                 { data: 'date' },
+                { data: 'status' },
                 { data: 'action' },
             ],
             'language': {
