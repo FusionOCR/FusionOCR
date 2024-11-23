@@ -643,14 +643,15 @@ var KTFileManagerList = function () {
         previewNode.parentNode.removeChild(previewNode);
 
         var myDropzone = new Dropzone(id, { // Make the whole body a dropzone
-            url: "path/to/your/server", // Set the url for your upload script location
+            url: "./", // Set the url for your upload script location
             parallelUploads: 10,
             previewTemplate: previewTemplate,
             maxFilesize: 1, // Max filesize in MB
             autoProcessQueue: false, // Stop auto upload
             autoQueue: false, // Make sure the files aren't queued until manually added
             previewsContainer: id + " .dropzone-items", // Define the container to display the previews
-            clickable: id + " .dropzone-select" // Define the element that should be used as click trigger to select files.
+            clickable: id + " .dropzone-select", // Define the element that should be used as click trigger to select files.
+            acceptedFiles:"application/pdf"
         });
 
         myDropzone.on("addedfile", function (file) {

@@ -275,183 +275,8 @@ var KTFileManagerList = function () {
         }
     }
 
-    // Handle new folder
-    const handleNewFolder = () => {
-        // Select button
-        const newFolder = document.getElementById('kt_file_manager_new_folder');
 
-        // Handle click action
-        newFolder.addEventListener('click', e => {
-            e.preventDefault();
-
-            // Ignore if input already exist
-            if (table.querySelector('#kt_file_manager_new_folder_row')) {
-                return;
-            }
-
-            // Add new blank row to datatable
-            const tableBody = table.querySelector('tbody');
-            const rowElement = uploadTemplate.cloneNode(true); // Clone template markup
-            tableBody.prepend(rowElement);
-
-            // Define template interactive elements
-            const rowForm = rowElement.querySelector('#kt_file_manager_add_folder_form');
-            const rowButton = rowElement.querySelector('#kt_file_manager_add_folder');
-            const cancelButton = rowElement.querySelector('#kt_file_manager_cancel_folder');
-            const folderIcon = rowElement.querySelector('#kt_file_manager_folder_icon');
-            const rowInput = rowElement.querySelector('[name="new_folder_name"]');
-
-            // Define validator
-            // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-            var validator = FormValidation.formValidation(
-                rowForm,
-                {
-                    fields: {
-                        'new_folder_name': {
-                            validators: {
-                                notEmpty: {
-                                    message: 'Folder name is required'
-                                }
-                            }
-                        },
-                    },
-                    plugins: {
-                        trigger: new FormValidation.plugins.Trigger(),
-                        bootstrap: new FormValidation.plugins.Bootstrap5({
-                            rowSelector: '.fv-row',
-                            eleInvalidClass: '',
-                            eleValidClass: ''
-                        })
-                    }
-                }
-            );
-
-            // Handle add new folder button
-            rowButton.addEventListener('click', e => {
-                e.preventDefault();
-
-                // Activate indicator
-                rowButton.setAttribute("data-kt-indicator", "on");
-
-                // Validate form before submit
-                if (validator) {
-                    validator.validate().then(function (status) {
-                        console.log('validated!');
-
-                        if (status == 'Valid') {
-                            // Simulate process for demo only
-                            setTimeout(function () {
-                                // Create folder link
-                                const folderLink = document.createElement('a');
-                                const folderLinkClasses = ['text-gray-800', 'text-hover-primary'];
-                                folderLink.setAttribute('href', '?page=apps/file-manager/blank');
-                                folderLink.classList.add(...folderLinkClasses);
-                                folderLink.innerText = rowInput.value;
-
-                                const newRow = datatable.row.add({
-                                    'checkbox': checkboxTemplate.innerHTML,
-                                    'name': folderIcon.outerHTML + folderLink.outerHTML,
-                                    "size": '-',
-                                    "date": '-',
-                                    'action': actionTemplate.innerHTML
-                                }).node();
-                                $(newRow).find('td').eq(4).attr('data-kt-filemanager-table', 'action_dropdown');
-                                $(newRow).find('td').eq(4).addClass('text-end'); // Add custom class to last 'td' element --- more info: https://datatables.net/forums/discussion/22341/row-add-cell-class
-
-                                // Re-sort datatable to allow new folder added at the top
-                                var index = datatable.row(0).index(),
-                                    rowCount = datatable.data().length - 1,
-                                    insertedRow = datatable.row(rowCount).data(),
-                                    tempRow;
-
-                                for (var i = rowCount; i > index; i--) {
-                                    tempRow = datatable.row(i - 1).data();
-                                    datatable.row(i).data(tempRow);
-                                    datatable.row(i - 1).data(insertedRow);
-                                }
-
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "debug": false,
-                                    "newestOnTop": false,
-                                    "progressBar": false,
-                                    "positionClass": "toastr-top-right",
-                                    "preventDuplicates": false,
-                                    "showDuration": "300",
-                                    "hideDuration": "1000",
-                                    "timeOut": "5000",
-                                    "extendedTimeOut": "1000",
-                                    "showEasing": "swing",
-                                    "hideEasing": "linear",
-                                    "showMethod": "fadeIn",
-                                    "hideMethod": "fadeOut"
-                                };
-
-                                toastr.success(rowInput.value + ' was created!');
-
-                                // Disable indicator
-                                rowButton.removeAttribute("data-kt-indicator");
-
-                                // Reset input
-                                rowInput.value = '';
-
-                                datatable.draw(false);
-
-                            }, 2000);
-                        } else {
-                            // Disable indicator
-                            rowButton.removeAttribute("data-kt-indicator");
-                        }
-                    });
-                }
-            });
-
-            // Handle cancel new folder button
-            cancelButton.addEventListener('click', e => {
-                e.preventDefault();
-
-                // Activate indicator
-                cancelButton.setAttribute("data-kt-indicator", "on");
-
-                setTimeout(function () {
-                    // Disable indicator
-                    cancelButton.removeAttribute("data-kt-indicator");
-
-                    // Toggle toastr
-                    toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toastr-top-right",
-                        "preventDuplicates": false,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    };
-
-                    toastr.error('Cancelled new folder creation');
-                    resetNewFolder();
-                }, 1000);
-            });
-        });
-    }
-
-    // Reset add new folder input
-    const resetNewFolder = () => {
-        const newFolderRow = table.querySelector('#kt_file_manager_new_folder_row');
-
-        if (newFolderRow) {
-            newFolderRow.parentNode.removeChild(newFolderRow);
-        }
-    }
-
-    // Handle rename file or folder
+    // Handle rename file
     const handleRename = () => {
         const renameButton = table.querySelectorAll('[data-kt-filemanager-table="rename"]');     
 
@@ -643,14 +468,15 @@ var KTFileManagerList = function () {
         previewNode.parentNode.removeChild(previewNode);
 
         var myDropzone = new Dropzone(id, { // Make the whole body a dropzone
-            url: "path/to/your/server", // Set the url for your upload script location
+            url: "./", // Set the url for your upload script location
             parallelUploads: 10,
             previewTemplate: previewTemplate,
             maxFilesize: 1, // Max filesize in MB
             autoProcessQueue: false, // Stop auto upload
             autoQueue: false, // Make sure the files aren't queued until manually added
             previewsContainer: id + " .dropzone-items", // Define the container to display the previews
-            clickable: id + " .dropzone-select" // Define the element that should be used as click trigger to select files.
+            clickable: id + " .dropzone-select", // Define the element that should be used as click trigger to select files.
+            acceptedFiles:"application/pdf"
         });
 
         myDropzone.on("addedfile", function (file) {
@@ -922,7 +748,6 @@ var KTFileManagerList = function () {
             initToggleToolbar();
             handleSearchDatatable();
             handleDeleteRows();
-            handleNewFolder();
             initDropzone();
             initCopyLink();
             handleRename();
