@@ -54,8 +54,8 @@ var KTTimelineWidget1 = function () {
                 progress: "60%",
                 color: 'primary',
                 users: [
-                    'avatars/300-6.jpg',
-                    'avatars/300-1.jpg'
+                    'avatars/blank.png',
+                    'avatars/blank.png'
                 ]
             },
             {
@@ -67,7 +67,7 @@ var KTTimelineWidget1 = function () {
                 progress: "47%",
                 color: 'success',
                 users: [
-                    'avatars/300-2.jpg'
+                    'avatars/blank.png'
                 ]
             },
             {
@@ -79,8 +79,8 @@ var KTTimelineWidget1 = function () {
                 progress: "55%",
                 color: 'danger',
                 users: [
-                    'avatars/300-5.jpg',
-                    'avatars/300-20.jpg'
+                    'avatars/blank.png',
+                    'avatars/blank.png'
                 ]
             },
             {
@@ -92,9 +92,9 @@ var KTTimelineWidget1 = function () {
                 progress: "75%",
                 color: 'info',
                 users: [
-                    'avatars/300-23.jpg',
-                    'avatars/300-12.jpg',
-                    'avatars/300-9.jpg'
+                    'avatars/blank.png',
+                    'avatars/blank.png',
+                    'avatars/blank.png'
                 ]
             },
         ]);
@@ -229,8 +229,8 @@ var KTTimelineWidget1 = function () {
                 progress: "71%",
                 color: 'primary',
                 users: [
-                    'avatars/300-6.jpg',
-                    'avatars/300-1.jpg'
+                    'avatars/blank.png',
+                    'avatars/blank.png'
                 ]
             },
             {
@@ -242,7 +242,7 @@ var KTTimelineWidget1 = function () {
                 progress: "84%",
                 color: 'success',
                 users: [
-                    'avatars/300-2.jpg'
+                    'avatars/blank.png'
                 ]
             },
             {
@@ -254,8 +254,8 @@ var KTTimelineWidget1 = function () {
                 progress: "69%",
                 color: 'danger',
                 users: [
-                    'avatars/300-5.jpg',
-                    'avatars/300-20.jpg'
+                    'avatars/blank.png',
+                    'avatars/blank.png'
                 ]
             },
             {
@@ -267,9 +267,9 @@ var KTTimelineWidget1 = function () {
                 progress: "74%",
                 color: 'info',
                 users: [
-                    'avatars/300-23.jpg',
-                    'avatars/300-12.jpg',
-                    'avatars/300-9.jpg'
+                    'avatars/blank.png',
+                    'avatars/blank.png',
+                    'avatars/blank.png'
                 ]
             },
         ]);
@@ -405,8 +405,8 @@ var KTTimelineWidget1 = function () {
                 progress: "79%",
                 color: 'primary',
                 users: [
-                    'avatars/300-6.jpg',
-                    'avatars/300-1.jpg'
+                    'avatars/blank.png',
+                    'avatars/blank.png'
                 ]
             },
             {
@@ -418,7 +418,7 @@ var KTTimelineWidget1 = function () {
                 progress: "64%",
                 color: 'success',
                 users: [
-                    'avatars/300-2.jpg'
+                    'avatars/blank.png'
                 ]
             },
             {
@@ -430,8 +430,8 @@ var KTTimelineWidget1 = function () {
                 progress: "82%",
                 color: 'danger',
                 users: [
-                    'avatars/300-5.jpg',
-                    'avatars/300-20.jpg'
+                    'avatars/blank.png',
+                    'avatars/blank.png'
                 ]
             },
             {
@@ -443,9 +443,9 @@ var KTTimelineWidget1 = function () {
                 progress: "58%",
                 color: 'info',
                 users: [
-                    'avatars/300-23.jpg',
-                    'avatars/300-12.jpg',
-                    'avatars/300-9.jpg'
+                    'avatars/blank.png',
+                    'avatars/blank.png',
+                    'avatars/blank.png'
                 ]
             },
         ]);
