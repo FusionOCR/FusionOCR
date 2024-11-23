@@ -94,7 +94,6 @@ var KTFileManagerList = function () {
             initToggleToolbar();
             handleDeleteRows();
             toggleToolbars();
-            resetNewFolder();
             KTMenu.createInstances();
             initCopyLink();
             countTotalItems();
