@@ -3,6 +3,16 @@ const fileInputLabel = document.getElementById('FileInputLabel');
 const uploadButton = document.getElementById('UploadMassage');
 const uploadingButton = document.getElementById('UploadingMassage');
 const RefreshPage = document.getElementById('RefreshPage');
+
+document.addEventListener("DOMContentLoaded", () => {
+    const fileInputLabel = document.querySelector("#FileInputLabel");
+    if (fileInputLabel) {
+        fileInputLabel.style.opacity = 1;
+        fileInputLabel.style.pointerEvents = "all";
+    }
+});
+
+
 // uploadingButton.style.display = 'none';
 fileInput.addEventListener('change', async () => {
     console.log("Starting to upload file...");
@@ -24,7 +34,7 @@ fileInput.addEventListener('change', async () => {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await fetch('http://fusionocr.com/api/upload', {
+        const response = await fetch('https://fusionocr.com/api/upload', {
             method: 'POST',
             body: formData,
         });
