@@ -37,8 +37,8 @@ fileInput.addEventListener('change', async () => {
         const formData = new FormData();
         formData.append('file', file);
 
-        // const response = await fetch('https://fusionocr.com/api/upload', {
-        const response = await fetch('http://127.0.0.1:5000/upload', {
+        const response = await fetch('https://fusionocr.com/api/upload', {
+        // const response = await fetch('http://127.0.0.1:5000/upload', {
             method: 'POST',
             body: formData,
         });
@@ -67,49 +67,88 @@ fileInput.addEventListener('change', async () => {
                 document.getElementById('ResBithDate').innerText = json.BithName || ' - ';
                 document.getElementById('ResAddress').innerText = json.Address || ' - ';
                 document.getElementById('ResCity').innerText = json.city || ' - ';
-                document.getElementById('ResGenderMale').innerText = json.Male || 'unchecked';
-                document.getElementById('ResGenderFemale').innerText = json.Female || 'unchecked';
+                document.getElementById('ResGender').innerText = json.Male?"Male": (json.Female?"Female": "un-Detected");
 
-                const params = ['ComprehensiveMetabolicPanel', 'LipidPanel', 'Covid19', 'RespiratoryPathoenPanel', 'FluABandRSVTest', 'GroupAStrip', 'UTIWithABSBYMicro', 'UTIWithGeneResistanceByPCR', 'GastroPathogenPanel', 'STIEssential', 'WoundInfectionWithABSByMicro', 'WoundInfectionWithGeneResistanceByPCR']
+                const params = [
+                    "AnemiaProfile",
+                    "ArthritisProfile",
+                    "B12FOLATEDeficiency",
+                    "BasicMetabolicPanel",
+                    "BasicMetabolicPanellonizeCalcium",
+                    "BasicMetabolicProfile",
+                    "ComprehensiveMetabolicPanel",
+                    "Covid19",
+                    "DiabeticProfile",
+                    "Electrolytes",
+                    "ElectrolytesPanel",
+                    "FluABandRSVTest",
+                    "GastroPathogenPanel",
+                    "GroupAStrip",
+                    "HepaticFunction",
+                    "HepaticFunctionPanel",
+                    "HepatitisPanel",
+                    "LipidPanel",
+                    "NMR_LIPOPROFILE",
+                    "ProstateHealth",
+                    "Prot_elect_ph_spep",
+                    "PSATotal_free",
+                    "QuantiFeron-TB_Gold_plus",
+                    "RenalFucntionPanel",
+                    "RespiratoryPathoenPanel",
+                    "STIEssential",
+                    "Testosterone-free-total",
+                    "ThyroidProfile",
+                    "UTIWithABSBYMicro",
+                    "UTIWithGeneResistanceByPCR",
+                    "WoundinfectionWithABSByMicro",
+                    "WoundInfectionWithGeneResistanceByPCR"
+                ]
+                
                 var checkedParams= []
                 for (let i = 0; i < params.length; i++) {
                     if(json[params[i]]){
+                        // Check Dublicated
+                        if (params[i] === "HepaticFunctionPanel" && checkedParams.includes("HepaticFunction")) {
+                            continue;
+                        }
+                        else if (params[i] === "ElectrolytesPanel" && checkedParams.includes("Electrolytes")) {
+                            continue;
+                        }else if (params[i] === "BasicMetabolicProfile" && checkedParams.includes("BasicMetabolicPanel")) {
+                            continue;
+                        }
                         checkedParams.push(params[i])
                     }
                 }
+                var addeddHTML = "  "
+                if (json['MobileNumber']){
+                    addeddHTML += `
+                    <!-- Last Name -->
+                    <div class="row mb-7">
+                        <label class="col-lg-4 fw-semibold text-muted">MobileNumber</label>
+                        <div class="col-lg-8">
+                            <span class="fw-bold fs-6 text-gray-800">${json['MobileNumber']}</span>
+                        </div>
+                    </div>
+                    `
+                }
+                // SpecimenCollectionDate
+                if (json['SpecimenCollectionDate']){
+                    addeddHTML += `
+                    <!-- Last Name -->
+                    <div class="row mb-7">
+                        <label class="col-lg-4 fw-semibold text-muted">Specimen Collection Date</label>
+                        <div class="col-lg-8">
+                            <span class="fw-bold fs-6 text-gray-800">${json['SpecimenCollectionDate']}</span>
+                        </div>
+                    </div>
+                    `
+                }
 
                 document.getElementById('ResTestPanel').innerText = checkedParams.length? checkedParams.join(",") : 'No Checked Paramters Found';
-                // document.getElementById('ResCompMetPanel').innerText = json.ComprehensiveMetabolicPanel || 'No';
-                // document.getElementById('ResLipiProfile').innerText = json.LipidPanel || 'No';
-                // document.getElementById('ResCovid19').innerText = json.Covid19 || 'No';
-                // document.getElementById('ResRespPathPanel').innerText = json.RespiratoryPathoenPanel || 'No';
-                // document.getElementById('ResFluABRSV').innerText = json.FluABandRSVTest || 'No';
-                // document.getElementById('ResGroupStrip').innerText = json.GroupAStrip || 'No';
-                // document.getElementById('ResUTIABS').innerText = json.UTIWithABSBYMicro || 'No';
-                // document.getElementById('ResUTIGene').innerText = json.UTIWithGeneResistanceByPCR || 'No';
-                // document.getElementById('ResGastro').innerText = json.GastroPathogenPanel || 'No';
-                // document.getElementById('ResSTIEssential').innerText = json.STIEssential || 'No';
-                // document.getElementById('ResWoundABS').innerText = json.WoundInfectionWithABSByMicro || 'No';
-                // document.getElementById('ResWoundGene').innerText = json.WoundInfectionWithGeneResistanceByPCR || 'No';
-                // document.getElementById('ResFName').innerText = json.first_name;
-                // document.getElementById('ResLName').innerText = json.last_name;
-                // document.getElementById('ResSex').innerText = json.sex? json.sex :' - ';
-                // document.getElementById('ResDOB').innerText = json.dob? json.dob :' - ';
-                // document.getElementById('ResAddress').innerText = json.address? json.address :' - ';
-                // document.getElementById('ResCity').innerText = json.city? json.city :' - ';
-                // document.getElementById('ResTestPanelSelected').innerText = json.test_panels_selected? json.test_panels_selected :' - ';
-                // document.getElementById('ResTestsSelected').innerText = json.tests_selected? json.tests_selected :' - ';
-                // document.getElementById('ResState').innerText = json.state? json.state :' - ';
-                // document.getElementById('ResZip').innerText = json.zip? json.zip :' - ';
-                // document.getElementById('ResPhone').innerText = json.phone? json.phone :' - ';
-                // document.getElementById('ResInsurance').innerText = json.insurance? json.insurance :' - ';
-                // document.getElementById('ResInsuranceID').innerText = json.insurance_id? json.insurance_id :' - ';
-                // document.getElementById('ResClient').innerText = json.client? json.client :' - ';
-                // document.getElementById('ResCollection').innerText = json.collection? json.collection :' - ';
-                // document.getElementById('ResTestReq').innerText = json.test_req? json.test_req :' - ';
-                // document.getElementById('ResDiagnoseCode').innerText = json.diagnose_code? json.diagnose_code :' - ';
-
+                
                 // document.getElementById('ResElse').innerText = json.else? json.else :' - ';
+                // add to addeddHTML to #ChangableParams
+                document.getElementById('ChangableParams').innerHTML += addeddHTML;
 
 
             }else{
