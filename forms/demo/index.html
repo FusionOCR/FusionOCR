@@ -250,7 +250,7 @@
 							<div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">
 								<!--begin::Heading-->
 								<h1 class="d-flex flex-column text-gray-900 fw-bold my-1">
-									<span class="text-white fs-1">Document Demo 2</span>
+									<span class="text-white fs-1">Document Upload</span>
 								</h1>
 								<!--end::Heading-->
 								<!--begin::Breadcrumb-->
@@ -260,7 +260,7 @@
 									</li>
 									<li class="breadcrumb-item text-gray-600">Forms</li>
 									<li class="breadcrumb-item text-gray-600">Document</li>
-									<li class="breadcrumb-item text-gray-500">Demo</li>
+									<li class="breadcrumb-item text-gray-500">upload</li>
 								</ul>
 								<!--end::Breadcrumb-->
 							</div>
@@ -520,7 +520,7 @@
 										<div class="d-flex justify-content-end ">
 											<div class="text-center">
 											  <label for="fileInput" id="FileInputLabel" style="pointer-events: none; opacity: 0.2;" class="btn btn-primary">
-												<input type="file" id="fileInput" class="d-none" accept="image/png">
+												<input type="file" id="fileInput" class="d-none" accept="image/png application/pdf ">
 												<i class="ki-duotone ki-folder-up fs-2">
 													<span class="path1"></span>
 													<span class="path2"></span>
@@ -592,6 +592,20 @@
 											<span class="fw-bold fs-6 text-gray-800" id="ResBithDate"> - </span>
 										</div>
 									</div>
+									<!-- Gender -->
+									<div class="row mb-7">
+										<label class="col-lg-4 fw-semibold text-muted">Gender:(Male)</label>
+										<div class="col-lg-8">
+											<span class="fw-bold fs-6 text-gray-800" id="ResGenderMale"> - </span>
+										</div>
+									</div>
+									<!-- Gender -->
+									<div class="row mb-7">
+										<label class="col-lg-4 fw-semibold text-muted">Gender:(Female)</label>
+										<div class="col-lg-8">
+											<span class="fw-bold fs-6 text-gray-800" id="ResGenderFemale"> - </span>
+										</div>
+									</div>
 									<!-- Last Name -->
 									<div class="row mb-7">
 										<label class="col-lg-4 fw-semibold text-muted">Address</label>
@@ -599,200 +613,21 @@
 											<span class="fw-bold fs-6 text-gray-800" id="ResAddress"> - </span>
 										</div>
 									</div>
-									<!-- Comprehensive Metabolic Panel -->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Comprehensive Metabolic Panel</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResCompMetPanel"> - </span>
-										</div>
-									</div>
-									<!-- Lipid Profile -->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Lipid Panel</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResLipiProfile"> - </span>
-										</div>
-									</div>
-									<!-- COVID-19 -->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">COVID-19</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResCovid19"> - </span>
-										</div>
-									</div>
-									<!-- Respiratory Pathogen Panel -->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Respiratory Pathogen Panel</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResRespPathPanel"> - </span>
-										</div>
-									</div>
-									<!-- Flu A, B and RSV Test -->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Flu A, B and RSV Test</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResFluABRSV"> - </span>
-										</div>
-									</div>
-									<!-- Group A Strep -->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Group A Strep</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResGroupStrip"> - </span>
-										</div>
-									</div>
-									<!-- UTI With ABS By Micro -->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">UTI With ABS By Micro</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResUTIABS"> - </span>
-										</div>
-									</div>
-									<!-- UTI With Gene Resistance By PCR -->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">UTI With Gene Resistance By PCR</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResUTIGene"> - </span>
-										</div>
-									</div>
-									<!-- UTI With Gene Resistance By PCR -->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Gastro Pathogen Panel</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResGastro"> - </span>
-										</div>
-									</div>
-									<!-- STI Essential -->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">STI Essential</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResSTIEssential"> - </span>
-										</div>
-									</div>
-									
-									<!-- Wound Infection with ABS By Micro -->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Wound Infection With ABS By Micro</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResWoundABS"> - </span>
-										</div>
-									</div>
-									<!-- Wound Infection With Gene Resistance By PCR -->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Wound Infection With Gene Resistance By PCR</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResWoundGene"> - </span>
-										</div>
-									</div>
-									
-									<!--begin::Row-->
-									<!-- <div class="row mb-7"> -->
-										<!--begin::Label-->
-										<!-- <label class="col-lg-4 fw-semibold text-muted">First Name</label> -->
-										<!--end::Label-->
-										<!--begin::Col-->
-										<!-- <div class="col-lg-8"> -->
-											<!-- <span class="fw-bold fs-6 text-gray-800" id="ResFName"> - </span> -->
-										<!-- </div> -->
-										<!--end::Col-->
-									<!-- </div> -->
-									<!--end::Row-->
-									<!-- <div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Last Name</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResLName"> - </span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Sex</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResSex"> - </span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Date of Birth</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResDOB"> - </span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Address</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResAddress"> - </span>
-										</div>
-									</div>
+									<!-- Last Name -->
 									<div class="row mb-7">
 										<label class="col-lg-4 fw-semibold text-muted">City</label>
 										<div class="col-lg-8">
 											<span class="fw-bold fs-6 text-gray-800" id="ResCity"> - </span>
 										</div>
 									</div>
+									<!-- Comprehensive Metabolic Panel -->
 									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Selected Test Panels</label>
+										<label class="col-lg-4 fw-semibold text-muted">TestPanels</label>
 										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResTestPanelSelected"> - </span>
+											<span class="fw-bold fs-6 text-gray-800" id="ResTestPanel"> - </span>
 										</div>
 									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Selected Tests (from first 16 at Col 1)</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResTestsSelected"> - </span>
-										</div>
-									</div> -->
-									<!-- <div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">State</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResState"> - </span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Zip Code</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResZip"> - </span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Telephone</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResPhone"> - </span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Insurance Number</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResInsurance"> - </span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Member ID of Insurance</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResInsuranceID"> - </span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Client #</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResClient"> - </span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Collection Date</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResCollection"> - </span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Test Requested</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResTestReq"> - </span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Diagnosis Code</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="ResDiagnoseCode"> - </span>
-										</div>
-									</div> -->
+									
 									<!-- <div class="row mb-7">
 										<label class="col-lg-4 fw-semibold text-muted">Other Data</label>
 										<div class="col-lg-8">

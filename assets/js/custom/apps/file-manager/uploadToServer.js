@@ -23,8 +23,8 @@ fileInput.addEventListener('change', async () => {
     //     alert('Please select a valid PDF document.');
     //     return;
     // }
-    if (file.type !== 'image/png') {
-        alert('Please select a valid PNG document.');
+    if (file.type !== 'image/png' &&file.type !== 'application/pdf') {
+        alert('Please select a valid PNG or PDF document.');
         return;
     }
     // fileInput.classList.add('disabled-opacity');
@@ -37,8 +37,8 @@ fileInput.addEventListener('change', async () => {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await fetch('https://fusionocr.com/api/upload', {
-        // const response = await fetch('http://127.0.0.1:5000/upload', {
+        // const response = await fetch('https://fusionocr.com/api/upload', {
+        const response = await fetch('http://127.0.0.1:5000/upload', {
             method: 'POST',
             body: formData,
         });
@@ -66,18 +66,31 @@ fileInput.addEventListener('change', async () => {
                 document.getElementById('ResLName').innerText = json.Patient_last_name || ' - ';
                 document.getElementById('ResBithDate').innerText = json.BithName || ' - ';
                 document.getElementById('ResAddress').innerText = json.Address || ' - ';
-                document.getElementById('ResCompMetPanel').innerText = json.ComprehensiveMetabolicPanel || 'No';
-                document.getElementById('ResLipiProfile').innerText = json.LipidPanel || 'No';
-                document.getElementById('ResCovid19').innerText = json.Covid19 || 'No';
-                document.getElementById('ResRespPathPanel').innerText = json.RespiratoryPathoenPanel || 'No';
-                document.getElementById('ResFluABRSV').innerText = json.FluABandRSVTest || 'No';
-                document.getElementById('ResGroupStrip').innerText = json.GroupAStrip || 'No';
-                document.getElementById('ResUTIABS').innerText = json.UTIWithABSBYMicro || 'No';
-                document.getElementById('ResUTIGene').innerText = json.UTIWithGeneResistanceByPCR || 'No';
-                document.getElementById('ResGastro').innerText = json.GastroPathogenPanel || 'No';
-                document.getElementById('ResSTIEssential').innerText = json.STIEssential || 'No';
-                document.getElementById('ResWoundABS').innerText = json.WoundInfectionWithABSByMicro || 'No';
-                document.getElementById('ResWoundGene').innerText = json.WoundInfectionWithGeneResistanceByPCR || 'No';
+                document.getElementById('ResCity').innerText = json.city || ' - ';
+                document.getElementById('ResGenderMale').innerText = json.Male || 'unchecked';
+                document.getElementById('ResGenderFemale').innerText = json.Female || 'unchecked';
+
+                const params = ['ComprehensiveMetabolicPanel', 'LipidPanel', 'Covid19', 'RespiratoryPathoenPanel', 'FluABandRSVTest', 'GroupAStrip', 'UTIWithABSBYMicro', 'UTIWithGeneResistanceByPCR', 'GastroPathogenPanel', 'STIEssential', 'WoundInfectionWithABSByMicro', 'WoundInfectionWithGeneResistanceByPCR']
+                var checkedParams= []
+                for (let i = 0; i < params.length; i++) {
+                    if(json[params[i]]){
+                        checkedParams.push(params[i])
+                    }
+                }
+
+                document.getElementById('ResTestPanel').innerText = checkedParams.length? checkedParams.join(",") : 'No Checked Paramters Found';
+                // document.getElementById('ResCompMetPanel').innerText = json.ComprehensiveMetabolicPanel || 'No';
+                // document.getElementById('ResLipiProfile').innerText = json.LipidPanel || 'No';
+                // document.getElementById('ResCovid19').innerText = json.Covid19 || 'No';
+                // document.getElementById('ResRespPathPanel').innerText = json.RespiratoryPathoenPanel || 'No';
+                // document.getElementById('ResFluABRSV').innerText = json.FluABandRSVTest || 'No';
+                // document.getElementById('ResGroupStrip').innerText = json.GroupAStrip || 'No';
+                // document.getElementById('ResUTIABS').innerText = json.UTIWithABSBYMicro || 'No';
+                // document.getElementById('ResUTIGene').innerText = json.UTIWithGeneResistanceByPCR || 'No';
+                // document.getElementById('ResGastro').innerText = json.GastroPathogenPanel || 'No';
+                // document.getElementById('ResSTIEssential').innerText = json.STIEssential || 'No';
+                // document.getElementById('ResWoundABS').innerText = json.WoundInfectionWithABSByMicro || 'No';
+                // document.getElementById('ResWoundGene').innerText = json.WoundInfectionWithGeneResistanceByPCR || 'No';
                 // document.getElementById('ResFName').innerText = json.first_name;
                 // document.getElementById('ResLName').innerText = json.last_name;
                 // document.getElementById('ResSex').innerText = json.sex? json.sex :' - ';
