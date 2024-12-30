@@ -1,5 +1,6 @@
 "use strict";
-
+// const BackURL = "https://fusionocr.com/api"
+const BackURL = "http://localhost:5000"
 // Class definition
 var KTUsersAddUser = function () {
     // Shared variables
@@ -15,10 +16,17 @@ var KTUsersAddUser = function () {
             form,
             {
                 fields: {
-                    'user_name': {
+                    'fname': {
                         validators: {
                             notEmpty: {
-                                message: 'Full name is required'
+                                message: 'First name is required'
+                            }
+                        }
+                    },
+                    'lname': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Last name is required'
                             }
                         }
                     },
@@ -49,9 +57,9 @@ var KTUsersAddUser = function () {
 
             // Validate form before submit
             if (validator) {
-                validator.validate().then(function (status) {
+                validator.validate().then(async function (status) {
                     console.log('validated!');
-
+                    console.log(status);
                     if (status == 'Valid') {
                         // Show loading indication
                         submitButton.setAttribute('data-kt-indicator', 'on');
@@ -59,32 +67,79 @@ var KTUsersAddUser = function () {
                         // Disable button to avoid multiple click 
                         submitButton.disabled = true;
 
-                        // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        setTimeout(function () {
+                        // Get The Params
+                        const fname = form.querySelector('[name="fname"]').value;
+                        const lname = form.querySelector('[name="lname"]').value;
+                        const email = form.querySelector('[name="user_email"]').value;
+                        const password = form.querySelector('[name="user_password"]').value;
+
+                        const formData = new FormData();
+                        formData.append('first_name', fname);
+                        formData.append('last_name', lname);
+                        formData.append('email', email);
+                        formData.append('password', password);
+
+                        const response = await fetch(`${BackURL}/auth/register`, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                authorization: `Bearer ${localStorage.getItem('token')}`
+                            }
+                        });
+
+                        if(response.ok){
+
+                            // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                            setTimeout(function () {
+                                // Remove loading indication
+                                submitButton.removeAttribute('data-kt-indicator');
+
+                                // Enable button
+                                submitButton.disabled = false;
+                                
+                                // Show popup confirmation 
+                                Swal.fire({
+                                    text: "Form has been successfully submitted!",
+                                    icon: "success",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Ok, got it!",
+                                    customClass: {
+                                        confirmButton: "btn btn-primary"
+                                    }
+                                }).then(function (result) {
+                                    if (result.isConfirmed) {
+                                        modal.hide();
+                                        window.location.reload();
+                                    }
+                                });
+
+                                //form.submit(); // Submit form
+                            }, 2000);
+
+                        }else{
                             // Remove loading indication
                             submitButton.removeAttribute('data-kt-indicator');
 
                             // Enable button
                             submitButton.disabled = false;
-
-                            // Show popup confirmation 
+                            // Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                             Swal.fire({
-                                text: "Form has been successfully submitted!",
-                                icon: "success",
+                                text: "Sorry, looks like there are some errors detected, please try again.",
+                                icon: "error",
                                 buttonsStyling: false,
                                 confirmButtonText: "Ok, got it!",
                                 customClass: {
                                     confirmButton: "btn btn-primary"
                                 }
-                            }).then(function (result) {
-                                if (result.isConfirmed) {
-                                    modal.hide();
-                                }
                             });
-
-                            //form.submit(); // Submit form
-                        }, 2000);
+                        }
+                        
                     } else {
+                        // Remove loading indication
+                        submitButton.removeAttribute('data-kt-indicator');
+
+                        // Enable button
+                        submitButton.disabled = false;
                         // Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
                             text: "Sorry, looks like there are some errors detected, please try again.",

@@ -2,8 +2,11 @@
 const BackURL = "http://localhost:5000"
 
 async function getData(){
-    const response = await fetch(`${BackURL}/user/user_list`, {
-        method: 'GET'
+    const response = await fetch(`${BackURL}/user/user_list?limit=10`, {
+        method: 'GET',
+        headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`
+        }
     });
     
     if (response.ok) {

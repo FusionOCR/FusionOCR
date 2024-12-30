@@ -12,7 +12,7 @@ var KTUsersList = function () {
     var initUserTable = function () {
         // Set date data order
         const tableRows = table.querySelectorAll('tbody tr');
-
+        console.log(tableRows);
         tableRows.forEach(row => {
             const dateRow = row.querySelectorAll('td');
             const lastLogin = dateRow[1].innerText.toLowerCase(); // Get last login time
