@@ -1,4 +1,6 @@
 "use strict";
+// const BackURL = "https://fusionocr.com/api"
+const BackURL = "http://localhost:5000"
 
 // Class definition
 var KTSigninGeneral = function () {
@@ -52,7 +54,7 @@ var KTSigninGeneral = function () {
             e.preventDefault();
 
             // Validate form
-            validator.validate().then(function (status) {
+            validator.validate().then(async function (status) {
                 if (status == 'Valid') {
                     // Show loading indication
                     submitButton.setAttribute('data-kt-indicator', 'on');
@@ -60,37 +62,76 @@ var KTSigninGeneral = function () {
                     // Disable button to avoid multiple click
                     submitButton.disabled = true;
 
+                    // Get The Params
+                    const email = form.querySelector('[name="email"]').value;
+                    const password = form.querySelector('[name="password"]').value;
+                    const formData = new FormData();
+                    formData.append('email', email);
+                    formData.append('password', password);
 
-                    // Simulate ajax request
-                    setTimeout(function () {
-                        // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                    const response = await fetch(`${BackURL}/auth/login`, {
+                        method: 'POST',
+                        body: formData
+                    });
 
-                        // Enable button
-                        submitButton.disabled = false;
+                    if(response.ok){
+                        const data = await response.json();
+                        console.log(data);
+                        const token = data['token'];
+                        localStorage.setItem('token', token);
+                        // window.location.replace("/");
+                         // Simulate ajax request
+                        setTimeout(function () {
+                            // Hide loading indication
+                            submitButton.removeAttribute('data-kt-indicator');
 
-                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                            // Enable button
+                            submitButton.disabled = false;
+
+                            // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                            Swal.fire({
+                                text: "You have successfully logged in!",
+                                icon: "success",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok, got it!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            }).then(function (result) {
+                                if (result.isConfirmed) {
+                                    form.querySelector('[name="email"]').value = "";
+                                    form.querySelector('[name="password"]').value = "";
+
+                                    //form.submit(); // submit form
+                                    var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                                    if (redirectUrl) {
+                                        location.href = redirectUrl;
+                                    }
+                                }
+                            });
+                        }, 2000);
+                    }else{
                         Swal.fire({
-                            text: "You have successfully logged in!",
-                            icon: "success",
+                            text: "Sorry, the email or password is incorrect, please try again.",
+                            icon: "error",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
-                        }).then(function (result) {
-                            if (result.isConfirmed) {
-                                form.querySelector('[name="email"]').value = "";
-                                form.querySelector('[name="password"]').value = "";
-
-                                //form.submit(); // submit form
-                                var redirectUrl = form.getAttribute('data-kt-redirect-url');
-                                if (redirectUrl) {
-                                    location.href = redirectUrl;
-                                }
-                            }
                         });
-                    }, 2000);
+
+                        // Show loading indication
+                        submitButton.setAttribute('data-kt-indicator', 'off');
+
+                        // Disable button to avoid multiple click
+                        submitButton.disabled = false;
+
+                        }
+
+
+
+                   
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
