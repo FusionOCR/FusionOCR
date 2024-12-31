@@ -50,7 +50,7 @@ var KTFileManagerList = function () {
                 emptyTable: `<div class="d-flex flex-column flex-center">
                     <img src="${hostUrl}media/illustrations/sketchy-1/5.png" class="mw-400px" />
                     <div class="fs-1 fw-bolder text-dark">No items found.</div>
-                    <div class="fs-6">Start creating new folders or uploading a new file!</div>
+                    <div class="fs-6">Start Uploading a new file!</div>
                 </div>`
             }
         };
@@ -72,7 +72,7 @@ var KTFileManagerList = function () {
                 emptyTable: `<div class="d-flex flex-column flex-center">
                     <img src="${hostUrl}media/illustrations/sketchy-1/5.png" class="mw-400px" />
                     <div class="fs-1 fw-bolder text-dark mb-4">No items found.</div>
-                    <div class="fs-6">Start creating new folders or uploading a new file!</div>
+                    <div class="fs-6">Start Uploading a new file!</div>
                 </div>`
             },
             conditionalPaging: true

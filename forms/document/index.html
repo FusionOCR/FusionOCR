@@ -436,13 +436,13 @@
 												<div class="d-flex flex-column">
 													<!--begin::Name-->
 													<div class="d-flex align-items-center mb-2">
-														<a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Scan PDF 123</a>
+														<a class="text-gray-900 text-hover-primary fs-2 fw-bold me-1" id="FormName">Loading Docuemnt Data</a>
 													</div>
 													<!--end::Name-->
 													<!--begin::Info-->
 													<div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
-														<a href="#" class="d-flex align-items-center text-gray-500 text-hover-primary me-5 mb-2">
-														# 1234</a>
+														<a class="d-flex align-items-center text-gray-500 text-hover-primary me-5 mb-2">
+														# <span id="FormStatus"></span></a>
 													</div>
 													<!--end::Info-->
 												</div>
@@ -456,20 +456,20 @@
 													<!--begin::Stats-->
 													<div class="d-flex flex-wrap">
 														<!--begin::Stat-->
-														<div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+														<!-- <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3"> -->
 														
 															<!--begin::Label-->
-															<div class="fw-semibold fs-6 text-gray-500">By</div>
-															<div class="fw-semibold fs-6 text-gray-700">Max. Smith</div>
+															<!-- <div class="fw-semibold fs-6 text-gray-500">By</div> -->
+															<!-- <div class="fw-semibold fs-6 text-gray-700">Max. Smith</div> -->
 															<!--end::Label-->
-														</div>
+														<!-- </div> -->
 														<!--end::Stat-->
 														<!--begin::Stat-->
 														<div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
 														
 															<!--begin::Label-->
 															<div class="fw-semibold fs-6 text-gray-500">uploaded</div>
-															<div class="fw-semibold fs-6 text-gray-700">28/12/2024</div>
+															<div class="fw-semibold fs-6 text-gray-700" id="FormDate"></div>
 															<!--end::Label-->
 														</div>
 														<!--end::Stat-->
@@ -498,7 +498,7 @@
 									</div>
 									<!--end::Card title-->
 									<!--begin::Action-->
-									<a href="forms/document/edit/" class="btn btn-sm btn-primary align-self-center">Edit</a>
+									<a href="forms/document/edit/" style="pointer-events: none;opacity: 0.5;" class="btn btn-sm btn-primary align-self-center">Edit</a>
 									<!--end::Action-->
 								</div>
 								<!--begin::Card header-->
@@ -522,105 +522,75 @@
 								-->
 								<!--begin::Card body-->
 								<div class="card-body p-9">
-									<!--begin::Row-->
 									<div class="row mb-7">
-										<!--begin::Label-->
-										<label class="col-lg-4 fw-semibold text-muted">First Name</label>
-										<!--end::Label-->
-										<!--begin::Col-->
+										<label class="col-lg-4 fw-semibold text-muted">Name</label>
 										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">John</span>
-										</div>
-										<!--end::Col-->
-									</div>
-									<!--end::Row-->
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Last Name</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">Doe</span>
+											<span class="fw-bold fs-6 text-gray-800" id="PatientName">-</span>
 										</div>
 									</div>
+									
 									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Sex</label>
+										<label class="col-lg-4 fw-semibold text-muted">Gender</label>
 										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">Male</span>
+											<span class="fw-bold fs-6 text-gray-800" id="PatientGender">-</span>
 										</div>
 									</div>
 									<div class="row mb-7">
 										<label class="col-lg-4 fw-semibold text-muted">Date of Birth</label>
 										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">1990-01-01</span>
+											<span class="fw-bold fs-6 text-gray-800"  id="PatientDOB">-</span>
 										</div>
 									</div>
 									<div class="row mb-7">
 										<label class="col-lg-4 fw-semibold text-muted">Address</label>
 										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">123 Main Street</span>
+											<span class="fw-bold fs-6 text-gray-800" id="PatientAddress">-</span>
 										</div>
 									</div>
 									<div class="row mb-7">
 										<label class="col-lg-4 fw-semibold text-muted">City</label>
 										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">New York</span>
+											<span class="fw-bold fs-6 text-gray-800" id="PatientCity">-</span>
 										</div>
 									</div>
 									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">State</label>
+										<label class="col-lg-4 fw-semibold text-muted">Sample Date (DOS)</label>
 										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">NY</span>
+											<span class="fw-bold fs-6 text-gray-800"  id="PatientDOS">-</span>
+										</div>
+									</div>
+									
+									<div class="row mb-7">
+										<label class="col-lg-4 fw-semibold text-muted">Mobile Number</label>
+										<div class="col-lg-8">
+											<span class="fw-bold fs-6 text-gray-800" id="PatientMobile">-</span>
 										</div>
 									</div>
 									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Zip Code</label>
+										<label class="col-lg-4 fw-semibold text-muted">Test Panels</label>
 										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">10001</span>
+											<span class="fw-bold fs-6 text-gray-800" id="PatientTestPanels">-</span>
 										</div>
 									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Telephone</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">(123) 456-7890</span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Insurance Number</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">INS-123456</span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Member ID of Insurance</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">MID-789123</span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Client #</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">C12345</span>
-										</div>
-									</div>
-									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Collection Date</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">2024-11-20</span>
-										</div>
-									</div>
+									
 									<div class="row mb-7">
 										<label class="col-lg-4 fw-semibold text-muted">Test Requested</label>
 										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">T1234</span>
+											<span class="fw-bold fs-6 text-gray-800" id="PatientTests">Still Under Development For Better Accuracy</span>
 										</div>
 									</div>
+									
 									<div class="row mb-7">
-										<label class="col-lg-4 fw-semibold text-muted">Diagnosis Code</label>
-										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800">D5678</span>
+										<label class="col-lg-4 fw-semibold text-muted">Document Review</label>
+										
+										<div class="col-lg-8" id="DocumentReview">
+									
 										</div>
 									</div>
 								</div>
 								
 								<!--end::Card body-->
+							
 							</div>
 							<!--end::details View-->
 
@@ -657,6 +627,7 @@
 		<script src="assets/js/custom/pages/user-profile/general.js"></script>
 		<script src="assets/js/widgets.bundle.js"></script>
 		<script src="assets/js/custom/widgets.js"></script>
+		<script src="assets/js/custom/API/FormInfo.js"></script>
 		<!--end::Custom Javascript-->
 		<!--end::Javascript-->
 	</body>

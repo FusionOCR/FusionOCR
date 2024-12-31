@@ -51,7 +51,7 @@ var KTFileManagerList = function () {
                 emptyTable: `<div class="d-flex flex-column flex-center">
                     <img src="${hostUrl}media/illustrations/sketchy-1/5.png" class="mw-400px" />
                     <div class="fs-1 fw-bolder text-dark">No items found.</div>
-                    <div class="fs-6">Start creating new folders or uploading a new file!</div>
+                    <div class="fs-6">Start Uploading a new file!</div>
                 </div>`
             }
         };
@@ -74,7 +74,7 @@ var KTFileManagerList = function () {
                 emptyTable: `<div class="d-flex flex-column flex-center">
                     <img src="${hostUrl}media/illustrations/sketchy-1/5.png" class="mw-400px" />
                     <div class="fs-1 fw-bolder text-dark mb-4">No items found.</div>
-                    <div class="fs-6">Start creating new folders or uploading a new file!</div>
+                    <div class="fs-6">Start Uploading a new file!</div>
                 </div>`
             },
             conditionalPaging: true
@@ -105,10 +105,10 @@ var KTFileManagerList = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     const handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-filemanager-table-filter="search"]');
-        filterSearch.addEventListener('keyup', function (e) {
-            datatable.search(e.target.value).draw();
-        });
+        // const filterSearch = document.querySelector('[data-kt-filemanager-table-filter="search"]');
+        // filterSearch.addEventListener('keyup', function (e) {
+        //     datatable.search(e.target.value).draw();
+        // });
     }
 
     // Delete customer
@@ -623,109 +623,7 @@ var KTFileManagerList = function () {
         });
     }
 
-    // Handle move to folder
-    const handleMoveToFolder = () => {
-        const element = document.querySelector('#kt_modal_move_to_folder');
-        const form = element.querySelector('#kt_modal_move_to_folder_form');
-        const saveButton = form.querySelector('#kt_modal_move_to_folder_submit');
-        const moveModal = new bootstrap.Modal(element);
-
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        var validator = FormValidation.formValidation(
-            form,
-            {
-                fields: {
-                    'move_to_folder': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Please select a folder.'
-                            }
-                        }
-                    },
-                },
-
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
-                }
-            }
-        );
-
-        saveButton.addEventListener('click', e => {
-            e.preventDefault();
-
-            saveButton.setAttribute("data-kt-indicator", "on");
-
-            if (validator) {
-                validator.validate().then(function (status) {
-                    console.log('validated!');
-
-                    if (status == 'Valid') {
-                        // Simulate process for demo only
-                        setTimeout(function () {
-
-                            Swal.fire({
-                                text: "Are you sure you would like to move to this folder",
-                                icon: "warning",
-                                showCancelButton: true,
-                                buttonsStyling: false,
-                                confirmButtonText: "Yes, move it!",
-                                cancelButtonText: "No, return",
-                                customClass: {
-                                    confirmButton: "btn btn-primary",
-                                    cancelButton: "btn btn-active-light"
-                                }
-                            }).then(function (result) {
-                                if (result.isConfirmed) {
-                                    form.reset(); // Reset form	
-                                    moveModal.hide(); // Hide modal			
-
-                                    toastr.options = {
-                                        "closeButton": true,
-                                        "debug": false,
-                                        "newestOnTop": false,
-                                        "progressBar": false,
-                                        "positionClass": "toastr-top-right",
-                                        "preventDuplicates": false,
-                                        "showDuration": "300",
-                                        "hideDuration": "1000",
-                                        "timeOut": "5000",
-                                        "extendedTimeOut": "1000",
-                                        "showEasing": "swing",
-                                        "hideEasing": "linear",
-                                        "showMethod": "fadeIn",
-                                        "hideMethod": "fadeOut"
-                                    };
-
-                                    toastr.success('1 item has been moved.');
-
-                                    saveButton.removeAttribute("data-kt-indicator");
-                                } else {
-                                    Swal.fire({
-                                        text: "Your action has been cancelled!.",
-                                        icon: "error",
-                                        buttonsStyling: false,
-                                        confirmButtonText: "Ok, got it!",
-                                        customClass: {
-                                            confirmButton: "btn btn-primary",
-                                        }
-                                    });
-
-                                    saveButton.removeAttribute("data-kt-indicator");
-                                }
-                            });
-                        }, 500);
-                    } else {
-                        saveButton.removeAttribute("data-kt-indicator");
-                    }
-                });
-            }
-        });
-    }
+   
 
     // Count total number of items
     const countTotalItems = () => {
@@ -752,7 +650,6 @@ var KTFileManagerList = function () {
             initDropzone();
             initCopyLink();
             handleRename();
-            handleMoveToFolder();
             countTotalItems();
             KTMenu.createInstances();
         }
