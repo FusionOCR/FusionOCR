@@ -1,6 +1,6 @@
 
 // const BackURL = "https://fusionocr.com/api"
-const BackURL = "http://localhost:5000"
+const BackURL = "https://fusionocr.com/api"
 async function getData(){
     const response = await fetch(`${BackURL}/forms_list?limit=100`, {
         method: 'GET',
