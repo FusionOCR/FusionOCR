@@ -14,7 +14,6 @@ async function getData(){
 
         for (let i = 0; i < userList.length; i++) {
             const user = userList[i];
-            console.log(user);
             const userDiv = `
                     <!--begin::Item-->
                     <div class="d-flex align-items-sm-center mb-7">

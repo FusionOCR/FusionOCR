@@ -116,6 +116,8 @@ var KTUsersAddUser = function () {
                                 //form.submit(); // Submit form
                             }, 2000);
 
+                        }else if(response.status === 401){
+                            window.location.replace("/sign-in");
                         }else{
                             // Remove loading indication
                             submitButton.removeAttribute('data-kt-indicator');

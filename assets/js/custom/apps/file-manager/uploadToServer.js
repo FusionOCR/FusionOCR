@@ -38,9 +38,11 @@ fileInput.addEventListener('change', async () => {
         formData.append('file', file);
 
         const response = await fetch('https://fusionocr.com/api/upload', {
-        // const response = await fetch('http://127.0.0.1:5000/upload', {
             method: 'POST',
             body: formData,
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`
+            }
         });
 
         if (response.ok) {
@@ -155,6 +157,8 @@ fileInput.addEventListener('change', async () => {
                 alert('File upload failed. (Empty Response)');
             }
 
+        }else if(response.status === 401){
+            window.location.replace("/sign-in");
         } else {
             alert('File upload failed.');
         }

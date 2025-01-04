@@ -131,6 +131,9 @@ fileInput.addEventListener('change', async () => {
         const response = await fetch(`${BackURL}/upload`, {
             method: 'POST',
             body: formData,
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`
+            }
         });
 
         if (response.ok) {
@@ -151,6 +154,8 @@ fileInput.addEventListener('change', async () => {
             document.getElementById('ProccessButton').classList.add("d-none");
             document.getElementById('upButton').classList.remove("d-none");
 
+        }else if(response.status === 401){
+            window.location.replace("/sign-in");
         } else {
             alert('File upload failed.');
         }

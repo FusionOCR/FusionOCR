@@ -8099,3 +8099,9 @@ KTUtil.onDOMContentLoaded(function () {
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = KTThemeMode;
 }
+
+// function to remove the LOcalstorage and redirect to ./sign-in
+function logout() {
+    localStorage.clear();
+    window.location.href = "./sign-in";
+}
