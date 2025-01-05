@@ -1,6 +1,6 @@
 
 async function getData(){
-    const response = await fetch(`${BackURL}/user/user_list?limit=10`, {
+    const response = await fetch(`${BackURL}/user/user_list?limit=1000`, {
         method: 'GET',
         headers: {
             authorization: `Bearer ${localStorage.getItem('token')}`

@@ -441,23 +441,15 @@
 								<div class="card-header pt-8">
 									<div class="card-title">
 										<!--begin::Search-->
-										<!-- <div class="d-flex align-items-center position-relative my-1">
+										<div class="d-flex align-items-center position-relative my-1">
 											<i class="ki-duotone ki-magnifier fs-1 position-absolute ms-6">
 												<span class="path1"></span>
 												<span class="path2"></span>
 											</i>
 											<input type="text" data-kt-filemanager-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Forms" />
-										</div> -->
-										<!--end::Search-->
-										<!--begin::Table header-->
-										<div class="d-flex flex-end">
-											<!--begin::Folder Stats-->
-											<div class="badge badge-lg badge-primary">
-												<span id="kt_file_manager_items_counter">0 items</span>
-											</div>
-											<!--end::Folder Stats-->
 										</div>
-										<!--end::Table header-->
+										<!--end::Search-->
+										
 									</div>
 									<!--begin::Card toolbar-->
 									<div class="card-toolbar">
@@ -492,7 +484,15 @@
 								<!--end::Card header-->
 								<!--begin::Card body-->
 								<div class="card-body">
-									
+									<!--begin::Table header-->
+									<div class="d-flex flex-end">
+										<!--begin::Folder Stats-->
+										<div class="badge badge-lg badge-primary">
+											<span id="kt_file_manager_items_counter">0 items</span>
+										</div>
+										<!--end::Folder Stats-->
+									</div>
+									<!--end::Table header-->
 									<!--begin::Table-->
 									<table id="kt_file_manager_list" data-kt-filemanager-table="files" class="table align-middle table-row-dashed fs-6 gy-5">
 										<thead>
@@ -503,10 +503,8 @@
 													</div> -->
 												</th>
 												<th class="min-w-250px">Name</th>
-												<th class="min-w-10px"></th>
 												<th class="min-w-125px">Uploaded at</th>
 												<th class="min-w-125px">Status</th>
-												<th class="w-125px"></th>
 											</tr>
 										</thead>
 										<tbody class="fw-semibold text-gray-600" id="FilesTable">
@@ -809,10 +807,10 @@
 		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
 		<!--end::Vendors Javascript-->
 		<!--begin::Custom Javascript(used for this page only)-->
-		<script src="assets/js/custom/API/Forms.js"></script>
 		<script src="assets/js/custom/apps/file-manager/list.js"></script>
 		<script src="assets/js/widgets.bundle.js"></script>
 		<script src="assets/js/custom/widgets.js"></script>
+		<script src="assets/js/custom/API/Forms.js"></script>
 		<!--end::Custom Javascript-->
 		<!--end::Javascript-->
 	</body>

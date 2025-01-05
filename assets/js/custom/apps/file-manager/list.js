@@ -27,7 +27,7 @@ var KTFileManagerList = function () {
 
         tableRows.forEach(row => {
             const dateRow = row.querySelectorAll('td');
-            const dateCol = dateRow[3]; // select date from 4th column in table
+            const dateCol = dateRow[1]; // select date from 4th column in table
             const realDate = moment(dateCol.innerHTML, "DD MMM YYYY, LT").format();
             dateCol.setAttribute('data-order', realDate);
         });
@@ -42,10 +42,8 @@ var KTFileManagerList = function () {
             'columns': [
                 { data: 'checkbox' },
                 { data: 'name' },
-                { data: 'size' },
                 { data: 'date' },
                 { data: 'status' },
-                { data: 'action' },
             ],
             'language': {
                 emptyTable: `<div class="d-flex flex-column flex-center">
@@ -59,16 +57,17 @@ var KTFileManagerList = function () {
         const filesListOptions = {
             "info": false,
             'order': [],
-            'pageLength': 10,
+            'pageLength': 15,
             "lengthChange": false,
-            'ordering': false,
+            // 'ordering': false,
             'columns': [
                 { data: 'checkbox' },
                 { data: 'name' },
-                { data: 'size' },
                 { data: 'date' },
                 { data: 'status' },
-                { data: 'action' },
+            ],
+            'columnDefs': [
+                { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
             ],
             'language': {
                 emptyTable: `<div class="d-flex flex-column flex-center">
@@ -81,13 +80,9 @@ var KTFileManagerList = function () {
         };
 
         // Define datatable options to load
-        var loadOptions;
-        if (table.getAttribute('data-kt-filemanager-table') === 'folders') {
-            loadOptions = foldersListOptions;
-        } else {
-            loadOptions = filesListOptions;
-        }
-
+        var loadOptions= filesListOptions;;
+        
+        
         // Init datatable --- more info on datatables: https://datatables.net/manual/
         datatable = $(table).DataTable(loadOptions);
 
@@ -105,10 +100,10 @@ var KTFileManagerList = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     const handleSearchDatatable = () => {
-        // const filterSearch = document.querySelector('[data-kt-filemanager-table-filter="search"]');
-        // filterSearch.addEventListener('keyup', function (e) {
-        //     datatable.search(e.target.value).draw();
-        // });
+        const filterSearch = document.querySelector('[data-kt-filemanager-table-filter="search"]');
+        filterSearch.addEventListener('keyup', function (e) {
+            datatable.search(e.target.value).draw();
+        });
     }
 
     // Delete customer
@@ -185,7 +180,6 @@ var KTFileManagerList = function () {
         checkboxes.forEach(c => {
             // Checkbox on click event
             c.addEventListener('click', function () {
-                console.log(c);
                 setTimeout(function () {
                     toggleToolbars();
                 }, 50);
@@ -647,16 +641,29 @@ var KTFileManagerList = function () {
             initToggleToolbar();
             handleSearchDatatable();
             handleDeleteRows();
-            initDropzone();
-            initCopyLink();
-            handleRename();
-            countTotalItems();
+            // initDropzone();
+            // initCopyLink();
+            // handleRename();
+            // countTotalItems();
             KTMenu.createInstances();
+            
+        },
+        reload: function(){
+            initTemplates();
+            initDatatable();
+            initToggleToolbar();
+            handleSearchDatatable();
+            handleDeleteRows();
+            // initDropzone();
+        },
+        distroy: function(){
+            KTMenu.distroy;
         }
+
     }
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTFileManagerList.init();
-});
+// KTUtil.onDOMContentLoaded(function () {
+//     KTFileManagerList.init();
+// });

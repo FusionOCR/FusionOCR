@@ -1,8 +1,9 @@
 
 // const BackURL = "http://localhost:5000"
 const BackURL = "http://localhost:5000"
+var initCount = 0 
 async function getData(){
-    const response = await fetch(`${BackURL}/forms_list?limit=100`, {
+    const response = await fetch(`${BackURL}/forms_list?limit=10000`, {
         method: 'GET',
         headers: {
             authorization: `Bearer ${localStorage.getItem('token')}`
@@ -13,7 +14,7 @@ async function getData(){
         const formsList = await response.json();
         if (formsList.length > 0 ){
 
-            document.querySelector("#FilesTable").innerHTML =''
+            // document.querySelector("#FilesTable").innerHTML =''
         }
         for (let i = 0; i < formsList.length; i++) {
             const form = formsList[i];
@@ -29,7 +30,6 @@ async function getData(){
             }else{
                 statusStyle = 'badge-light-warning'
             }
-            console.log(form)
             const link = 
             (form.status !== "Proccessing" && form.status !== "Pending")?
                                 `<a href="./forms/document" id="${form.form_id}" onClick="localStorage.setItem('activeDoc',${form.form_id})" class="text-gray-800 text-hover-primary">${form.name}</a>`
@@ -41,7 +41,9 @@ async function getData(){
             const formDiv = `
                     <tr>
                         <td>
-                            
+                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                <input class="form-check-input" type="checkbox" value="1" />
+                            </div>
                         </td>
                         <td>
                             <div class="d-flex align-items-center">
@@ -54,20 +56,12 @@ async function getData(){
                                 ${link}
                             </div>
                         </td>
-                        <td></td>
                         <td>${formattedDate}</td>
                         <td class="text-start">
                             <span class="badge ${statusStyle}">${form.status}</span>
 
                         </td>
-                        <td class="text-end" data-kt-filemanager-table="action_dropdown">
-                            <div class="d-flex justify-content-end">
-                                
-                                <!--begin::More-->
-                                
-                                <!--end::More-->
-                            </div>
-                        </td>
+                        
                     </tr>
                     `
             document.querySelector("#FilesTable").innerHTML += formDiv;
@@ -78,6 +72,11 @@ async function getData(){
     }else if(response.status === 401){
         window.location.replace("/sign-in");
     }
+    KTFileManagerList.distroy()
+    KTFileManagerList.init();
+    
+    
+
 }
 
 {/*
@@ -165,11 +164,15 @@ fileInput.addEventListener('change', async () => {
     } finally {
         
 
-
     }
 });
-getData()
-setInterval(getData, 15000);
+getData().then(()=>{
+    // KTUtil.onDOMContentLoaded(function () {
+    //     KTFileManagerList.init();
+    //     initCount+=1
+    // });
+})
+// setInterval(getData, 15000);
 
 
 
