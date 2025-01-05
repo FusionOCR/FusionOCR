@@ -1,6 +1,6 @@
 "use strict";
-// const BackURL = "https://fusionocr.com/api"
-const BackURL = "https://fusionocr.com/api"
+// const BackURL = "http://localhost:5000"
+const BackURL = "http://localhost:5000"
 // Class definition
 var KTUsersAddUser = function () {
     // Shared variables

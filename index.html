@@ -254,7 +254,7 @@
 							<div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">
 								<!--begin::Heading-->
 								<h1 class="d-flex flex-column text-gray-900 fw-bold my-1">
-									<span class="text-white fs-1">Home - <a href="/forms/single/">Go To Upload</a></span>
+									<span class="text-white fs-1">Home</span>
 									
 									<small class="text-gray-600 fs-6 fw-normal pt-2">Home</small>
 									
@@ -287,8 +287,8 @@
 													<!--end::Avatar-->
 													<!--begin::Username-->
 													<div class="d-flex flex-column">
-														<div class="fw-bold d-flex align-items-center fs-5">Max Smith</div>
-														<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">max@kt.com</a>
+														<div class="fw-bold d-flex align-items-center fs-5" id="navUserName">-</div>
+														<a href="#" class="fw-semibold text-muted text-hover-primary fs-7" id="navUserEmail">-</a>
 													</div>
 													<!--end::Username-->
 												</div>
@@ -303,14 +303,7 @@
 											</div>
 											<!--end::Menu item-->
 											<!--begin::Menu item-->
-											<div class="menu-item px-5">
-												<a href="./forms/myforms" class="menu-link px-5">
-													<span class="menu-text">My Forms</span>
-													<span class="menu-badge">
-														<span class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
-													</span>
-												</a>
-											</div>
+											
 											<!--end::Menu item-->
 											<!--begin::Menu item-->
 											<div class="menu-item px-5">
@@ -423,7 +416,7 @@
 										<!--begin::Card body-->
 										<div class="card-body p-9">
 											<!--begin::Heading-->
-											<div class="fs-2hx fw-bold">237</div>
+											<div class="fs-2hx fw-bold" id="totalFormCount">-</div>
 											<div class="fs-4 fw-semibold text-gray-500 mb-7">Current Forms</div>
 											<!--end::Heading-->
 											<!--begin::Wrapper-->
@@ -439,21 +432,28 @@
 													<div class="d-flex fs-6 fw-semibold align-items-center mb-3">
 														<div class="bullet bg-primary me-3"></div>
 														<div class="text-gray-500">Processing</div>
-														<div class="ms-auto fw-bold text-gray-700">30</div>
+														<div class="ms-auto fw-bold text-gray-700" id="processing">-</div>
 													</div>
 													<!--end::Label-->
 													<!--begin::Label-->
 													<div class="d-flex fs-6 fw-semibold align-items-center mb-3">
 														<div class="bullet bg-success me-3"></div>
 														<div class="text-gray-500">Extracted</div>
-														<div class="ms-auto fw-bold text-gray-700">45</div>
+														<div class="ms-auto fw-bold text-gray-700" id="extracted">-</div>
+													</div>
+													<!--end::Label-->
+													<!--begin::Label-->
+													<div class="d-flex fs-6 fw-semibold align-items-center mb-3">
+														<div class="bullet bg-gray me-3"></div>
+														<div class="text-gray-500">Pending</div>
+														<div class="ms-auto fw-bold text-gray-700" id="pending">-</div>
 													</div>
 													<!--end::Label-->
 													<!--begin::Label-->
 													<div class="d-flex fs-6 fw-semibold align-items-center">
-														<div class="bullet bg-gray-300 me-3"></div>
-														<div class="text-gray-500">Queued</div>
-														<div class="ms-auto fw-bold text-gray-700">25</div>
+														<div class="bullet bg-danger me-3"></div>
+														<div class="text-gray-500">Error</div>
+														<div class="ms-auto fw-bold text-gray-700" id="error">-</div>
 													</div>
 													<!--end::Label-->
 												</div>
@@ -532,257 +532,8 @@
 															</thead>
 															<!--end::Table head-->
 															<!--begin::Table body-->
-															<tbody>
-																<tr>
-																	<td>
-																		<div class="symbol symbol-45px me-2">
-																			<span class="symbol-label">
-																				<img src="assets/media/svg/files/pdf.svg" class="h-50 align-self-center" alt="" />
-																			</span>
-																		</div>
-																	</td>
-																	<td>
-																		<a href="./forms/document/" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">Scan #12023</a>
-																		<span class="text-muted fw-semibold d-block">28/12/2024</span>
-																	</td>
-																	<td class="text-end text-muted fw-bold"></td>
-																	<td class="text-end">
-																		<span class="badge badge-light-success">Extracted</span>
-																	</td>
-																	<td class="text-end">
-																		<a href="./forms/document/" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-																			<i class="ki-duotone ki-arrow-right fs-2">
-																				<span class="path1"></span>
-																				<span class="path2"></span>
-																			</i>
-																		</a>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<div class="symbol symbol-45px me-2">
-																			<span class="symbol-label">
-																				<img src="assets/media/svg/files/pdf.svg" class="h-50 align-self-center" alt="" />
-																			</span>
-																		</div>
-																	</td>
-																	<td>
-																		<a href="./forms/document/" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">Scan #12312</a>
-																		<span class="text-muted fw-semibold d-block">12/12/2024</span>
-																	</td>
-																	<td class="text-end text-muted fw-bold"></td>
-																	<td class="text-end">
-																		<span class="badge badge-light-warning">Processing</span>
-																	</td>
-																	<td class="text-end">
-																		<a href="./forms/document/" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-																			<i class="ki-duotone ki-arrow-right fs-2">
-																				<span class="path1"></span>
-																				<span class="path2"></span>
-																			</i>
-																		</a>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<div class="symbol symbol-45px me-2">
-																			<span class="symbol-label">
-																				<img src="assets/media/svg/files/pdf.svg" class="h-50 align-self-center" alt="" />
-																			</span>
-																		</div>
-																	</td>
-																	<td>
-																		<a href="./forms/document/" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">Alex Smith Scan</a>
-																		<span class="text-muted fw-semibold d-block">12/12/2024</span>
-																	</td>
-																	<td class="text-end text-muted fw-bold"></td>
-																	<td class="text-end">
-																		<span class="badge badge-light-success">Extracted</span>
-																	</td>
-																	<td class="text-end">
-																		<a href="./forms/document/" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-																			<i class="ki-duotone ki-arrow-right fs-2">
-																				<span class="path1"></span>
-																				<span class="path2"></span>
-																			</i>
-																		</a>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<div class="symbol symbol-45px me-2">
-																			<span class="symbol-label">
-																				<img src="assets/media/svg/files/pdf.svg" class="h-50 align-self-center" alt="" />
-																			</span>
-																		</div>
-																	</td>
-																	<td>
-																		<a href="./forms/document/" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">Max Morgan</a>
-																		<span class="text-muted fw-semibold d-block">12/12/2024</span>
-																	</td>
-																	<td class="text-end text-muted fw-bold"></td>
-																	<td class="text-end">
-																		<span class="badge badge-light-danger">Error</span>
-																	</td>
-																	<td class="text-end">
-																		<a href="./forms/document/" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-																			<i class="ki-duotone ki-arrow-right fs-2">
-																				<span class="path1"></span>
-																				<span class="path2"></span>
-																			</i>
-																		</a>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<div class="symbol symbol-45px me-2">
-																			<span class="symbol-label">
-																				<img src="assets/media/svg/files/pdf.svg" class="h-50 align-self-center" alt="" />
-																			</span>
-																		</div>
-																	</td>
-																	<td>
-																		<a href="./forms/document/" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">Test Scan 12</a>
-																		<span class="text-muted fw-semibold d-block">12/12/2024</span>
-																	</td>
-																	<td class="text-end text-muted fw-bold"></td>
-																	<td class="text-end">
-																		<span class="badge badge-light-warning">In Progress</span>
-																	</td>
-																	<td class="text-end">
-																		<a href="./forms/document/" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-																			<i class="ki-duotone ki-arrow-right fs-2">
-																				<span class="path1"></span>
-																				<span class="path2"></span>
-																			</i>
-																		</a>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<div class="symbol symbol-45px me-2">
-																			<span class="symbol-label">
-																				<img src="assets/media/svg/files/pdf.svg" class="h-50 align-self-center" alt="" />
-																			</span>
-																		</div>
-																	</td>
-																	<td>
-																		<a href="./forms/document/" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">Test Scan 12</a>
-																		<span class="text-muted fw-semibold d-block">12/12/2024</span>
-																	</td>
-																	<td class="text-end text-muted fw-bold"></td>
-																	<td class="text-end">
-																		<span class="badge badge-light-warning">In Progress</span>
-																	</td>
-																	<td class="text-end">
-																		<a href="./forms/document/" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-																			<i class="ki-duotone ki-arrow-right fs-2">
-																				<span class="path1"></span>
-																				<span class="path2"></span>
-																			</i>
-																		</a>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<div class="symbol symbol-45px me-2">
-																			<span class="symbol-label">
-																				<img src="assets/media/svg/files/pdf.svg" class="h-50 align-self-center" alt="" />
-																			</span>
-																		</div>
-																	</td>
-																	<td>
-																		<a href="./forms/document/" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">Test Scan 12</a>
-																		<span class="text-muted fw-semibold d-block">12/12/2024</span>
-																	</td>
-																	<td class="text-end text-muted fw-bold"></td>
-																	<td class="text-end">
-																		<span class="badge badge-light-warning">In Progress</span>
-																	</td>
-																	<td class="text-end">
-																		<a href="./forms/document/" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-																			<i class="ki-duotone ki-arrow-right fs-2">
-																				<span class="path1"></span>
-																				<span class="path2"></span>
-																			</i>
-																		</a>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<div class="symbol symbol-45px me-2">
-																			<span class="symbol-label">
-																				<img src="assets/media/svg/files/pdf.svg" class="h-50 align-self-center" alt="" />
-																			</span>
-																		</div>
-																	</td>
-																	<td>
-																		<a href="./forms/document/" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">Test Scan 12</a>
-																		<span class="text-muted fw-semibold d-block">12/12/2024</span>
-																	</td>
-																	<td class="text-end text-muted fw-bold"></td>
-																	<td class="text-end">
-																		<span class="badge badge-light-warning">In Progress</span>
-																	</td>
-																	<td class="text-end">
-																		<a href="./forms/document/" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-																			<i class="ki-duotone ki-arrow-right fs-2">
-																				<span class="path1"></span>
-																				<span class="path2"></span>
-																			</i>
-																		</a>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<div class="symbol symbol-45px me-2">
-																			<span class="symbol-label">
-																				<img src="assets/media/svg/files/pdf.svg" class="h-50 align-self-center" alt="" />
-																			</span>
-																		</div>
-																	</td>
-																	<td>
-																		<a href="./forms/document/" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">Test Scan 12</a>
-																		<span class="text-muted fw-semibold d-block">12/12/2024</span>
-																	</td>
-																	<td class="text-end text-muted fw-bold"></td>
-																	<td class="text-end">
-																		<span class="badge badge-light-warning">In Progress</span>
-																	</td>
-																	<td class="text-end">
-																		<a href="./forms/document/" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-																			<i class="ki-duotone ki-arrow-right fs-2">
-																				<span class="path1"></span>
-																				<span class="path2"></span>
-																			</i>
-																		</a>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<div class="symbol symbol-45px me-2">
-																			<span class="symbol-label">
-																				<img src="assets/media/svg/files/pdf.svg" class="h-50 align-self-center" alt="" />
-																			</span>
-																		</div>
-																	</td>
-																	<td>
-																		<a href="./forms/document/" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">Test Scan 12</a>
-																		<span class="text-muted fw-semibold d-block">12/12/2024</span>
-																	</td>
-																	<td class="text-end text-muted fw-bold"></td>
-																	<td class="text-end">
-																		<span class="badge badge-light-warning">In Progress</span>
-																	</td>
-																	<td class="text-end">
-																		<a href="./forms/document/" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-																			<i class="ki-duotone ki-arrow-right fs-2">
-																				<span class="path1"></span>
-																				<span class="path2"></span>
-																			</i>
-																		</a>
-																	</td>
-																</tr>
+															<tbody id="forms_list">
+																
 																
 															</tbody>
 															<!--end::Table body-->

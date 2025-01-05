@@ -1,6 +1,6 @@
 
-// const BackURL = "https://fusionocr.com/api"
-const BackURL = "https://fusionocr.com/api"
+// const BackURL = "http://localhost:5000"
+const BackURL = "http://localhost:5000"
 
 async function getData(){
     const formID = localStorage.getItem('activeDoc')
@@ -31,10 +31,34 @@ async function getData(){
         document.getElementById('PatientMobile').innerHTML = details.mobile_number
         document.getElementById('PatientTestPanels').innerHTML = details.test_panels
 
-        document.getElementById("DocumentReview").innerHTML = `<embed src="${BackURL}/file/${formInfo.file_name}" type="application/pdf" width="100%" height="600px" />`
+        // document.getElementById("DocumentReview").innerHTML = `<embed src="${BackURL}/file/${formInfo.file_name}" type="application/pdf" width="100%" height="600px" />`
+    
+    fetch(`${BackURL}/file/${formInfo.file_name}`, {
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+    })
+        .then((response) => {
+        if (response.ok) {
+            return response.blob();
+        }
+        throw new Error("Failed to fetch the PDF");
+        })
+        .then((blob) => {
+        const objectUrl = URL.createObjectURL(blob);
+        // const embed = document.getElementById("DocumentReview");
+        // embed = 
+        // embed.src = objectUrl;
+        document.getElementById("DocumentReview").innerHTML = `<embed src="${objectUrl}" type="application/pdf" width="100%" height="600px" />`
+        })
+        .catch((error) => {
+            document.getElementById("DocumentReview").innerHTML = "Cannot load the PDF Preview";
+            console.error(error);
+        });
     }else if(response.status === 401){
         window.location.replace("/sign-in");
     }
 }
 
 getData()
+

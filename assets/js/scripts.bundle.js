@@ -8105,3 +8105,11 @@ function logout() {
     localStorage.clear();
     window.location.href = "./sign-in";
 }
+
+if(document.getElementById("navUserName")){
+    document.getElementById("navUserName").innerText =`${localStorage.getItem("first_name")} ${localStorage.getItem("last_name")}`;
+
+}
+if(document.getElementById("navUserEmail")){
+    document.getElementById("navUserEmail").innerText =`${localStorage.getItem("email")}`;
+}

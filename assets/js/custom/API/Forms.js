@@ -1,6 +1,6 @@
 
-// const BackURL = "https://fusionocr.com/api"
-const BackURL = "https://fusionocr.com/api"
+// const BackURL = "http://localhost:5000"
+const BackURL = "http://localhost:5000"
 async function getData(){
     const response = await fetch(`${BackURL}/forms_list?limit=100`, {
         method: 'GET',
@@ -18,7 +18,7 @@ async function getData(){
         for (let i = 0; i < formsList.length; i++) {
             const form = formsList[i];
             var statusStyle = ''
-            if (form.status === 'Checking'){
+            if (form.status === 'Detecting Forms'){
                 statusStyle = 'badge-badge-light-dark'
             }else if (form.status === 'Pending'){
                 statusStyle = 'badge-badge-light-dark'
@@ -127,8 +127,8 @@ fileInput.addEventListener('change', async () => {
     try {
         const formData = new FormData();
         formData.append('file', file);
-
-        const response = await fetch(`${BackURL}/upload`, {
+        console.log(formData)
+        const response = await fetch(`${BackURL}/upload?id=${localStorage.getItem("id")}`, {
             method: 'POST',
             body: formData,
             headers: {

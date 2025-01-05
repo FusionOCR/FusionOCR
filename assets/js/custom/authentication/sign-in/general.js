@@ -1,6 +1,6 @@
 "use strict";
-// const BackURL = "https://fusionocr.com/api"
-const BackURL = "https://fusionocr.com/api"
+// const BackURL = "http://localhost:5000"
+const BackURL = "http://localhost:5000"
 
 // Class definition
 var KTSigninGeneral = function () {
@@ -76,9 +76,12 @@ var KTSigninGeneral = function () {
 
                     if(response.ok){
                         const data = await response.json();
-                        console.log(data);
                         const token = data['token'];
                         localStorage.setItem('token', token);
+                        localStorage.setItem('id', data['id']);
+                        localStorage.setItem('first_name', data['first_name']);
+                        localStorage.setItem('last_name', data['last_name']);
+                        localStorage.setItem('email', data['email']);
                         // window.location.replace("/");
                          // Simulate ajax request
                         setTimeout(function () {
@@ -109,7 +112,7 @@ var KTSigninGeneral = function () {
                                     }
                                 }
                             });
-                        }, 2000);
+                        }, 1000);
                     }else{
                         Swal.fire({
                             text: "Sorry, the email or password is incorrect, please try again.",

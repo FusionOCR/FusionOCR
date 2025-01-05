@@ -37,7 +37,7 @@ fileInput.addEventListener('change', async () => {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await fetch('https://fusionocr.com/api/upload', {
+        const response = await fetch(`${BackURL}/upload?user_id=${localStorage.getItem("id")}`, {
             method: 'POST',
             body: formData,
             headers: {
