@@ -22,7 +22,7 @@ async function getData(){
                         <td class="d-flex align-items-center">
                             <!--begin:: Avatar -->
                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                <a href="./users-list/user">
+                                <a >
                                     <div class="symbol-label">
                                         <img src="assets/media/avatars/blank.png" alt="${user['first_name']} ${user['last_name']}" class="w-100" />
                                     </div>
@@ -31,7 +31,7 @@ async function getData(){
                             <!--end::Avatar-->
                             <!--begin::User details-->
                             <div class="d-flex flex-column">
-                                <a href="./users-list/user" class="text-gray-800 text-hover-primary mb-1">${user['first_name']} ${user['last_name']}</a>
+                                <a  class="text-gray-800 text-hover-primary mb-1">${user['first_name']} ${user['last_name']}</a>
                                 <span>${user['email']}</span>
                             </div>
                             <!--begin::User details-->

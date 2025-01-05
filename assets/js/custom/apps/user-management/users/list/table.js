@@ -48,7 +48,6 @@ var KTUsersList = function () {
         });
 
         // Init datatable --- more info on datatables: https://datatables.net/manual/
-        console.log(table)
         datatable = $(table).DataTable({
             "info": false,
             'order': [],

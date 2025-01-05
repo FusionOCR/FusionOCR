@@ -24,7 +24,7 @@ async function getUserData(){
                         </div>
                         <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                             <div class="flex-grow-1 me-2">
-                                <a href="./users-list/user/" class="text-gray-800 text-hover-primary fs-6 fw-bold">${user.first_name} ${user.last_name}</a>
+                                <a  class="text-gray-800 text-hover-primary fs-6 fw-bold">${user.first_name} ${user.last_name}</a>
                                 <span class="text-muted fw-semibold d-block fs-7">${user.email}</span>
                             </div>
                             <span class="badge badge-light fw-bold my-2">${user.uploaded_forms_num} Files</span>
