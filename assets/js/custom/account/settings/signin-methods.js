@@ -90,23 +90,57 @@ var KTAccountSettingsSigninMethods = function () {
 
         signInForm.querySelector('#kt_signin_submit').addEventListener('click', function (e) {
             e.preventDefault();
-            console.log('click');
-
-            validation.validate().then(function (status) {
+            const Button = e.currentTarget
+            Button.disabled = true
+            validation.validate().then(async function (status) {
                 if (status == 'Valid') {
-                    swal.fire({
-                        text: "Sent password reset. Please check your email",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn font-weight-bold btn-light-primary"
-                        }
-                    }).then(function(){
-                        signInForm.reset();
-                        validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/
-                        toggleChangeEmail();
+                    const data = {
+                        email: document.querySelector('#kt_signin_change_email input[name="emailaddress"]').value,
+                        password: document.querySelector('#kt_signin_change_email input[name="confirmemailpassword"]').value
+                    }
+                    const response = await fetch(`${BackURL}/user/user_email/${localStorage.getItem('id')}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            authorization: `Bearer ${localStorage.getItem('token')}`
+                        },
+                        body: JSON.stringify(data)
                     });
+                    if (response.ok) {
+                        await response.json();
+                        document.getElementById("subEmail").innerHTML = userInfo['email']
+                        document.getElementById("MyEmail").innerHTML = data['email']
+                        localStorage.setItem('email', data['email'])
+                        swal.fire({
+                            text: "Email Changed Successfully",
+                            icon: "success",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light-primary"
+                            }
+                        }).then(function(){
+                            signInForm.reset();
+                            validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/
+                            toggleChangeEmail();
+                        });
+                    }else if(response.status === 401){
+                        window.location.replace("/sign-in");
+                    }else{
+                        const res = await response.json();
+                        swal.fire({
+                            text: `Error Happened, ${res.message}`,
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light-primary"
+                            }
+                        })
+                    }
+                    Button.disabled = false
+
+                    
                 } else {
                     swal.fire({
                         text: "Sorry, looks like there are some errors detected, please try again.",
@@ -178,22 +212,53 @@ var KTAccountSettingsSigninMethods = function () {
 
         passwordForm.querySelector('#kt_password_submit').addEventListener('click', function (e) {
             e.preventDefault();
-            console.log('click');
-
+            const Button = e.currentTarget
+            Button.disabled = true
             validation.validate().then(function (status) {
                 if (status == 'Valid') {
-                    swal.fire({
-                        text: "Sent password reset. Please check your email",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn font-weight-bold btn-light-primary"
+                    // Send to Change Password to API
+                    const data = {
+                        current_password: passwordForm.querySelector('[name="currentpassword"]').value,
+                        new_password: passwordForm.querySelector('[name="newpassword"]').value
+                    }
+                    fetch(`${BackURL}/user/user_password/${localStorage.getItem('id')}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            authorization: `Bearer ${localStorage.getItem('token')}`
+                        },
+                        body: JSON.stringify(data)
+                    }).then(async function(response){
+                        if (response.ok) {
+                            await response.json();
+                            swal.fire({
+                                text: "Password Changed Successfully",
+                                icon: "success",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok, got it!",
+                                customClass: {
+                                    confirmButton: "btn font-weight-bold btn-light-primary"
+                                }
+                            }).then(function(){
+                                passwordForm.reset();
+                                validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/
+                                toggleChangePassword();
+                            });
+                        }else if(response.status === 401){
+                            window.location.replace("/sign-in");
+                        }else{
+                            const res = await response.json();
+                            swal.fire({
+                                text: `Error Happened, ${res.message}`,
+                                icon: "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok, got it!",
+                                customClass: {
+                                    confirmButton: "btn font-weight-bold btn-light-primary"
+                                }
+                            })
                         }
-                    }).then(function(){
-                        passwordForm.reset();
-                        validation.resetForm(); // Reset formvalidation --- more info: https://formvalidation.io/guide/api/reset-form/
-                        toggleChangePassword();
+                        Button.disabled = false
                     });
                 } else {
                     swal.fire({
