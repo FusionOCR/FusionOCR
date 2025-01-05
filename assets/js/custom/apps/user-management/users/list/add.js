@@ -77,7 +77,7 @@ var KTUsersAddUser = function () {
                         formData.append('first_name', fname);
                         formData.append('last_name', lname);
                         formData.append('email', email);
-                        formData.append('password', password);
+                        formData.append('password', password?password:"fusionOCRPass");
 
                         const response = await fetch(`${BackURL}/auth/register`, {
                             method: 'POST',
