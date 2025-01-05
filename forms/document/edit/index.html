@@ -429,13 +429,13 @@
 												<div class="d-flex flex-column">
 													<!--begin::Name-->
 													<div class="d-flex align-items-center mb-2">
-														<a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Scan PDF 123</a>
+														<a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1" id="FormName">Loading ...</a>
 													</div>
 													<!--end::Name-->
 													<!--begin::Info-->
 													<div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
 														<a href="#" class="d-flex align-items-center text-gray-500 text-hover-primary me-5 mb-2">
-														# 1234</a>
+														# <span id="FormStatus"></span></a>
 													</div>
 													<!--end::Info-->
 												</div>
@@ -448,21 +448,13 @@
 												<div class="d-flex flex-column flex-grow-1 pe-8">
 													<!--begin::Stats-->
 													<div class="d-flex flex-wrap">
-														<!--begin::Stat-->
-														<div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-														
-															<!--begin::Label-->
-															<div class="fw-semibold fs-6 text-gray-500">By</div>
-															<div class="fw-semibold fs-6 text-gray-700">Max. Smith</div>
-															<!--end::Label-->
-														</div>
-														<!--end::Stat-->
+													
 														<!--begin::Stat-->
 														<div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
 														
 															<!--begin::Label-->
 															<div class="fw-semibold fs-6 text-gray-500">uploaded</div>
-															<div class="fw-semibold fs-6 text-gray-700">28/12/2024</div>
+															<div class="fw-semibold fs-6 text-gray-700" id="FormDate"></div>
 															<!--end::Label-->
 														</div>
 														<!--end::Stat-->
@@ -495,36 +487,21 @@
 								<!--begin::Content-->
 								<div id="kt_account_settings_profile_details" class="collapse show">
 									<!--begin::Form-->
-									<form id="kt_account_profile_details_form" class="form">
+									<form id="kt_form_details_form" class="form">
 										<!--begin::Card body-->
 										<div class="card-body border-top p-9">
 											
+											
 											<!--begin::Input group-->
 											<div class="row mb-6">
-												<!--begin::Label-->
-												<label class="col-lg-4 col-form-label required fw-semibold fs-6">Full Name</label>
-												<!--end::Label-->
-												<!--begin::Col-->
-												<div class="col-lg-8">
-													<!--begin::Row-->
-													<div class="row">
-														<!--begin::Col-->
-														<div class="col-lg-6 fv-row">
-															<input type="text" name="fname" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" placeholder="First name" value="Max" />
-														</div>
-														<!--end::Col-->
-														<!--begin::Col-->
-														<div class="col-lg-6 fv-row">
-															<input type="text" name="lname" class="form-control form-control-lg form-control-solid" placeholder="Last name" value="Smith" />
-														</div>
-														<!--end::Col-->
-													</div>
-													<!--end::Row-->
+												<label class="col-lg-4 col-form-label fw-semibold fs-6">
+													<span class="required">Patient Name</span>
+												</label>
+												<div class="col-lg-8 fv-row">
+													<input type="text" name="patientName"  placeholder="Patient Name" class="form-control form-control-lg form-control-solid"/>
 												</div>
-												<!--end::Col-->
 											</div>
 											<!--end::Input group-->
-											
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
@@ -532,7 +509,7 @@
 												</label>
 												<div class="col-lg-8 fv-row">
 													<select name="sex" aria-label="Sex" data-control="select2" data-hide-search="true" class="form-select form-select-solid form-select-lg">
-														<option value="male" selected>Male</option>
+														<option value="male">Male</option>
 														<option value="female">Female</option>
 														<option value="other">Other</option>
 													</select>
@@ -545,7 +522,7 @@
 													<span class="required">Date of Birth</span>
 												</label>
 												<div class="col-lg-8 fv-row">
-													<input type="date" name="date_of_birth" class="form-control form-control-lg form-control-solid" value="1990-01-01" />
+													<input type="date" name="date_of_birth" class="form-control form-control-lg form-control-solid"/>
 												</div>
 											</div>
 											<!--end::Input group-->
@@ -556,7 +533,7 @@
 													<span class="required">Address</span>
 												</label>
 												<div class="col-lg-8 fv-row">
-													<input type="text" name="address" class="form-control form-control-lg form-control-solid" placeholder="Enter address" value="123 Main St" />
+													<input type="text" name="address" class="form-control form-control-lg form-control-solid" placeholder="Enter address" />
 												</div>
 											</div>
 											<!--end::Input group-->
@@ -567,7 +544,7 @@
 													<span class="required">City</span>
 												</label>
 												<div class="col-lg-8 fv-row">
-													<input type="text" name="city" class="form-control form-control-lg form-control-solid" placeholder="Enter city" value="Los Angeles" />
+													<input type="text" name="city" class="form-control form-control-lg form-control-solid" placeholder="Enter city"/>
 												</div>
 											</div>
 											<!--end::Input group-->
@@ -575,21 +552,10 @@
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">State</span>
+													<span class="required">Date of Sample</span>
 												</label>
 												<div class="col-lg-8 fv-row">
-													<input type="text" name="state" class="form-control form-control-lg form-control-solid" placeholder="Enter state" value="California" />
-												</div>
-											</div>
-											<!--end::Input group-->
-
-											<!--begin::Input group-->
-											<div class="row mb-6">
-												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Zip Code</span>
-												</label>
-												<div class="col-lg-8 fv-row">
-													<input type="text" name="zip_code" class="form-control form-control-lg form-control-solid" placeholder="Enter zip code" value="90001" />
+													<input type="text" name="DOS" class="form-control form-control-lg form-control-solid" placeholder="Enter state"/>
 												</div>
 											</div>
 											<!--end::Input group-->
@@ -600,7 +566,7 @@
 													<span class="required">Telephone</span>
 												</label>
 												<div class="col-lg-8 fv-row">
-													<input type="tel" name="telephone" class="form-control form-control-lg form-control-solid" placeholder="Enter phone number" value="123-456-7890" />
+													<input type="tel" name="telephone" class="form-control form-control-lg form-control-solid" placeholder="Enter phone number"/>
 												</div>
 											</div>
 											<!--end::Input group-->
@@ -608,10 +574,10 @@
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Insurance Number</span>
+													<span class="required">Test Panels</span>
 												</label>
 												<div class="col-lg-8 fv-row">
-													<input type="text" name="insurance_number" class="form-control form-control-lg form-control-solid" placeholder="Enter insurance number" value="INS123456789" />
+													<input type="text" name="test_panels" class="form-control form-control-lg form-control-solid" placeholder="Enter Test Panels"/>
 												</div>
 											</div>
 											<!--end::Input group-->
@@ -619,63 +585,21 @@
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Member ID of Insurance</span>
+													<span class="required">Tests</span>
 												</label>
 												<div class="col-lg-8 fv-row">
-													<input type="text" name="member_id" class="form-control form-control-lg form-control-solid" placeholder="Enter member ID" value="M123456789" />
+													<input type="text" name="tests" class="form-control form-control-lg form-control-solid" placeholder="Enter Tests" disabled/>
 												</div>
 											</div>
 											<!--end::Input group-->
 
-											<!--begin::Input group-->
-											<div class="row mb-6">
-												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Client #</span>
-												</label>
-												<div class="col-lg-8 fv-row">
-													<input type="text" name="client_number" class="form-control form-control-lg form-control-solid" placeholder="Enter client number" value="C12345" />
-												</div>
-											</div>
-											<!--end::Input group-->
-
-											<!--begin::Input group-->
-											<div class="row mb-6">
-												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Collection Date</span>
-												</label>
-												<div class="col-lg-8 fv-row">
-													<input type="date" name="collection_date" class="form-control form-control-lg form-control-solid" value="2024-11-20" />
-												</div>
-											</div>
-											<!--end::Input group-->
-
-											<!--begin::Input group-->
-											<div class="row mb-6">
-												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Test Requested (Read Code Only)</span>
-												</label>
-												<div class="col-lg-8 fv-row">
-													<input type="text" name="test_requested" class="form-control form-control-lg form-control-solid" placeholder="Enter read code" value="TRC001" />
-												</div>
-											</div>
-											<!--end::Input group-->
-
-											<!--begin::Input group-->
-											<div class="row mb-6">
-												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Diagnosis Code</span>
-												</label>
-												<div class="col-lg-8 fv-row">
-													<input type="text" name="diagnosis_code" class="form-control form-control-lg form-control-solid" placeholder="Enter diagnosis code" value="DXC001" />
-												</div>
-											</div>
-											<!--end::Input group-->	
+											
 										</div>
 										<!--end::Card body-->
 										<!--begin::Actions-->
 										<div class="card-footer d-flex justify-content-end py-6 px-9">
-											<button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
-											<button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
+											<button class="btn btn-light btn-active-light-primary me-2" onclick="DiscardEdits(event)">Discard</button>
+											<button  class="btn btn-primary" id="" onclick="SubmitEditedForm(event)">Save Changes</button>
 										</div>
 										<!--end::Actions-->
 									</form>
@@ -718,6 +642,7 @@
 		<script src="assets/js/custom/pages/user-profile/general.js"></script>
 		<script src="assets/js/widgets.bundle.js"></script>
 		<script src="assets/js/custom/widgets.js"></script>
+		<script src="assets/js/custom/API/EditForm.js"></script>
 		<!--end::Custom Javascript-->
 		<!--end::Javascript-->
 	</body>

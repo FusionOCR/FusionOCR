@@ -491,34 +491,16 @@
 									</div>
 									<!--end::Card title-->
 									<!--begin::Action-->
-									<a href="forms/document/edit/" style="pointer-events: none;opacity: 0.5;" class="btn btn-sm btn-primary align-self-center">Edit</a>
+									<a href="forms/document/edit/" class="btn btn-sm btn-primary align-self-center" onclick="StorePatientInfo()">Edit</a>
 									<!--end::Action-->
 								</div>
-								<!--begin::Card header-->
-								<!-- 
-								first name
-								last name
-								sex
-								date of birth
-								address
-								city
-								state
-								zip code
-								telephone
-								insurance number
-								member ID of Insurance 
-								client #
-								collection date
-								test requested "read code only"
-								diagnisis code
-
-								-->
+								
 								<!--begin::Card body-->
 								<div class="card-body p-9">
 									<div class="row mb-7">
 										<label class="col-lg-4 fw-semibold text-muted">Name</label>
 										<div class="col-lg-8">
-											<span class="fw-bold fs-6 text-gray-800" id="PatientName">-</span>
+											<span class="fw-bold fs-6 text-gray-800" id="PatientName"><span id="lname"></span> <span id="fname"></span> </span>
 										</div>
 									</div>
 									

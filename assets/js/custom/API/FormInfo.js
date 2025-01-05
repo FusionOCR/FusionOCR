@@ -59,6 +59,36 @@ async function getData(){
         window.location.replace("/sign-in");
     }
 }
+function StorePatientInfo(){
+    // Store Patient Info in Local Storage
+    const PatientName = document.getElementById('PatientName').innerHTML
+    const PatientGender = document.getElementById('PatientGender').innerHTML
+    const PatientDOB = document.getElementById('PatientDOB').innerHTML
+    const PatientAddress = document.getElementById('PatientAddress').innerHTML
+    const PatientCity = document.getElementById('PatientCity').innerHTML
+    const PatientDOS = document.getElementById('PatientDOS').innerHTML
+    const PatientMobile = document.getElementById('PatientMobile').innerHTML
+    const PatientTestPanels = document.getElementById('PatientTestPanels').innerHTML
+    const PatientTests = document.getElementById('PatientTests').innerHTML
 
+    // Form name, status Date
+    const FormName = document.getElementById('FormName').innerHTML
+    const FormStatus = document.getElementById('FormStatus').innerHTML
+    const FormDate = document.getElementById('FormDate').innerHTML
+
+    localStorage.setItem('FormName', FormName)
+    localStorage.setItem('FormStatus', FormStatus)
+    localStorage.setItem('FormDate', FormDate)
+
+    localStorage.setItem('PatientName', PatientName)
+    localStorage.setItem('PatientGender', PatientGender)
+    localStorage.setItem('PatientDOB', PatientDOB)
+    localStorage.setItem('PatientAddress', PatientAddress)
+    localStorage.setItem('PatientCity', PatientCity)
+    localStorage.setItem('PatientDOS', PatientDOS)
+    localStorage.setItem('PatientMobile', PatientMobile)
+    localStorage.setItem('PatientTestPanels', PatientTestPanels)
+    localStorage.setItem('PatientTests', PatientTests)
+}
 getData()
 
