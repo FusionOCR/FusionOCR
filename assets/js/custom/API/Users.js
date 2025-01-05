@@ -9,11 +9,10 @@ async function getData(){
     
     if (response.ok) {
         const userList = await response.json();
-
-        for (let i = 0; i < userList.length; i++) {
-            const user = userList[i];
+        userList.forEach(user => {
+        
             const userDiv = `
-                    <tr>
+                    <tr id="user-${user['id']}">
                         <td>
                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
                                     <input class="form-check-input" type="checkbox" value="1" />
@@ -46,7 +45,7 @@ async function getData(){
                     </tr>
             `
             document.querySelector("#users-list").innerHTML += userDiv;
-        }
+        })
 
     }else if(response.status === 401){
         window.location.replace("/sign-in");

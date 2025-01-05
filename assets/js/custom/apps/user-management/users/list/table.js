@@ -1,5 +1,5 @@
 "use strict";
-
+const BackURL = "http://localhost:5000"
 var KTUsersList = function () {
     // Define shared variables
     var table = document.getElementById('kt_table_users');
@@ -176,34 +176,93 @@ var KTUsersList = function () {
                     confirmButton: "btn fw-bold btn-danger",
                     cancelButton: "btn fw-bold btn-active-light-primary"
                 }
-            }).then(function (result) {
+            }).then(async function (result) {
                 if (result.value) {
-                    Swal.fire({
-                        text: "You have deleted all selected customers!.",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn fw-bold btn-primary",
-                        }
-                    }).then(function () {
-                        // Remove all selected customers
-                        checkboxes.forEach(c => {
-                            if (c.checked) {
-                                datatable.row($(c.closest('tbody tr'))).remove().draw();
-                            }
-                        });
+                        const promises = [];
 
-                        // Remove header checked box
-                        const headerCheckbox = table.querySelectorAll('[type="checkbox"]')[0];
-                        headerCheckbox.checked = false;
-                    }).then(function () {
-                        toggleToolbars(); // Detect checked checkboxes
-                        initToggleToolbar(); // Re-init toolbar to recalculate checkboxes
-                    });
+                        // Remove all selected customers
+                        checkboxes.forEach((c,i) => {
+                            if (c.checked) {
+                                const userID = c.closest('tbody tr')?.id.split("-")[1]
+                                // Send to Delete the User by DELETE /user with userID
+                                const deletePromise = fetch(`${BackURL}/user/user`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        authorization: `Bearer ${localStorage.getItem('token')}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        user_id: userID
+                                    })
+                                }).then(response => {
+                                    if (response.ok) {
+                                        return response.json();
+                                    } else {
+                                        Swal.fire({
+                                            text: "Something went wrong.",
+                                            icon: "error",
+                                            buttonsStyling: false,
+                                            confirmButtonText: "Ok, got it!",
+                                            customClass: {
+                                                confirmButton: "btn fw-bold btn-primary",
+                                            }
+                                        });
+                                    }
+                                }).catch(error => {
+                                    console.error('Error:', error);
+                                    Swal.fire({
+                                        text: "Something went wrong.",
+                                        icon: "error",
+                                        buttonsStyling: false,
+                                        confirmButtonText: "Ok, got it!",
+                                        customClass: {
+                                            confirmButton: "btn fw-bold btn-primary",
+                                        }
+                                    });
+                                });
+                                promises.push(deletePromise);
+
+                            }
+                        })
+                        Promise.all(promises)
+                            .then(() => {
+                                Swal.fire({
+                                    text: "You have deleted all selected Users!.",
+                                    icon: "success",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Ok, got it!",
+                                    customClass: {
+                                        confirmButton: "btn fw-bold btn-primary",
+                                    }
+                                }).then(()=>{
+                                    if (result.isConfirmed) {
+                                        // Remove header checked box
+                                        const headerCheckbox = table.querySelectorAll('[type="checkbox"]')[0];
+                                        headerCheckbox.checked = false;
+
+                                        window.location.reload();
+
+                                        toggleToolbars(); // Detect checked checkboxes
+                                        initToggleToolbar(); // Re-init toolbar to recalculate checkboxes
+                                    }
+                                });
+
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    text: "Something went wrong.",
+                                    icon: "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Ok, got it!",
+                                    customClass: {
+                                        confirmButton: "btn fw-bold btn-primary",
+                                    }
+                                });
+                            });
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
-                        text: "Selected customers was not deleted.",
+                        text: "Selected Users was not deleted.",
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",
