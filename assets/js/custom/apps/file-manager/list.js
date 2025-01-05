@@ -169,9 +169,7 @@ var KTFileManagerList = function () {
         // Toggle selected action toolbar
         // Select all checkboxes
         var checkboxes = table.querySelectorAll('[type="checkbox"]');
-        if (table.getAttribute('data-kt-filemanager-table') === 'folders') {
-            checkboxes = document.querySelectorAll('#kt_file_manager_list_wrapper [type="checkbox"]');
-        }
+        
 
         // Select elements
         const deleteSelected = document.querySelector('[data-kt-filemanager-table-select="delete_selected"]');

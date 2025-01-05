@@ -92,3 +92,63 @@ function StorePatientInfo(){
 }
 getData()
 
+
+
+function DeleteForm(){
+    // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
+    Swal.fire({
+        text: "Are you sure you want to delete selected Document?",
+        icon: "warning",
+        showCancelButton: true,
+        buttonsStyling: false,
+        confirmButtonText: "Yes, delete!",
+        cancelButtonText: "No, cancel",
+        customClass: {
+            confirmButton: "btn fw-bold btn-danger",
+            cancelButton: "btn fw-bold btn-active-light-primary"
+        }
+    }).then(function (result) {
+        if (result.value) {
+            // Send to API to Delete the Docuemnt
+            const formID = localStorage.getItem('activeDoc')
+            fetch(`${BackURL}/form?form_id=${formID}`, {
+                method: 'DELETE',
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    form_id: formID
+                })
+            }).then((response) => {
+                if (response.ok) {
+
+                    Swal.fire({
+                        text: "You have deleted The Document.",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn fw-bold btn-primary",
+                        }
+                    }).then(function () {
+                        window.location.replace("/forms");
+                    });
+                } else if(response.status === 401){
+                    window.location.replace("/sign-in");
+                }
+            }
+            );
+        } else if (result.dismiss === 'cancel') {
+            Swal.fire({
+                text: "Selected Document was not deleted.",
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                }
+            });
+        }
+    });
+}

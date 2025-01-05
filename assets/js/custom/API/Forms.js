@@ -41,9 +41,9 @@ async function getData(){
             const formDiv = `
                     <tr>
                         <td>
-                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <!-- <div class="form-check form-check-sm form-check-custom form-check-solid">
                                 <input class="form-check-input" type="checkbox" value="1" />
-                            </div>
+                            </div> -->
                         </td>
                         <td>
                             <div class="d-flex align-items-center">

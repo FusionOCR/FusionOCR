@@ -491,8 +491,18 @@
 									</div>
 									<!--end::Card title-->
 									<!--begin::Action-->
-									<a href="forms/document/edit/" class="btn btn-sm btn-primary align-self-center" onclick="StorePatientInfo()">Edit</a>
+									<!-- <a href="forms/document/edit/" class="btn btn-sm btn-primary align-self-center" onclick="StorePatientInfo()">Edit</a> -->
 									<!--end::Action-->
+									<!--begin::Menu item-->
+									<!-- <button type="button" class="btn btn-danger" data-kt-filemanager-table-select="delete_selected">Delete Selected</button> -->
+									<!--end::Menu item-->
+
+									<!--begin::Group actions-->
+									<div class="d-flex justify-content-space-between align-items-center " data-kt-filemanager-table-toolbar="selected">
+										<a href="forms/document/edit/" class="btn btn-sm btn-primary align-self-center me-2 py-3 px-5 rounded" onclick="StorePatientInfo()">Edit</a>
+										<button type="button" class="btn btn-danger me-2 py-3 px-5 rounded" data-kt-filemanager-table-select="delete_selected" onclick="DeleteForm()">Delete</button>
+									</div>
+									<!--end::Group actions-->
 								</div>
 								
 								<!--begin::Card body-->
