@@ -17,11 +17,11 @@ async function getData(){
 
     // Check for Search 
     const searchQuery = document.getElementById("FormsSearch").value
-    var endpoint = `forms_list?limit=10&offset=${page?page-1:0}`
+    var endpoint = `my_forms_list?user_id=${localStorage.getItem('id')}&limit=10&offset=${page?page-1:0}`
     document.querySelector("#paginationNav").style.display = 'flex'
 
     if (searchQuery){
-        var endpoint = `forms_search_list?search_query=${searchQuery}&offset=${page?page-1:0}`
+        var endpoint = `my_forms_search_list?user_id=${localStorage.getItem('id')}&search_query=${searchQuery}&offset=${page?page-1:0}`
         document.querySelector("#paginationNav").style.display = 'none'
     }
     const response = await fetch(`${BackURL}/${endpoint}`, {
@@ -100,7 +100,7 @@ async function getData(){
         for (let i = 1; i <= totalPages; i++) {
             pageNav += `
                 <li class="dt-paging-button page-item ${page == i || (!page && i==1) ? 'active' : ''}">
-                    <a class="page-link"  href="/forms/?page=${i}"  aria-controls="kt_file_manager_list">${i}</a>
+                    <a class="page-link"  href="/forms/myforms/?page=${i}"  aria-controls="kt_file_manager_list">${i}</a>
                 </li>
             `
         }
