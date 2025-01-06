@@ -84,7 +84,7 @@ function SubmitEditedForm(e){
         localStorage.removeItem('FormName')
         localStorage.removeItem('FormStatus')
         localStorage.removeItem('FormDate')
-        window.location.replace("/forms/document/");
+        window.location.replace(`/forms/document/?id=${formID}`);
     })
     .catch((error) => {
         console.error(error);
@@ -94,6 +94,15 @@ function SubmitEditedForm(e){
 }
 function DiscardEdits(e){
     e.preventDefault()
+    const token = localStorage.getItem('token')    
+    // Get the current URL
+    const currentUrl = window.location.href;
+
+    // Parse the URL to extract query parameters
+    const urlParams = new URLSearchParams(new URL(currentUrl).search);
+
+    // Get the value of the "id" parameter
+    const formID = urlParams.get('id');
     e.currentTarget.disabled = true
     localStorage.removeItem('PatientName')
     localStorage.removeItem('PatientGender')
@@ -107,7 +116,7 @@ function DiscardEdits(e){
     localStorage.removeItem('FormName')
     localStorage.removeItem('FormStatus')
     localStorage.removeItem('FormDate')
-    window.history.back();
+    window.location.href = `/forms/document/?id=${formID}`;
 }
 
 // send to rename Form with the Value of #FormNameInput 
