@@ -429,12 +429,14 @@
 												<div class="d-flex flex-column">
 													<!--begin::Name-->
 													<div class="d-flex align-items-center mb-2">
-														<a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1" id="FormName">Loading ...</a>
+														<!-- <a class="text-gray-900 text-hover-primary fs-2 fw-bold me-1" id="FormName">Loading ...</a> -->
+														<input type="text" name="documentName" id="FormNameInput"  placeholder="Document Name" class="form-control form-control-lg form-control-solid"/>
+														<button  class="btn btn-primary" id="RenameFormButton" onclick="renameForm(event)">Rename</button>
 													</div>
 													<!--end::Name-->
 													<!--begin::Info-->
 													<div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
-														<a href="#" class="d-flex align-items-center text-gray-500 text-hover-primary me-5 mb-2">
+														<a class="d-flex align-items-center text-gray-500 text-hover-primary me-5 mb-2">
 														# <span id="FormStatus"></span></a>
 													</div>
 													<!--end::Info-->

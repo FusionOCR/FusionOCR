@@ -10,7 +10,7 @@ function loadFromLocalStorage(){
     document.querySelector('input[name="telephone"]').value = localStorage.getItem('PatientMobile')
     document.querySelector('input[name="test_panels"]').value = localStorage.getItem('PatientTestPanels')
     document.querySelector('input[name="tests"]').value = localStorage.getItem('PatientTests')
-    document.querySelector('#FormName').innerHTML = localStorage.getItem('FormName')
+    document.querySelector('#FormNameInput').value = localStorage.getItem('FormName')
     document.querySelector('#FormStatus').innerHTML = localStorage.getItem('FormStatus')
     document.querySelector('#FormDate').innerHTML = localStorage.getItem('FormDate')
     // if date is 08/29/97, then it should be 1997-08-29
@@ -108,6 +108,58 @@ function DiscardEdits(e){
     localStorage.removeItem('FormStatus')
     localStorage.removeItem('FormDate')
     window.history.back();
+}
+
+// send to rename Form with the Value of #FormNameInput 
+function renameForm(event){
+    event.preventDefault()
+    const token = localStorage.getItem('token')
+    const currentUrl = window.location.href;
+    const urlParams = new URLSearchParams(new URL(currentUrl).search);
+    const formID = urlParams.get('id');
+    const data = {
+        form_id: formID,
+        form_name: document.querySelector('#FormNameInput').value
+    }
+    fetch(`${BackURL}/rename-form`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+    })
+    .then(async (response) => {
+        if (response.ok) {
+            Swal.fire({
+                text: "Document Name Changed Successfully",
+                icon: "success",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                }
+            })
+        }else{
+            const errorMessage =await  response.json()
+            Swal.fire({
+                text: "Failed to update the document name, "+errorMessage.message,
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                }
+            })
+        }
+    })
+    .then((data) => {
+        localStorage.setItem('FormName', document.querySelector('#FormNameInput').value)
+        document.querySelector('#FormNameInput').value = localStorage.getItem('FormName')
+    })
+    .catch((error) => {
+        console.error(error);
+    });
 }
 
 loadFromLocalStorage()
