@@ -150,10 +150,10 @@ async function getStatusCount(){
                     type: 'doughnut',
                     data: {
                         datasets: [{
-                            data: Object.values(statusCount).slice(1,),
-                            backgroundColor: ['#00A3FF', '#50CD89', '#E4E6EF',"#f8285a"]
+                            data: [statusCount["Pending"], statusCount["Error"], statusCount["Extracted"], statusCount["Proccessing"]],
+                            backgroundColor: ['#E4E6EF',"#f8285a",'#50CD89','#00A3FF']
                         }],
-                        labels: Object.keys(statusCount).slice(1,)
+                        labels: ['Pending', 'Error', 'Extracted', 'Proccessing']
                     },
                     options: {
                         chart: {
