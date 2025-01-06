@@ -1,5 +1,5 @@
 "use strict";
-const BackURL = "http://localhost:5000"
+const BackURL = "https://fusionocr.com/api/"
 var KTUsersList = function () {
     // Define shared variables
     var table = document.getElementById('kt_table_users');
