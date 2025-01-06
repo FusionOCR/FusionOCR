@@ -12,7 +12,9 @@ async function getData(){
     const page = urlParams.get('page');
 
     // set to Be Loading
-    document.querySelector("#NotFoundForms").innerHTML ='Loading ...'
+    if (!document.querySelector("#FilesTable").innerHTML){
+        document.querySelector("#NotFoundForms").innerHTML ='Loading ...'
+    }
 
 
     // Check for Search 
