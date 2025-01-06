@@ -50,7 +50,8 @@ async function getformsData(){
     });
     
     if (response.ok) {
-        const formsList = await response.json();
+        const res = await response.json();
+        const formsList = res['forms'];
 
         for (let i = 0; i < formsList.length; i++) {
             const form = formsList[i];
@@ -70,9 +71,20 @@ async function getformsData(){
             const formattedDate = `${uploadDate.getDate()} ${uploadDate.toLocaleString('default', { month: 'short' })} ${uploadDate.getFullYear()}, ${uploadDate.getHours() % 12 || 12}:${uploadDate.getMinutes().toString().padStart(2, '0')} ${uploadDate.getHours() >= 12 ? 'PM' : 'AM'}`;
             const link = 
             (form.status !== "Proccessing" && form.status !== "Pending")?
-                                `<a href="./forms/document" id="${form.form_id}" onClick="localStorage.setItem('activeDoc',${form.form_id})" class="text-gray-800 text-hover-primary">${form.name}</a>`
+                                `<a href="./forms/document/?id=${form.form_id}" id="${form.form_id}" class="text-gray-800 text-hover-primary">${form.name}</a>`
                             :
-                                `<a  id="${form.form_id}" onClick="localStorage.setItem('activeDoc',${form.form_id})" class="text-gray-800 text-hover-primary">${form.name}</a>`
+                                `<a  id="${form.form_id}"class="text-gray-800 text-hover-primary">${form.name}</a>`
+            const subLink = 
+            (form.status !== "Proccessing" && form.status !== "Pending")?
+                                `<a href="./forms/document/?id=${form.form_id}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                                    <i class="ki-duotone ki-arrow-right fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </a>`
+                            :
+                                ``
+            
             const formDiv = `
                     <tr>
                         <td>
@@ -92,12 +104,7 @@ async function getformsData(){
 
                         </td>
                         <td class="text-end">
-                            <a href="./forms/document/" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-                                <i class="ki-duotone ki-arrow-right fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                            </a>
+                            ${subLink}
                         </td>
                     </tr>
             `

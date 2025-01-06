@@ -3,7 +3,14 @@
 const BackURL = "http://localhost:5000"
 
 async function getData(){
-    const formID = localStorage.getItem('activeDoc')
+    // Get the current URL
+    const currentUrl = window.location.href;
+
+    // Parse the URL to extract query parameters
+    const urlParams = new URLSearchParams(new URL(currentUrl).search);
+
+    // Get the value of the "id" parameter
+    const formID = urlParams.get('id');
     const response = await fetch(`${BackURL}/form?form_id=${formID}`, {
         method: 'GET',
         headers: {
@@ -32,7 +39,7 @@ async function getData(){
         document.getElementById('PatientTestPanels').innerHTML = details.test_panels
 
         // document.getElementById("DocumentReview").innerHTML = `<embed src="${BackURL}/file/${formInfo.file_name}" type="application/pdf" width="100%" height="600px" />`
-    
+        document.getElementById('EditButton').href = `/forms/document/edit/?id=${formID}`
     fetch(`${BackURL}/file/${formInfo.file_name}`, {
         headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -46,9 +53,6 @@ async function getData(){
         })
         .then((blob) => {
         const objectUrl = URL.createObjectURL(blob);
-        // const embed = document.getElementById("DocumentReview");
-        // embed = 
-        // embed.src = objectUrl;
         document.getElementById("DocumentReview").innerHTML = `<embed src="${objectUrl}" type="application/pdf" width="100%" height="600px" />`
         })
         .catch((error) => {
@@ -57,6 +61,17 @@ async function getData(){
         });
     }else if(response.status === 401){
         window.location.replace("/sign-in");
+    }else{
+        const error = await response.json();
+        Swal.fire({
+            text: "Error Getting Document Info, "+error.message,
+            icon: "error",
+            buttonsStyling: false,
+            confirmButtonText: "Ok, got it!",
+            customClass: {
+                confirmButton: "btn fw-bold btn-primary",
+            }
+        })
     }
 }
 function StorePatientInfo(){
@@ -110,7 +125,14 @@ function DeleteForm(){
     }).then(function (result) {
         if (result.value) {
             // Send to API to Delete the Docuemnt
-            const formID = localStorage.getItem('activeDoc')
+            // Get the current URL
+            const currentUrl = window.location.href;
+
+            // Parse the URL to extract query parameters
+            const urlParams = new URLSearchParams(new URL(currentUrl).search);
+
+            // Get the value of the "id" parameter
+            const formID = urlParams.get('id');
             fetch(`${BackURL}/form?form_id=${formID}`, {
                 method: 'DELETE',
                 headers: {

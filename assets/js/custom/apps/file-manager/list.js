@@ -8,17 +8,12 @@ var KTFileManagerList = function () {
 
     // Define template element variables
     var uploadTemplate;
-    var renameTemplate;
-    var actionTemplate;
-    var checkboxTemplate;
+
 
 
     // Private functions
     const initTemplates = () => {
         uploadTemplate = document.querySelector('[data-kt-filemanager-template="upload"]');
-        renameTemplate = document.querySelector('[data-kt-filemanager-template="rename"]');
-        actionTemplate = document.querySelector('[data-kt-filemanager-template="action"]');
-        checkboxTemplate = document.querySelector('[data-kt-filemanager-template="checkbox"]');
     }
 
     const initDatatable = () => {
@@ -27,32 +22,10 @@ var KTFileManagerList = function () {
 
         tableRows.forEach(row => {
             const dateRow = row.querySelectorAll('td');
-            const dateCol = dateRow[1]; // select date from 4th column in table
+            const dateCol = dateRow[1]; // select date from 1st column in table
             const realDate = moment(dateCol.innerHTML, "DD MMM YYYY, LT").format();
             dateCol.setAttribute('data-order', realDate);
         });
-
-        const foldersListOptions = {
-            "info": false,
-            'order': [],
-            "scrollY": "700px",
-            "scrollCollapse": true,
-            "paging": false,
-            'ordering': false,
-            'columns': [
-                { data: 'checkbox' },
-                { data: 'name' },
-                { data: 'date' },
-                { data: 'status' },
-            ],
-            'language': {
-                emptyTable: `<div class="d-flex flex-column flex-center">
-                    <img src="${hostUrl}media/illustrations/sketchy-1/5.png" class="mw-400px" />
-                    <div class="fs-1 fw-bolder text-dark">No items found.</div>
-                    <div class="fs-6">Start Uploading a new file!</div>
-                </div>`
-            }
-        };
 
         const filesListOptions = {
             "info": false,
@@ -78,13 +51,10 @@ var KTFileManagerList = function () {
             },
             conditionalPaging: true
         };
-
-        // Define datatable options to load
-        var loadOptions= filesListOptions;;
         
         
         // Init datatable --- more info on datatables: https://datatables.net/manual/
-        datatable = $(table).DataTable(loadOptions);
+        datatable = $(table).DataTable(filesListOptions);
 
         // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
         datatable.on('draw', function () {
@@ -92,9 +62,9 @@ var KTFileManagerList = function () {
             handleDeleteRows();
             toggleToolbars();
             KTMenu.createInstances();
-            initCopyLink();
-            countTotalItems();
-            handleRename();
+            // initCopyLink();
+            // countTotalItems();
+            // handleRename();
         });
     }
 
@@ -448,183 +418,11 @@ var KTFileManagerList = function () {
         });
     }
 
-    // Init dropzone
-    const initDropzone = () => {
-        // set the dropzone container id
-        const id = "#kt_modal_upload_dropzone";
-        const dropzone = document.querySelector(id);
+    const reinit = ()=>{
+        console.log(datatable)
+        // datatable.search("").draw()
 
-        // set the preview element template
-        var previewNode = dropzone.querySelector(".dropzone-item");
-        previewNode.id = "";
-        var previewTemplate = previewNode.parentNode.innerHTML;
-        previewNode.parentNode.removeChild(previewNode);
-
-        var myDropzone = new Dropzone(id, { // Make the whole body a dropzone
-            url: "./", // Set the url for your upload script location
-            parallelUploads: 10,
-            previewTemplate: previewTemplate,
-            maxFilesize: 1, // Max filesize in MB
-            autoProcessQueue: false, // Stop auto upload
-            autoQueue: false, // Make sure the files aren't queued until manually added
-            previewsContainer: id + " .dropzone-items", // Define the container to display the previews
-            clickable: id + " .dropzone-select", // Define the element that should be used as click trigger to select files.
-            acceptedFiles:"application/pdf"
-        });
-
-        myDropzone.on("addedfile", function (file) {
-            // Hook each start button
-            file.previewElement.querySelector(id + " .dropzone-start").onclick = function () {
-                // myDropzone.enqueueFile(file); -- default dropzone function
-
-                // Process simulation for demo only
-                const progressBar = file.previewElement.querySelector('.progress-bar');
-                progressBar.style.opacity = "1";
-                var width = 1;
-                var timer = setInterval(function () {
-                    if (width >= 100) {
-                        myDropzone.emit("success", file);
-                        myDropzone.emit("complete", file);
-                        clearInterval(timer);
-                    } else {
-                        width++;
-                        progressBar.style.width = width + '%';
-                    }
-                }, 20);
-            };
-
-            const dropzoneItems = dropzone.querySelectorAll('.dropzone-item');
-            dropzoneItems.forEach(dropzoneItem => {
-                dropzoneItem.style.display = '';
-            });
-            dropzone.querySelector('.dropzone-upload').style.display = "inline-block";
-            dropzone.querySelector('.dropzone-remove-all').style.display = "inline-block";
-        });
-
-        // Hide the total progress bar when nothing's uploading anymore
-        myDropzone.on("complete", function (file) {
-            const progressBars = dropzone.querySelectorAll('.dz-complete');
-            setTimeout(function () {
-                progressBars.forEach(progressBar => {
-                    progressBar.querySelector('.progress-bar').style.opacity = "0";
-                    progressBar.querySelector('.progress').style.opacity = "0";
-                    progressBar.querySelector('.dropzone-start').style.opacity = "0";
-                });
-            }, 300);
-        });
-
-        // Setup the buttons for all transfers
-        dropzone.querySelector(".dropzone-upload").addEventListener('click', function () {
-            // myDropzone.processQueue(); --- default dropzone process
-
-            // Process simulation for demo only
-            myDropzone.files.forEach(file => {
-                const progressBar = file.previewElement.querySelector('.progress-bar');
-                progressBar.style.opacity = "1";
-                var width = 1;
-                var timer = setInterval(function () {
-                    if (width >= 100) {
-                        myDropzone.emit("success", file);
-                        myDropzone.emit("complete", file);
-                        clearInterval(timer);
-                    } else {
-                        width++;
-                        progressBar.style.width = width + '%';
-                    }
-                }, 20);
-            });
-        });
-
-        // Setup the button for remove all files
-        dropzone.querySelector(".dropzone-remove-all").addEventListener('click', function () {
-            Swal.fire({
-                text: "Are you sure you would like to remove all files?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, remove it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    dropzone.querySelector('.dropzone-upload').style.display = "none";
-                    dropzone.querySelector('.dropzone-remove-all').style.display = "none";
-                    myDropzone.removeAllFiles(true);
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your files was not removed!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
-                        }
-                    });
-                }
-            });
-        });
-
-        // On all files completed upload
-        myDropzone.on("queuecomplete", function (progress) {
-            const uploadIcons = dropzone.querySelectorAll('.dropzone-upload');
-            uploadIcons.forEach(uploadIcon => {
-                uploadIcon.style.display = "none";
-            });
-        });
-
-        // On all files removed
-        myDropzone.on("removedfile", function (file) {
-            if (myDropzone.files.length < 1) {
-                dropzone.querySelector('.dropzone-upload').style.display = "none";
-                dropzone.querySelector('.dropzone-remove-all').style.display = "none";
-            }
-        });
     }
-
-    // Init copy link
-    const initCopyLink = () => {
-        // Select all copy link elements
-        const elements = table.querySelectorAll('[data-kt-filemanger-table="copy_link"]');
-
-        elements.forEach(el => {
-            // Define elements
-            const button = el.querySelector('button');
-            const generator = el.querySelector('[data-kt-filemanger-table="copy_link_generator"]');
-            const result = el.querySelector('[data-kt-filemanger-table="copy_link_result"]');
-            const input = el.querySelector('input');
-
-            // Click action
-            button.addEventListener('click', e => {
-                e.preventDefault();
-
-                // Reset toggle
-                generator.classList.remove('d-none');
-                result.classList.add('d-none');
-
-                var linkTimeout;
-                clearTimeout(linkTimeout);
-                linkTimeout = setTimeout(() => {
-                    generator.classList.add('d-none');
-                    result.classList.remove('d-none');
-                    input.select();
-                }, 2000);
-            });
-        });
-    }
-
-   
-
-    // Count total number of items
-    const countTotalItems = () => {
-        const counter = document.getElementById('kt_file_manager_items_counter');
-
-        // Count total number of elements in datatable --- more info: https://datatables.net/reference/api/count()
-        counter.innerText = datatable.rows().count() + ' items';
-    }
-
     // Public methods
     return {
         init: function () {
@@ -639,24 +437,19 @@ var KTFileManagerList = function () {
             initToggleToolbar();
             handleSearchDatatable();
             handleDeleteRows();
-            // initDropzone();
-            // initCopyLink();
-            // handleRename();
-            // countTotalItems();
             KTMenu.createInstances();
-            
+                console.log(datatable)
         },
-        reload: function(){
-            initTemplates();
-            initDatatable();
-            initToggleToolbar();
-            handleSearchDatatable();
-            handleDeleteRows();
-            // initDropzone();
-        },
-        distroy: function(){
-            KTMenu.distroy;
+        reload: function (){
+            // reinit()
+            if (datatable){
+                    datatable.search("").draw()
+
+            }
+            // console.log(datatable)
+
         }
+        
 
     }
 }();

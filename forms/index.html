@@ -446,7 +446,7 @@
 												<span class="path1"></span>
 												<span class="path2"></span>
 											</i>
-											<input type="text" data-kt-filemanager-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Forms" />
+											<input type="text"  class="form-control form-control-solid w-250px ps-15" placeholder="Search Forms" id="FormsSearch" />
 										</div>
 										<!--end::Search-->
 										
@@ -488,7 +488,7 @@
 									<div class="d-flex flex-end">
 										<!--begin::Folder Stats-->
 										<div class="badge badge-lg badge-primary">
-											<span id="kt_file_manager_items_counter">0 items</span>
+											<span id="kt_file_manager_items_counter">total 0 Forms</span>
 										</div>
 										<!--end::Folder Stats-->
 									</div>
@@ -511,7 +511,22 @@
 											
 										</tbody>
 									</table>
+									<div>
+										<p style="text-align: center;"  id="NotFoundForms">Loading ...</p>
+									</div>
 									<!--end::Table-->
+									<div id="" class="row">
+										<div id="" class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start dt-toolbar"></div>
+										<div id="" class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+											<div class="dt-paging paging_simple_numbers">
+												<nav aria-label="pagination">
+													<ul class="pagination" id="paginationNav">
+														
+													</ul>
+												</nav>
+											</div>
+										</div>
+									</div>
 								</div>
 								<!--end::Card body-->
 							</div>

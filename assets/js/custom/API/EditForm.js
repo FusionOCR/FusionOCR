@@ -34,8 +34,16 @@ function SubmitEditedForm(e){
     e.preventDefault()
     e.currentTarget.disabled = true
     const token = localStorage.getItem('token')    
+    // Get the current URL
+    const currentUrl = window.location.href;
+
+    // Parse the URL to extract query parameters
+    const urlParams = new URLSearchParams(new URL(currentUrl).search);
+
+    // Get the value of the "id" parameter
+    const formID = urlParams.get('id');
     const data = {
-        form_id: localStorage.getItem('activeDoc'),
+        form_id: formID,
         patient_name: document.querySelector('input[name="patientName"]').value,
         gender: document.querySelector('select[name]').value,
         date_of_birth: document.querySelector('input[name="date_of_birth"]').value,
@@ -99,7 +107,7 @@ function DiscardEdits(e){
     localStorage.removeItem('FormName')
     localStorage.removeItem('FormStatus')
     localStorage.removeItem('FormDate')
-    window.location.replace("/forms/document/");
+    window.history.back();
 }
 
 loadFromLocalStorage()
