@@ -185,7 +185,7 @@ document.getElementById("FormsSearch")?.addEventListener("keyup", async function
     getData()
 })
 getData()
-setInterval(getData, 20000);
+setInterval(getData, 5000);
 
 
 
