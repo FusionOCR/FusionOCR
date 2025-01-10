@@ -1,6 +1,6 @@
 
-const BackURL = "http://localhost:5000"
-// const BackURL = "https://fusionocr.com/api/"
+// const BackURL = "http://localhost:5000"
+const BackURL = "https://fusionocr.com/api"
 
 async function getData(){
     // Get the current URL

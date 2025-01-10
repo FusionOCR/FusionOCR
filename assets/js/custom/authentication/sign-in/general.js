@@ -1,6 +1,6 @@
 "use strict";
-// const BackURL = "https://fusionocr.com/api/"
-const BackURL = "https://fusionocr.com/api/"
+// const BackURL = "https://fusionocr.com/api"
+const BackURL = "https://fusionocr.com/api"
 
 // Class definition
 var KTSigninGeneral = function () {

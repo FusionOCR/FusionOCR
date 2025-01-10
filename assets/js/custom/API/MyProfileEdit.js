@@ -1,5 +1,5 @@
 // Read First and Last name  from #kt_account_profile_details_form input [lname] and [fname] and send to API
-const BackURL = "https://fusionocr.com/api/"
+const BackURL = "https://fusionocr.com/api"
 
 async function getMyData(){
     const response = await fetch(`${BackURL}/user/user/${localStorage.getItem('id')}`, {

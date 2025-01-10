@@ -1,5 +1,5 @@
-// const BackURL = "https://fusionocr.com/api/"
-const BackURL = "https://fusionocr.com/api/"
+// const BackURL = "https://fusionocr.com/api"
+const BackURL = "https://fusionocr.com/api"
 
 async function getUserData(){
     const response = await fetch(`${BackURL}/user/user_list?limit=10`, {
