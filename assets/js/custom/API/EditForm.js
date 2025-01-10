@@ -1,4 +1,6 @@
-const BackURL = "https://fusionocr.com/api/"
+// const BackURL = "https://fusionocr.com/api/"
+const BackURL = "http://localhost:5000"
+
 function loadFromLocalStorage(){
     // Input [Names]: lname, fname, sex:malle-female-other, date_of_birth, address, city, DOS, telephone, test_panels, tests
     document.querySelector('input[name="patientName"]').value = localStorage.getItem('PatientName')
@@ -9,7 +11,12 @@ function loadFromLocalStorage(){
     document.querySelector('input[name="DOS"]').value = localStorage.getItem('PatientDOS')
     document.querySelector('input[name="telephone"]').value = localStorage.getItem('PatientMobile')
     document.querySelector('input[name="test_panels"]').value = localStorage.getItem('PatientTestPanels')
-    document.querySelector('input[name="tests"]').value = localStorage.getItem('PatientTests')
+    document.querySelector('input[name="test_requested"]').value = localStorage.getItem('PatientTestRequested')
+    document.querySelector('input[name="canser_markers"]').value = localStorage.getItem('PatientCanser_Markers')
+    document.querySelector('input[name="microbiology"]').value = localStorage.getItem('PatientMicroBiology')
+    document.querySelector('input[name="covid_19_tests"]').value = localStorage.getItem('PatientCovid_19_Tests')
+    document.querySelector('input[name="gynecology"]').value = localStorage.getItem('PatientGynecology')
+
     document.querySelector('#FormNameInput').value = localStorage.getItem('FormName')
     document.querySelector('#FormStatus').innerHTML = localStorage.getItem('FormStatus')
     document.querySelector('#FormDate').innerHTML = localStorage.getItem('FormDate')
@@ -52,7 +59,11 @@ function SubmitEditedForm(e){
         dos: document.querySelector('input[name="DOS"]').value,
         mobile_number: document.querySelector('input[name="telephone"]').value,
         test_panels: document.querySelector('input[name="test_panels"]').value,
-        test_requested: document.querySelector('input[name="tests"]').value,
+        test_requested: document.querySelector('input[name="test_requested"]').value,
+        canser_markers: document.querySelector('input[name="canser_markers"]').value,
+        microbiology: document.querySelector('input[name="microbiology"]').value,
+        covid_19_tests: document.querySelector('input[name="covid_19_tests"]').value,
+        gynecology: document.querySelector('input[name="gynecology"]').value
     }
     console.log(data)
     const f = new FormData()
@@ -80,7 +91,13 @@ function SubmitEditedForm(e){
         localStorage.removeItem('PatientDOS')
         localStorage.removeItem('PatientMobile')
         localStorage.removeItem('PatientTestPanels')
-        localStorage.removeItem('PatientTests')
+        localStorage.removeItem('PatientTestRequested')
+            // for inputs canser_markers, microbiology, covid19_tests, gynecology
+
+        localStorage.removeItem('PatientCanser_Markers')
+        localStorage.removeItem('PatientMicroBiology')
+        localStorage.removeItem('PatientCovid_19_Tests')
+        localStorage.removeItem('PatientGynecology')
         localStorage.removeItem('FormName')
         localStorage.removeItem('FormStatus')
         localStorage.removeItem('FormDate')
@@ -112,7 +129,7 @@ function DiscardEdits(e){
     localStorage.removeItem('PatientDOS')
     localStorage.removeItem('PatientMobile')
     localStorage.removeItem('PatientTestPanels')
-    localStorage.removeItem('PatientTests')
+    localStorage.removeItem('PatientTestRequested')
     localStorage.removeItem('FormName')
     localStorage.removeItem('FormStatus')
     localStorage.removeItem('FormDate')

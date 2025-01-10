@@ -497,7 +497,7 @@
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Patient Name</span>
+													<span >Patient Name</span>
 												</label>
 												<div class="col-lg-8 fv-row">
 													<input type="text" name="patientName"  placeholder="Patient Name" class="form-control form-control-lg form-control-solid"/>
@@ -507,7 +507,7 @@
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Sex</span>
+													<span >Sex</span>
 												</label>
 												<div class="col-lg-8 fv-row">
 													<select name="sex" aria-label="Sex" data-control="select2" data-hide-search="true" class="form-select form-select-solid form-select-lg">
@@ -521,7 +521,7 @@
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Date of Birth</span>
+													<span >Date of Birth</span>
 												</label>
 												<div class="col-lg-8 fv-row">
 													<input type="date" name="date_of_birth" class="form-control form-control-lg form-control-solid"/>
@@ -532,7 +532,7 @@
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Address</span>
+													<span >Address</span>
 												</label>
 												<div class="col-lg-8 fv-row">
 													<input type="text" name="address" class="form-control form-control-lg form-control-solid" placeholder="Enter address" />
@@ -543,7 +543,7 @@
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">City</span>
+													<span >City</span>
 												</label>
 												<div class="col-lg-8 fv-row">
 													<input type="text" name="city" class="form-control form-control-lg form-control-solid" placeholder="Enter city"/>
@@ -554,7 +554,7 @@
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Date of Sample</span>
+													<span >Date of Sample</span>
 												</label>
 												<div class="col-lg-8 fv-row">
 													<input type="text" name="DOS" class="form-control form-control-lg form-control-solid" placeholder="Enter state"/>
@@ -565,7 +565,7 @@
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Telephone</span>
+													<span >Telephone</span>
 												</label>
 												<div class="col-lg-8 fv-row">
 													<input type="tel" name="telephone" class="form-control form-control-lg form-control-solid" placeholder="Enter phone number"/>
@@ -576,7 +576,7 @@
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Test Panels</span>
+													<span >Test Panels</span>
 												</label>
 												<div class="col-lg-8 fv-row">
 													<input type="text" name="test_panels" class="form-control form-control-lg form-control-solid" placeholder="Enter Test Panels"/>
@@ -587,15 +587,56 @@
 											<!--begin::Input group-->
 											<div class="row mb-6">
 												<label class="col-lg-4 col-form-label fw-semibold fs-6">
-													<span class="required">Tests</span>
+													<span >Test Requested</span>
 												</label>
 												<div class="col-lg-8 fv-row">
-													<input type="text" name="tests" class="form-control form-control-lg form-control-solid" placeholder="Enter Tests" disabled/>
+													<input type="text" name="test_requested" class="form-control form-control-lg form-control-solid" placeholder="Enter Tests" disabled/>
+												</div>
+											</div>
+											<!--end::Input group-->
+											<!--begin::Input group-->
+											<div class="row mb-6" id="canser_markers">
+												<label class="col-lg-4 col-form-label fw-semibold fs-6">
+													<span >Canser Markers</span>
+												</label>
+												<div class="col-lg-8 fv-row">
+													<input type="text" name="canser_markers" class="form-control form-control-lg form-control-solid" placeholder="Enter Canser Markers"/>
 												</div>
 											</div>
 											<!--end::Input group-->
 
+											<!--begin::Input group-->
+											<div class="row mb-6" id="MicroBiology">
+												<label class="col-lg-4 col-form-label fw-semibold fs-6">
+													<span >MicroBiology</span>
+												</label>
+												<div class="col-lg-8 fv-row">
+													<input type="text" name="microbiology" class="form-control form-control-lg form-control-solid" placeholder="Enter MicroBiology"/>
+												</div>
+											</div>
+											<!--end::Input group-->
 											
+											<!--begin::Input group-->
+											<div class="row mb-6" id="Covid19Tests">
+												<label class="col-lg-4 col-form-label fw-semibold fs-6">
+													<span >Covid19 Tests</span>
+												</label>
+												<div class="col-lg-8 fv-row">
+													<input type="text" name="covid_19_tests" class="form-control form-control-lg form-control-solid" placeholder="Enter Covid19 Tests"/>
+												</div>
+											</div>
+											<!--end::Input group-->
+
+											<!--begin::Input group-->
+											<div class="row mb-6" id="Gynecology">
+												<label class="col-lg-4 col-form-label fw-semibold fs-6">
+													<span >Gynecology</span>
+												</label>
+												<div class="col-lg-8 fv-row">
+													<input type="text" name="gynecology" class="form-control form-control-lg form-control-solid" placeholder="Enter Gynecology"/>
+												</div>
+											</div>
+											<!--end::Input group-->
 										</div>
 										<!--end::Card body-->
 										<!--begin::Actions-->

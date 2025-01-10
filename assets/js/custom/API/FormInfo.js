@@ -1,6 +1,6 @@
 
+const BackURL = "http://localhost:5000"
 // const BackURL = "https://fusionocr.com/api/"
-const BackURL = "https://fusionocr.com/api/"
 
 async function getData(){
     // Get the current URL
@@ -29,14 +29,19 @@ async function getData(){
         document.getElementById('FormDate').innerHTML = formattedDate
 
 
-        document.getElementById('PatientName').innerHTML = details.patient_name
-        document.getElementById('PatientGender').innerHTML = details.gender
-        document.getElementById('PatientDOB').innerHTML = details.date_of_birth
-        document.getElementById('PatientAddress').innerHTML = details.address
-        document.getElementById('PatientCity').innerHTML = details.city
-        document.getElementById('PatientDOS').innerHTML = details.dos
-        document.getElementById('PatientMobile').innerHTML = details.mobile_number
-        document.getElementById('PatientTestPanels').innerHTML = details.test_panels
+        document.getElementById('PatientName').innerHTML = details.patient_name?details.patient_name:'-'
+        document.getElementById('PatientGender').innerHTML = details.gender?details.gender:'-'  
+        document.getElementById('PatientDOB').innerHTML = details.date_of_birth?details.date_of_birth:'-'
+        document.getElementById('PatientAddress').innerHTML = details.address?details.address:'-'
+        document.getElementById('PatientCity').innerHTML = details.city?details.city:'-'
+        document.getElementById('PatientDOS').innerHTML = details.dos?details.dos:'-'
+        document.getElementById('PatientMobile').innerHTML = details.mobile_number?details.mobile_number:'-'
+        document.getElementById('PatientTestPanels').innerHTML = details.test_panels?details.test_panels:'No Checked Boxes Detected'
+        document.getElementById('PatientTestRequested').innerHTML = details.test_requested?details.test_requested:'No Checked Boxes Detected'
+        document.getElementById('PatientCanser_Markers').innerHTML = details.canser_markers?details.canser_markers:'No Checked Boxes Detected'
+        document.getElementById('PatientMicroBiology').innerHTML = details.microbiology?details.microbiology:'No Checked Boxes Detected'
+        document.getElementById('PatientCovid_19_Tests').innerHTML = details.covid_19_tests?details.covid_19_tests:'No Checked Boxes Detected'
+        document.getElementById('PatientGynecology').innerHTML = details.gynecology?details.gynecology:'No Checked Boxes Detected'
 
         // document.getElementById("DocumentReview").innerHTML = `<embed src="${BackURL}/file/${formInfo.file_name}" type="application/pdf" width="100%" height="600px" />`
         document.getElementById('EditButton').href = `/forms/document/edit/?id=${formID}`
@@ -84,7 +89,12 @@ function StorePatientInfo(){
     const PatientDOS = document.getElementById('PatientDOS').innerHTML
     const PatientMobile = document.getElementById('PatientMobile').innerHTML
     const PatientTestPanels = document.getElementById('PatientTestPanels').innerHTML
-    const PatientTests = document.getElementById('PatientTests').innerHTML
+    const PatientTests = document.getElementById('PatientTestRequested').innerHTML
+    const PatientCanser_Markers = document.getElementById('PatientCanser_Markers').innerHTML
+    const PatientMicroBiology = document.getElementById('PatientMicroBiology').innerHTML
+    const PatientCovid_19_Tests = document.getElementById('PatientCovid_19_Tests').innerHTML
+    const PatientGynecology = document.getElementById('PatientGynecology').innerHTML
+
 
     // Form name, status Date
     const FormName = document.getElementById('FormName').innerHTML
@@ -102,8 +112,13 @@ function StorePatientInfo(){
     localStorage.setItem('PatientCity', PatientCity)
     localStorage.setItem('PatientDOS', PatientDOS)
     localStorage.setItem('PatientMobile', PatientMobile)
-    localStorage.setItem('PatientTestPanels', PatientTestPanels)
-    localStorage.setItem('PatientTests', PatientTests)
+    localStorage.setItem('PatientTestPanels', PatientTestPanels !== "No Checked Boxes Detected"?PatientTestPanels:'')
+    localStorage.setItem('PatientTestRequested', PatientTests !== "No Checked Boxes Detected"?PatientTests:'')
+    localStorage.setItem('PatientCanser_Markers', PatientCanser_Markers !== "No Checked Boxes Detected"?PatientCanser_Markers:'')
+    localStorage.setItem('PatientMicroBiology', PatientMicroBiology !== "No Checked Boxes Detected"?PatientMicroBiology:'')
+    localStorage.setItem('PatientCovid_19_Tests', PatientCovid_19_Tests !== "No Checked Boxes Detected"?PatientCovid_19_Tests:'')
+    localStorage.setItem('PatientGynecology', PatientGynecology !== "No Checked Boxes Detected"?PatientGynecology:'')
+
 }
 getData()
 
