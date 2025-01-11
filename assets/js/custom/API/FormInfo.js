@@ -25,7 +25,7 @@ async function getData(){
         document.getElementById('FormStatus').innerHTML = formInfo.status
         // Date in From of from Tue, 31 Dec 2024 06:09:51 GMT to  28/12/2024
         const date = new Date(formInfo.uploaded_at)
-        const formattedDate = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+        const formattedDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
         document.getElementById('FormDate').innerHTML = formattedDate
 
 
