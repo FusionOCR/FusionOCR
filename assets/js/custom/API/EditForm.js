@@ -1,4 +1,4 @@
-// const BackURL = "http://localhost:5000"
+// const BackURL = "https://fusionocr.com/api"
 const BackURL = "https://fusionocr.com/api"
 
 function loadFromLocalStorage(){

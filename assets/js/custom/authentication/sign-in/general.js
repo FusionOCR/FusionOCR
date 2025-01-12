@@ -52,7 +52,7 @@ var KTSigninGeneral = function () {
         submitButton.addEventListener('click', function (e) {
             // Prevent button default action
             e.preventDefault();
-
+            console.log("Upload Clicked")
             // Validate form
             validator.validate().then(async function (status) {
                 if (status == 'Valid') {
