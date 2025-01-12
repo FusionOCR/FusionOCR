@@ -59,7 +59,7 @@ async function getData(){
 
 };
 
-function updateUI(formsList, totalCount,page) {
+function updateUI(formsList, totalCount) {
     if (formsList.length === 0 ){
         document.querySelector("#NotFoundForms").innerHTML ='No Forms Found'
         document.querySelector("#FilesTable").innerHTML =''
@@ -203,7 +203,7 @@ socket.on('connect', () => {
     console.log('Connected to Socket.IO server');
     
     // Request forms list
-    socket.emit('get_forms', { limit: 10, offset: 0 });
+    socket.emit('get_forms', { limit: limit, offset: page?page-1:0 });
 });
 // update_front
 socket.on('update_front', (data) => {
@@ -215,7 +215,7 @@ socket.on('update_front', (data) => {
 socket.on('forms_update', (data) => {
 
     console.log('Received forms update:', data);
-    updateUI(data.forms,data.total,page?page-1:0);
+    updateUI(data.forms,data.total);
     console.log(data.forms); // Your function to update the UI
 });
 
