@@ -129,7 +129,7 @@ function updateUI(formsList, totalCount) {
         `
     }
     document.querySelector("#paginationNav").innerHTML = pageNav;
-    document.querySelector("#kt_file_manager_items_counter").innerHTML = `total ${totalCount} Forms`
+    document.querySelector("#kt_file_manager_items_counter").innerHTML = `${formsList.length} Forms`
     document.querySelector("#HeaderFormsCount").innerHTML = totalCount
 }
 
