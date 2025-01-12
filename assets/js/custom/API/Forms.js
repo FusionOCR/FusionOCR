@@ -1,8 +1,8 @@
 
 // const BackURL = "https://fusionocr.com/api"
 const BackURL = "https://fusionocr.com/api"
-const BackSocketURL = "ws://fusionocr.com:5000"
-const socket = io(`${BackSocketURL}`,{withCredentials: false}); // Connect to the backend
+const BackSocketURL = "wss://fusionocr.com"
+const socket = io(`${BackSocketURL}`,{transports: ["websocket", "polling"],withCredentials: false}); // Connect to the backend
 
 // Get the current URL
 const currentUrl = window.location.href;

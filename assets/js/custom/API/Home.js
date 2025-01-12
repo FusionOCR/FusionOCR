@@ -1,7 +1,7 @@
 const BackURL = "https://fusionocr.com/api"
 // const BackURL = "https://fusionocr.com/api"
-const BackSocketURL = "ws://fusionocr.com:5000"
-const socket = io(`${BackSocketURL}`); // Connect to the backend
+const BackSocketURL = "wss://fusionocr.com"
+const socket = io(`${BackSocketURL}`,{transports: ["websocket", "polling"],withCredentials: false}); // Connect to the backend
 
 async function getUserData(){
     const response = await fetch(`${BackURL}/user/user_list?limit=10`, {
