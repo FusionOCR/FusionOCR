@@ -12,7 +12,7 @@ const urlParams = new URLSearchParams(new URL(currentUrl).search);
 
 // Get the value of the "page" parameter
 const page = urlParams.get('page');
-const limit = 10;
+const limit = 25;
 
 async function getData(){
 
