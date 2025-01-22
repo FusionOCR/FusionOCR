@@ -3,19 +3,26 @@ const BackURL = "https://fusionocr.com/api"
 
 function loadFromLocalStorage(){
     // Input [Names]: lname, fname, sex:malle-female-other, date_of_birth, address, city, DOS, telephone, test_panels, tests
-    document.querySelector('input[name="patientName"]').value = localStorage.getItem('PatientName')
+    document.querySelector('input[name="patientName"]').value = localStorage.getItem('PatientName') ==='-' ? '' : localStorage.getItem('PatientName')
+    document.querySelector('input[name="patientID"]').value = localStorage.getItem('PatientID') === '-' ? '' : localStorage.getItem('PatientID')
     document.querySelector('select[name=sex').value = localStorage.getItem('PatientGender').toLowerCase()
-    document.querySelector('input[name="date_of_birth"]').value = localStorage.getItem('PatientDOB')
-    document.querySelector('input[name="address"]').value = localStorage.getItem('PatientAddress')
-    document.querySelector('input[name="city"]').value = localStorage.getItem('PatientCity')
-    document.querySelector('input[name="DOS"]').value = localStorage.getItem('PatientDOS')
-    document.querySelector('input[name="telephone"]').value = localStorage.getItem('PatientMobile')
-    document.querySelector('input[name="test_panels"]').value = localStorage.getItem('PatientTestPanels')
-    document.querySelector('input[name="test_requested"]').value = localStorage.getItem('PatientTestRequested')
-    document.querySelector('input[name="canser_markers"]').value = localStorage.getItem('PatientCanser_Markers')
-    document.querySelector('input[name="microbiology"]').value = localStorage.getItem('PatientMicroBiology')
-    document.querySelector('input[name="covid_19_tests"]').value = localStorage.getItem('PatientCovid_19_Tests')
-    document.querySelector('input[name="gynecology"]').value = localStorage.getItem('PatientGynecology')
+    document.querySelector('input[name="date_of_birth"]').value = localStorage.getItem('PatientDOB') === '-' ? '' : localStorage.getItem('PatientDOB')
+    document.querySelector('input[name="address"]').value = localStorage.getItem('PatientAddress') === '-' ? '' : localStorage.getItem('PatientAddress')
+    document.querySelector('input[name="city"]').value = localStorage.getItem('PatientCity') === '-' ? '' : localStorage.getItem('PatientCity')
+    document.querySelector('input[name="DOS"]').value = localStorage.getItem('PatientDOS') === '-' ? '' : localStorage.getItem('PatientDOS')
+    document.querySelector('input[name="telephone"]').value = localStorage.getItem('PatientMobile') === '-' ? '' : localStorage.getItem('PatientMobile')
+    document.querySelector('input[name="test_panels"]').value = localStorage.getItem('PatientTestPanels') === '-' ? '' : localStorage.getItem('PatientTestPanels')
+    document.querySelector('input[name="Insurance"]').value = localStorage.getItem('PatientInsurance') === '-' ? '' : localStorage.getItem('PatientInsurance')
+    document.querySelector('input[name="InsurancePolicy"]').value = localStorage.getItem('PatientPolicy') === '-' ? '' : localStorage.getItem('PatientPolicy')
+    document.querySelector('input[name="test_requested"]').value = localStorage.getItem('PatientTestRequested') === '-' ? '' : localStorage.getItem('PatientTestRequested')
+    document.querySelector('input[name="canser_markers"]').value = localStorage.getItem('PatientCanser_Markers') === '-' ? '' : localStorage.getItem('PatientCanser_Markers')
+    document.querySelector('input[name="microbiology"]').value = localStorage.getItem('PatientMicroBiology') === '-' ? '' : localStorage.getItem('PatientMicroBiology')
+    document.querySelector('input[name="covid_19_tests"]').value = localStorage.getItem('PatientCovid_19_Tests') === '-' ? '' : localStorage.getItem('PatientCovid_19_Tests')
+    document.querySelector('input[name="gynecology"]').value = localStorage.getItem('PatientGynecology') === '-' ? '' : localStorage.getItem('PatientGynecology')
+    
+    document.querySelector('input[name="Fasting"]').checked = localStorage.getItem('PatientFasting') === 'Checked'
+    document.querySelector('input[name="Stat"]').checked = localStorage.getItem('PatientStat') === 'Checked' 
+    
 
     document.querySelector('#FormNameInput').value = localStorage.getItem('FormName')
     document.querySelector('#FormStatus').innerHTML = localStorage.getItem('FormStatus')
@@ -52,12 +59,17 @@ function SubmitEditedForm(e){
     const data = {
         form_id: formID,
         patient_name: document.querySelector('input[name="patientName"]').value,
+        patient_id: document.querySelector('input[name="patientID"]').value,
         gender: document.querySelector('select[name]').value,
         date_of_birth: document.querySelector('input[name="date_of_birth"]').value,
         address: document.querySelector('input[name="address"]').value,
         city: document.querySelector('input[name="city"]').value,
         dos: document.querySelector('input[name="DOS"]').value,
         mobile_number: document.querySelector('input[name="telephone"]').value,
+        insurance: document.querySelector('input[name="Insurance"]').value,
+        insurance_policy: document.querySelector('input[name="InsurancePolicy"]').value,
+        fasting: document.querySelector('input[name="Fasting"]').checked,
+        stat: document.querySelector('input[name="Stat"]').checked,
         test_panels: document.querySelector('input[name="test_panels"]').value,
         test_requested: document.querySelector('input[name="test_requested"]').value,
         canser_markers: document.querySelector('input[name="canser_markers"]').value,

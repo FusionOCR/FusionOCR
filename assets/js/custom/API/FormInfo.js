@@ -30,12 +30,17 @@ async function getData(){
 
 
         document.getElementById('PatientName').innerHTML = details.patient_name?details.patient_name:'-'
+        document.getElementById('PatientID').innerHTML = details.patient_id?details.patient_id:'-'
         document.getElementById('PatientGender').innerHTML = details.gender?details.gender:'-'  
         document.getElementById('PatientDOB').innerHTML = details.date_of_birth?details.date_of_birth:'-'
         document.getElementById('PatientAddress').innerHTML = details.address?details.address:'-'
         document.getElementById('PatientCity').innerHTML = details.city?details.city:'-'
         document.getElementById('PatientDOS').innerHTML = details.dos?details.dos:'-'
         document.getElementById('PatientMobile').innerHTML = details.mobile_number?details.mobile_number:'-'
+        document.getElementById('PatientInsurance').innerHTML = details.insurance?details.insurance:'-'
+        document.getElementById('PatientPolicy').innerHTML = details.insurance_policy?details.insurance_policy:'-'
+        document.getElementById('PatientFasting').innerHTML = details.fasting?"Checked":'Not Checked'
+        document.getElementById('PatientStat').innerHTML = details.stat?"Checked":'Not Checked'
         document.getElementById('PatientTestPanels').innerHTML = details.test_panels?details.test_panels:'No Checked Boxes Detected'
         document.getElementById('PatientTestRequested').innerHTML = details.test_requested?details.test_requested:'No Checked Boxes Detected'
         document.getElementById('PatientCanser_Markers').innerHTML = details.canser_markers?details.canser_markers:'No Checked Boxes Detected'
@@ -82,12 +87,17 @@ async function getData(){
 function StorePatientInfo(){
     // Store Patient Info in Local Storage
     const PatientName = document.getElementById('PatientName').innerHTML
+    const PatientID  = document.getElementById('PatientID').innerHTML
     const PatientGender = document.getElementById('PatientGender').innerHTML
     const PatientDOB = document.getElementById('PatientDOB').innerHTML
     const PatientAddress = document.getElementById('PatientAddress').innerHTML
     const PatientCity = document.getElementById('PatientCity').innerHTML
     const PatientDOS = document.getElementById('PatientDOS').innerHTML
     const PatientMobile = document.getElementById('PatientMobile').innerHTML
+    const PatientInsurance = document.getElementById('PatientInsurance').innerHTML
+    const PatientPolicy = document.getElementById('PatientPolicy').innerHTML
+    const PatientFasting = document.getElementById('PatientFasting').innerHTML
+    const PatientStat = document.getElementById('PatientStat').innerHTML
     const PatientTestPanels = document.getElementById('PatientTestPanels').innerHTML
     const PatientTests = document.getElementById('PatientTestRequested').innerHTML
     const PatientCanser_Markers = document.getElementById('PatientCanser_Markers').innerHTML
@@ -106,12 +116,17 @@ function StorePatientInfo(){
     localStorage.setItem('FormDate', FormDate)
 
     localStorage.setItem('PatientName', PatientName)
+    localStorage.setItem('PatientID', PatientID)
     localStorage.setItem('PatientGender', PatientGender)
     localStorage.setItem('PatientDOB', PatientDOB)
     localStorage.setItem('PatientAddress', PatientAddress)
     localStorage.setItem('PatientCity', PatientCity)
     localStorage.setItem('PatientDOS', PatientDOS)
     localStorage.setItem('PatientMobile', PatientMobile)
+    localStorage.setItem('PatientInsurance', PatientInsurance)
+    localStorage.setItem('PatientPolicy', PatientPolicy)
+    localStorage.setItem('PatientFasting', PatientFasting)
+    localStorage.setItem('PatientStat', PatientStat)
     localStorage.setItem('PatientTestPanels', PatientTestPanels !== "No Checked Boxes Detected"?PatientTestPanels:'')
     localStorage.setItem('PatientTestRequested', PatientTests !== "No Checked Boxes Detected"?PatientTests:'')
     localStorage.setItem('PatientCanser_Markers', PatientCanser_Markers !== "No Checked Boxes Detected"?PatientCanser_Markers:'')
