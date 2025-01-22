@@ -125,7 +125,8 @@ async function downloadForms(fileType = 'xlsx') {
     }
 
     try {
-        const response = await fetch(`${BackURL}/download-csv`, {
+        
+        const response = await fetch(`${BackURL}/download-${fileType}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -135,9 +136,16 @@ async function downloadForms(fileType = 'xlsx') {
         });
 
         if (!response.ok) {
-            const error = await response.json();
-            alert(`Error: ${error.message}`);
-            return;
+            Swal.fire({
+                text: "Error in Downloading Forms",
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                }
+            });
+            return
         }
 
         const blob = await response.blob();
