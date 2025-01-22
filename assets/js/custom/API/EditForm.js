@@ -1,5 +1,5 @@
-// const BackURL = "https://fusionocr.com/api"
 const BackURL = "https://fusionocr.com/api"
+// const BackURL = "http://localhost:5000"
 
 function loadFromLocalStorage(){
     // Input [Names]: lname, fname, sex:malle-female-other, date_of_birth, address, city, DOS, telephone, test_panels, tests

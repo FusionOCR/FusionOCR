@@ -482,6 +482,24 @@
 										<div class="d-flex justify-content-end" data-kt-filemanager-table-toolbar="base">
 
 											<!--begin::Add customer-->
+											<button type="button" class="btn btn-flex btn-success mx-1 d-none DownloadButtons" onclick="downloadForms('csv')">	
+												<i class="ki-duotone ki-folder-down fs-2">
+													<span class="path1"></span>
+													<span class="path2"></span>
+												</i>
+												<span>Downlaod CSV</span>
+											</button>
+											<button type="button" class="btn btn-flex btn-success mx-1 d-none DownloadButtons" onclick="downloadForms('xlsx')">	
+												<i class="ki-duotone ki-folder-down fs-2">
+													<span class="path1"></span>
+													<span class="path2"></span>
+												</i>
+												<span>Downlaod Excel</span>
+											</button>
+											<button type="button" class="btn btn-flex btn-danger mx-1 d-none" id="DeleteButton" onclick="deleteForms()">	
+												<span> Delete Selected</span>
+											</button>
+
 											<button type="button" class="btn btn-flex btn-primary"id="upButton"  onclick="document.getElementById('kt_file_manager_upload_file').click()" >	
 											<i class="ki-duotone ki-folder-up fs-2">
 												<span class="path1"></span>

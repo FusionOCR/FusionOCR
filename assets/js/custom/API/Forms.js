@@ -1,7 +1,10 @@
 
-// const BackURL = "https://fusionocr.com/api"
 const BackURL = "https://fusionocr.com/api"
+// const BackURL = "http://localhost:5000"
+
 const BackSocketURL = "wss://fusionocr.com"
+// const BackSocketURL = "http://localhost:5000"
+
 const socket = io(`${BackSocketURL}`,{transports: ["websocket", "polling"],withCredentials: false}); // Connect to the backend
 
 // Get the current URL
@@ -59,7 +62,125 @@ async function getData(){
 
 };
 
+// Delete Forms
+async function deleteForms() {
+    const checkboxes = document.querySelectorAll('.form-check-input');
+    const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+
+    if (checked.length === 0) {
+        alert('Please select at least one form to download.');
+        return;
+    }
+    // for each Form, Send a Delete Request
+    const response = await fetch(`${BackURL}/forms`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ form_ids: checked }),
+    });
+
+    if (response.ok) {
+        Swal.fire({
+            text: "You have deleted " + checked.length + " Forms!.",
+            icon: "success",
+            buttonsStyling: false,
+            confirmButtonText: "Ok, got it!",
+            customClass: {
+                confirmButton: "btn fw-bold btn-primary",
+            }
+        }).then(function () {
+            socket.emit('get_forms', { limit: limit, offset: page?page-1:0 });
+            document.getElementsByClassName('DownloadButtons')[0].classList.add('d-none');
+            document.getElementsByClassName('DownloadButtons')[1].classList.add('d-none');
+            document.getElementById('DeleteButton').classList.add('d-none');
+            document.getElementById('upButton').classList.remove('d-none');
+        });
+    }else{
+
+        const error = await response.json();
+        Swal.fire({
+            text: "Forms was not deleted.",
+            icon: "error",
+            buttonsStyling: false,
+            confirmButtonText: "Ok, got it!",
+            customClass: {
+                confirmButton: "btn fw-bold btn-primary",
+            }
+        });
+    }
+
+
+
+
+}
+async function downloadForms(fileType = 'xlsx') {
+    const checkboxes = document.querySelectorAll('.form-check-input');
+    const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+
+    if (checked.length === 0) {
+        alert('Please select at least one form to download.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${BackURL}/download-csv`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify({ form_ids: checked, file_type: fileType }),
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            alert(`Error: ${error.message}`);
+            return;
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `forms.${fileType}`; // Set the downloaded file name
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    } catch (err) {
+        console.error('Error during file download:', err);
+        alert('An error occurred while downloading the file.');
+    }
+}
+
+
+// Function to handle checkbox change events
+function handleCheckboxChange() {
+    const checkboxes = document.querySelectorAll('.form-check-input');
+    const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+    if (anyChecked) {
+        document.getElementsByClassName('DownloadButtons')[0].classList.remove('d-none');
+        document.getElementsByClassName('DownloadButtons')[1].classList.remove('d-none');
+        document.getElementById('DeleteButton').classList.remove('d-none');
+        document.getElementById('upButton').classList.add('d-none');
+
+    } else {
+        document.getElementsByClassName('DownloadButtons')[0].classList.add('d-none');
+        document.getElementsByClassName('DownloadButtons')[1].classList.add('d-none');
+        document.getElementById('DeleteButton').classList.add('d-none');
+        document.getElementById('upButton').classList.remove('d-none');
+
+        console.log("none Checked");
+    }
+}
+
 function updateUI(formsList, totalCount) {
+    // Get Checked
+    const checkboxes = document.querySelectorAll('.form-check-input');
+    const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+
     if (formsList.length === 0 ){
         document.querySelector("#NotFoundForms").innerHTML ='No Forms Found'
         document.querySelector("#FilesTable").innerHTML =''
@@ -89,13 +210,12 @@ function updateUI(formsList, totalCount) {
                             `<a style="pointer-events:none" id="${form.form_id}" class="text-gray-800 text-hover-primary">${form.name}</a>`
         const uploadDate = new Date(form.uploaded_at)
         const formattedDate = `${uploadDate.getDate()} ${uploadDate.toLocaleString('default', { month: 'short' })} ${uploadDate.getFullYear()}, ${uploadDate.getHours() % 12 || 12}:${uploadDate.getMinutes().toString().padStart(2, '0')} ${uploadDate.getHours() >= 12 ? 'PM' : 'AM'}`;
-
         const formDiv = `
                 <tr>
                     <td>
-                        <!-- <div class="form-check form-check-sm form-check-custom form-check-solid">
-                            <input class="form-check-input" type="checkbox" value="1" />
-                        </div> -->
+                         <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" value="${form.form_id}" ${checked.includes((form.form_id).toString()) ? 'checked':''} onChange="handleCheckboxChange()"/>
+                        </div> 
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
@@ -197,8 +317,6 @@ getData()
 
 
 
-
-
 socket.on('connect', () => {
     console.log('Connected to Socket.IO server');
     
@@ -216,7 +334,6 @@ socket.on('forms_update', (data) => {
 
     console.log('Received forms update:', data);
     updateUI(data.forms,data.total);
-    console.log(data.forms); // Your function to update the UI
 });
 
 socket.on('disconnect', () => {
