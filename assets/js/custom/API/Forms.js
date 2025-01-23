@@ -241,7 +241,14 @@ function updateUI(formsList, totalCount) {
                         <span class="badge ${statusStyle}">${form.status}</span>
 
                     </td>
-                    
+                    <td>
+                        <button type="button" title="Re Proccess" class="btn btn-flex ${form.status !== 'Error'?"d-none":''}" data-id="${form.form_id}"  onclick="reProccess(this)" >	
+                            <i class="ki-duotone ki-arrows-circle fs-2 text-danger">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </button>
+                    </td>
                 </tr>
                 `
         document.querySelector("#FilesTable").innerHTML += formDiv;
@@ -323,7 +330,75 @@ document.getElementById("FormsSearch")?.addEventListener("keyup", async function
 getData()
 // setInterval(getData, 5000);
 
+function reProccess(event){
+    const formID = event.getAttribute('data-id')
+    // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
+    Swal.fire({
+        text: "Are you sure you want to Re Proccess selected Document?",
+        icon: "warning",
+        showCancelButton: true,
+        buttonsStyling: false,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No, cancel",
+        customClass: {
+            confirmButton: "btn fw-bold btn-danger",
+            cancelButton: "btn fw-bold btn-active-light-primary"
+        }
+    }).then(function (result) {
+        if (result.value) {
+            fetch(`${BackURL}/form_reproccess?form_id=${formID}`, {
+                method: 'POST',
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    form_id: formID
+                })
+            }).then((response) => {
+                if (response.ok) {
 
+                    // Swal.fire({
+                    //     text: "You have deleted The Document.",
+                    //     icon: "success",
+                    //     buttonsStyling: false,
+                    //     confirmButtonText: "Ok, got it!",
+                    //     customClass: {
+                    //         confirmButton: "btn fw-bold btn-primary",
+                    //     }
+                    // }).then(function () {
+                    //     window.location.replace("/forms");
+                    // });
+                    socket.emit('get_forms', { limit: limit, offset: page?page-1:0 });
+                    
+                } else if(response.status === 401){
+                    window.location.replace("/sign-in");
+                }else{
+                    Swal.fire({
+                        text: "Form Can't Be Re-Procceesed, Please Try Again Later.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn fw-bold btn-primary",
+                        }
+                    });
+                }
+            }
+            );
+        } else if (result.dismiss === 'cancel') {
+            Swal.fire({
+                text: "Selected Document was not Re Proccessed.",
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                }
+            });
+        }
+    });
+}
 
 socket.on('connect', () => {
     console.log('Connected to Socket.IO server');
