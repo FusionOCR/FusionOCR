@@ -17,6 +17,20 @@ const urlParams = new URLSearchParams(new URL(currentUrl).search);
 const page = urlParams.get('page');
 const limit = urlParams.get("limit") || 25;
 document.querySelector('[data-kt-filemanager-table-select="page_size"]').value = limit
+
+
+// Get the elements
+const dateFromInput = document.getElementById('DateExportFrom');
+const dateToInput = document.getElementById('DateExportTo');
+const exportButton = document.querySelector('.ExportButton');
+// Get the current date in YYYY-MM-DD format
+const today = new Date().toISOString().split('T')[0];
+
+// Set the max attribute for both date inputs
+document.getElementById('DateExportFrom').setAttribute('max', today);
+document.getElementById('DateExportTo').setAttribute('max', today);
+
+
 async function getData(){
 
 
@@ -345,100 +359,6 @@ function updateUI(formsList, totalCount) {
     })
 }
 
-// Handle File Upload
-fileInput = document.getElementById('kt_file_manager_upload_file');
-fileInput?.addEventListener('change', async () => {
-    console.log("Starting to upload file...");
-    if (!fileInput.files[0]) return; // No file selected
-    const file = fileInput.files[0];
-
-    if (file.type !== 'image/png' &&file.type !== 'application/pdf') {
-        alert('Please select a valid PNG or PDF document.');
-        return;
-    }
-    document.getElementById('ProccessButton').classList.remove("d-none");
-    document.getElementById('upButton').classList.add("d-none");
-    try {
-        const formData = new FormData();
-        formData.append('file', file);
-        console.log(formData)
-        const response = await fetch(`${BackURL}/upload?id=${localStorage.getItem("id")}`, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        });
-
-        if (response.ok) {
-            // alert('File uploaded successfully!');
-
-            // ResFileName, ResUploadDate, ResFName, ResLName, ResSex, ResDOB, ResAddress,ResCity, ResState, ResZip,
-            // ResPhone, ResInsurance, ResInsuranceID, ResClient, ResCollection, ResTestReq, ResDiagnoseCode, ResElse
-            var json = await response.json();
-            console.log(json);
-            json = json['file_id'];
-            
-
-            getData()
-
-            document.getElementById('ProccessButton').classList.add("d-none");
-            document.getElementById('upButton').classList.remove("d-none");
-
-        }else if(response.status === 401){
-            window.location.replace("/sign-in");
-        } else {
-            alert('File upload failed.');
-        }
-    } catch (error) {
-        console.error('Error uploading file:', error);
-        alert('An error occurred while uploading.');
-    } finally {
-        
-
-    }
-});
-
-// Get the select element
-const pageSizeSelect = document.querySelector('[data-kt-filemanager-table-select="page_size"]');
-
-// Add an event listener to the select element
-pageSizeSelect.addEventListener('change', (event) => {
-    // Get the selected value
-    const selectedLimit = event.target.value;
-
-    // Get the current URL
-    const currentUrl = window.location.href;
-
-    // Parse the URL to modify query parameters
-    const url = new URL(currentUrl);
-    url.searchParams.set('limit', selectedLimit); // Set or update the "limit" parameter
-
-
-
-    // Reload the page with the new limit
-    total = Number(document.getElementById("HeaderFormsCount").innerHTML)
-    if (selectedLimit * page > total){
-        url.searchParams.set('page', 1); // Set or update the "limit" parameter
-
-    }
-    // Update the browser URL without reloading the page
-    window.history.pushState({}, '', url);
-
-    window.location.reload()
-});
-
-
-
-
-document.getElementById("FormsSearch")?.addEventListener("keyup", async function(event) {
-    console.log(event.currentTarget.value)
-    getData()
-})
-
-getData()
-// setInterval(getData, 5000);
-
 function reProccess(event){
     const formID = event.getAttribute('data-id')
     // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
@@ -509,18 +429,6 @@ function reProccess(event){
     });
 }
 
-
-
-// Get the elements
-const dateFromInput = document.getElementById('DateExportFrom');
-const dateToInput = document.getElementById('DateExportTo');
-const exportButton = document.querySelector('.ExportButton');
-// Get the current date in YYYY-MM-DD format
-const today = new Date().toISOString().split('T')[0];
-
-// Set the max attribute for both date inputs
-document.getElementById('DateExportFrom').setAttribute('max', today);
-document.getElementById('DateExportTo').setAttribute('max', today);
 // Function to check if both dates have values
 function toggleExportButton() {
     const fromValue = dateFromInput.value;
@@ -533,6 +441,95 @@ function toggleExportButton() {
         exportButton.disabled = true;
     }
 }
+
+// Handle File Upload
+fileInput = document.getElementById('kt_file_manager_upload_file');
+fileInput?.addEventListener('change', async () => {
+    console.log("Starting to upload file...");
+    if (!fileInput.files[0]) return; // No file selected
+    const file = fileInput.files[0];
+
+    if (file.type !== 'image/png' &&file.type !== 'application/pdf') {
+        alert('Please select a valid PNG or PDF document.');
+        return;
+    }
+    document.getElementById('ProccessButton').classList.remove("d-none");
+    document.getElementById('upButton').classList.add("d-none");
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+        console.log(formData)
+        const response = await fetch(`${BackURL}/upload?id=${localStorage.getItem("id")}`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        if (response.ok) {
+            // alert('File uploaded successfully!');
+
+            // ResFileName, ResUploadDate, ResFName, ResLName, ResSex, ResDOB, ResAddress,ResCity, ResState, ResZip,
+            // ResPhone, ResInsurance, ResInsuranceID, ResClient, ResCollection, ResTestReq, ResDiagnoseCode, ResElse
+            var json = await response.json();
+            console.log(json);
+            json = json['file_id'];
+            
+
+            getData()
+
+            document.getElementById('ProccessButton').classList.add("d-none");
+            document.getElementById('upButton').classList.remove("d-none");
+
+        }else if(response.status === 401){
+            window.location.replace("/sign-in");
+        } else {
+            alert('File upload failed.');
+        }
+    } catch (error) {
+        console.error('Error uploading file:', error);
+        alert('An error occurred while uploading.');
+    } finally {
+        
+
+    }
+});
+
+// Get the select element
+const pageSizeSelect = document.querySelector('[data-kt-filemanager-table-select="page_size"]');
+pageSizeSelect.addEventListener('change', (event) => {
+    // Get the selected value
+    const selectedLimit = event.target.value;
+
+    // Get the current URL
+    const currentUrl = window.location.href;
+
+    // Parse the URL to modify query parameters
+    const url = new URL(currentUrl);
+    url.searchParams.set('limit', selectedLimit); // Set or update the "limit" parameter
+
+
+
+    // Reload the page with the new limit
+    total = Number(document.getElementById("HeaderFormsCount").innerHTML)
+    if (selectedLimit * page > total){
+        url.searchParams.set('page', 1); // Set or update the "limit" parameter
+
+    }
+    // Update the browser URL without reloading the page
+    window.history.pushState({}, '', url);
+
+    window.location.reload()
+});
+
+
+document.getElementById("FormsSearch")?.addEventListener("keyup", async function(event) {
+    console.log(event.currentTarget.value)
+    getData()
+})
+
+getData()
 
 // Attach event listeners to both inputs
 dateFromInput.addEventListener('input', toggleExportButton);
