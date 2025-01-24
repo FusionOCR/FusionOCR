@@ -441,6 +441,7 @@ function toggleExportButton() {
         exportButton.disabled = true;
     }
 }
+let isUploading = false; // Track if upload is in progress
 
 // Handle File Upload
 fileInput = document.getElementById('kt_file_manager_upload_file');
@@ -455,6 +456,8 @@ fileInput?.addEventListener('change', async () => {
     }
     document.getElementById('ProccessButton').classList.remove("d-none");
     document.getElementById('upButton').classList.add("d-none");
+    // Set uploading state to true
+    isUploading = true;
     try {
         const formData = new FormData();
         formData.append('file', file);
@@ -491,8 +494,16 @@ fileInput?.addEventListener('change', async () => {
         console.error('Error uploading file:', error);
         alert('An error occurred while uploading.');
     } finally {
-        
+        // Reset uploading state
+        isUploading = false;
 
+    }
+});
+// Prevent page close/reload during upload
+window.addEventListener('beforeunload', (event) => {
+    if (isUploading) {
+        event.preventDefault();
+        // event.returnValue = ''; // Display a confirmation dialog
     }
 });
 
