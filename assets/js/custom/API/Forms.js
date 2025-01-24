@@ -15,8 +15,8 @@ const urlParams = new URLSearchParams(new URL(currentUrl).search);
 
 // Get the value of the "page" parameter
 const page = urlParams.get('page');
-const limit = 25;
-
+const limit = urlParams.get("limit") || 25;
+document.querySelector('[data-kt-filemanager-table-select="page_size"]').value = limit
 async function getData(){
 
 
@@ -259,13 +259,38 @@ function updateUI(formsList, totalCount) {
     for (let i = 1; i <= totalPages; i++) {
         pageNav += `
             <li class="dt-paging-button page-item ${page == i || (!page && i==1) ? 'active' : ''}">
-                <a class="page-link"  href="/forms/?page=${i}"  aria-controls="kt_file_manager_list">${i}</a>
+                <a class="page-link" aria-controls="kt_file_manager_list">${i}</a>
             </li>
         `
     }
     document.querySelector("#paginationNav").innerHTML = pageNav;
     document.querySelector("#kt_file_manager_items_counter").innerHTML = `${formsList.length} Forms`
     document.querySelector("#HeaderFormsCount").innerHTML = totalCount
+
+
+    // Get the select element
+    const pagingNavs = document.querySelectorAll('.dt-paging-button a');
+
+    // Add an event listener to the select element
+    pagingNavs.forEach((navButton)=>{
+        navButton.addEventListener('click', (event) => {
+            console.log("Heelo")
+            // Get the selected value
+            const selectedPage = event.target.innerHTML;
+
+            // Get the current URL
+            const currentUrl = window.location.href;
+
+            // Parse the URL to modify query parameters
+            const url = new URL(currentUrl);
+            url.searchParams.set('page', selectedPage); // Set or update the "limit" parameter
+
+            // Update the browser URL without reloading the page
+            window.history.pushState({}, '', url);
+
+            window.location.reload()
+        })
+    })
 }
 
 // Handle File Upload
@@ -321,6 +346,38 @@ fileInput?.addEventListener('change', async () => {
 
     }
 });
+
+// Get the select element
+const pageSizeSelect = document.querySelector('[data-kt-filemanager-table-select="page_size"]');
+
+// Add an event listener to the select element
+pageSizeSelect.addEventListener('change', (event) => {
+    // Get the selected value
+    const selectedLimit = event.target.value;
+
+    // Get the current URL
+    const currentUrl = window.location.href;
+
+    // Parse the URL to modify query parameters
+    const url = new URL(currentUrl);
+    url.searchParams.set('limit', selectedLimit); // Set or update the "limit" parameter
+
+
+
+    // Reload the page with the new limit
+    total = Number(document.getElementById("HeaderFormsCount").innerHTML)
+    if (selectedLimit * page > total){
+        url.searchParams.set('page', 1); // Set or update the "limit" parameter
+
+    }
+    // Update the browser URL without reloading the page
+    window.history.pushState({}, '', url);
+
+    window.location.reload()
+});
+
+
+
 
 document.getElementById("FormsSearch")?.addEventListener("keyup", async function(event) {
     console.log(event.currentTarget.value)

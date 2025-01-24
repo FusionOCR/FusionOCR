@@ -480,6 +480,7 @@
 									<div class="card-toolbar">
 										<!--begin::Toolbar-->
 										<div class="d-flex justify-content-end" data-kt-filemanager-table-toolbar="base">
+											
 
 											<!--begin::Add customer-->
 											<button type="button" class="btn btn-flex btn-success mx-1 d-none DownloadButtons" onclick="downloadForms('csv')">	
@@ -560,10 +561,21 @@
 									</div>
 									<!--end::Table-->
 									<div id="" class="row">
-										<div id="" class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start dt-toolbar"></div>
+										<div id="" class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start dt-toolbar">
+											<div>
+												<select class="form-select form-select-sm form-select-solid" data-kt-filemanager-table-select="page_size" data-kt-table-toolbar-item="select" data-kt-table-toolbar-item-value="" data-kt-table-toolbar-item-width="40px" data-kt-table-toolbar-item-trigger="change">
+													<option value="25">25</option>
+													<option value="50">50</option>
+													<option value="100">100</option>
+												</select>
+											</div>
+										</div>
 										<div id="" class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+											
 											<div class="dt-paging paging_simple_numbers">
+												
 												<nav aria-label="pagination">
+													
 													<ul class="pagination" id="paginationNav">
 														
 													</ul>
