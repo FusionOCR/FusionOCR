@@ -1,9 +1,9 @@
 
-const BackURL = "https://fusionocr.com/api"
-// const BackURL = "http://localhost:5000"
+// const BackURL = "https://fusionocr.com/api"
+const BackURL = "http://localhost:5000"
 
-const BackSocketURL = "wss://fusionocr.com"
-// const BackSocketURL = "http://localhost:5000"
+// const BackSocketURL = "wss://fusionocr.com"
+const BackSocketURL = "http://localhost:5000"
 
 const socket = io(`${BackSocketURL}`,{transports: ["websocket", "polling"],withCredentials: false}); // Connect to the backend
 
@@ -161,7 +161,53 @@ async function downloadForms(fileType = 'xlsx') {
         alert('An error occurred while downloading the file.');
     }
 }
+async function downloadFormsByDate(fileType = 'xlsx') {
+    const fromValue = dateFromInput.value;
+    const toValue = dateToInput.value;
 
+    console.log(fromValue, toValue)
+    if (!fromValue || !toValue) {
+        alert('Please select From and To Date');
+        return;
+    }
+
+    try {
+        
+        const response = await fetch(`${BackURL}/download-${fileType}-date`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify({ from_date: fromValue, to_date: toValue }),
+        });
+
+        if (!response.ok) {
+            Swal.fire({
+                text: "Error in Downloading Forms",
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                }
+            });
+            return
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `forms.${fileType}`; // Set the downloaded file name
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    } catch (err) {
+        console.error('Error during file download:', err);
+        alert('An error occurred while downloading the file.');
+    }
+}
 
 // Function to handle checkbox change events
 function handleCheckboxChange() {
@@ -169,16 +215,22 @@ function handleCheckboxChange() {
     const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
 
     if (anyChecked) {
-        document.getElementsByClassName('DownloadButtons')[0].classList.remove('d-none');
-        document.getElementsByClassName('DownloadButtons')[1].classList.remove('d-none');
-        document.getElementById('DeleteButton').classList.remove('d-none');
-        document.getElementById('upButton').classList.add('d-none');
+        // document.getElementsByClassName('DownloadButtons')[0].classList.remove('d-none');
+        // document.getElementsByClassName('DownloadButtons')[1].classList.remove('d-none');
+        // document.getElementById('DeleteButton').classList.remove('d-none');
+        // document.getElementById('upButton').classList.add('d-none');
+        document.querySelector(".NormalToolBar").classList.add('d-none');
+        document.querySelector(".CheckedToolBar").classList.remove('d-none');
+        document.querySelector(".dateExportForm").classList.add('d-none');
 
     } else {
-        document.getElementsByClassName('DownloadButtons')[0].classList.add('d-none');
-        document.getElementsByClassName('DownloadButtons')[1].classList.add('d-none');
-        document.getElementById('DeleteButton').classList.add('d-none');
-        document.getElementById('upButton').classList.remove('d-none');
+
+        // document.getElementById('upButton').classList.remove('d-none');
+        document.querySelector(".NormalToolBar").classList.remove('d-none');
+
+        document.querySelector(".CheckedToolBar").classList.add('d-none');
+
+        document.querySelector(".dateExportForm").classList.remove('d-none');
 
         console.log("none Checked");
     }
@@ -456,6 +508,41 @@ function reProccess(event){
         }
     });
 }
+
+
+
+// Get the elements
+const dateFromInput = document.getElementById('DateExportFrom');
+const dateToInput = document.getElementById('DateExportTo');
+const exportButton = document.querySelector('.ExportButton');
+// Get the current date in YYYY-MM-DD format
+const today = new Date().toISOString().split('T')[0];
+
+// Set the max attribute for both date inputs
+document.getElementById('DateExportFrom').setAttribute('max', today);
+document.getElementById('DateExportTo').setAttribute('max', today);
+// Function to check if both dates have values
+function toggleExportButton() {
+    const fromValue = dateFromInput.value;
+    const toValue = dateToInput.value;
+
+    // Enable the button if both dates are set; otherwise, disable it
+    if (fromValue && toValue) {
+        exportButton.disabled = false;
+    } else {
+        exportButton.disabled = true;
+    }
+}
+
+// Attach event listeners to both inputs
+dateFromInput.addEventListener('input', toggleExportButton);
+dateToInput.addEventListener('input', toggleExportButton);
+
+// Initial state check
+toggleExportButton();
+
+
+
 
 socket.on('connect', () => {
     console.log('Connected to Socket.IO server');
