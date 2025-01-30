@@ -518,8 +518,12 @@
 											</div>
 											<!--begin::Add customer-->
 											
-											<div class="NormalToolBar">
-												<button type="button" class="btn btn-flex btn-primary"id="upButton"  onclick="document.getElementById('kt_file_manager_upload_file').click()" >	
+											
+											<!--begin::Menu-->
+
+											<div class="me-0 NormalToolBar">
+												
+												<button class="btn btn-flex btn-primary" id="upButton" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" >	
 													<i class="ki-duotone ki-folder-up fs-2">
 														<span class="path1"></span>
 														<span class="path2"></span>
@@ -530,11 +534,49 @@
 													<i class="ki-duotone ki-folder-up fs-2">
 														<span class="path1"></span>
 														<span class="path2"></span>
-													</i><span id="ButtonStatus">Uploading</span></button>
+													</i>
+													<span id="ButtonStatus">Uploading</span>
+												</button>
 												<input type="file" id="kt_file_manager_upload_file" name="file" class="d-none" accept="application/pdf"/>
 												<!--end::Add customer-->
+	
+													
+												<!--begin::Menu 3-->
+												<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
+													<!--begin::Heading-->
+													<div class="menu-item px-3">
+														<div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">Labs</div>
+													</div>
+													<!--end::Heading-->
+													<!--begin::Menu item-->
+													<div class="menu-item px-3">
+														<a class="menu-link px-3" lab-template="accu_reference" onclick="handleTemplateChoose(this)">Accu Reference</a>
+													</div>
+													<!--end::Menu item-->
+												
+													<!--begin::Menu item-->
+													<div class="menu-item px-3">
+														<a class="menu-link px-3" lab-template="fusion_diagnosticson" onclick="handleTemplateChoose(this)">Fusion Diagnostics</a>
+													</div>
+													<!--end::Menu item-->
+
+													<!--begin::Menu item-->
+													<div class="menu-item px-3">
+														<a class="menu-link px-3" lab-template="laboratory_orders" onclick="handleTemplateChoose(this)">Laboratory Orders</a>
+													</div>
+													<!--end::Menu item-->
+
+													<!--begin::Menu item-->
+													<div class="menu-item px-3">
+														<a class="menu-link px-3" lab-template="bio_reference" onclick="handleTemplateChoose(this)">Bio Reference</a>
+													</div>
+													<!--end::Menu item-->
+													
+													
+												</div>
+												<!--end::Menu 3-->
 											</div>
-											
+											<!--end::Menu-->
 										</div>
 										<!--end::Toolbar-->
 										<!--begin::Group actions-->
