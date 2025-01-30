@@ -124,6 +124,11 @@ async function getData(){
     
 
 };
+function handleTemplateChoose(event) {
+    const LabTemplate = event.getAttribute("lab-template");
+    localStorage.setItem("LabTemplate", LabTemplate)
+    document.getElementById('kt_file_manager_upload_file').click()
+}
 
 // Handle File Upload
 fileInput = document.getElementById('kt_file_manager_upload_file');
@@ -142,7 +147,7 @@ fileInput?.addEventListener('change', async () => {
         const formData = new FormData();
         formData.append('file', file);
         console.log(formData)
-        const response = await fetch(`${BackURL}/upload?id=${localStorage.getItem("id")}`, {
+        const response = await fetch(`${BackURL}/upload?id=${localStorage.getItem("id")}&template=${localStorage.getItem("LabTemplate")}`, {
             method: 'POST',
             body: formData,
             headers: {
