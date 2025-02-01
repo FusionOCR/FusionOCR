@@ -38,7 +38,9 @@ async function getData(){
         document.getElementById('PatientDOS').innerHTML = details.dos?details.dos:'-'
         document.getElementById('PatientMobile').innerHTML = details.mobile_number?details.mobile_number:'-'
         document.getElementById('PatientInsurance').innerHTML = details.insurance?details.insurance:'-'
+        document.getElementById('PatientInsurance2').innerHTML = details.insurance_2?details.insurance_2:'-'
         document.getElementById('PatientPolicy').innerHTML = details.insurance_policy?details.insurance_policy:'-'
+        document.getElementById('PatientPolicy2').innerHTML = details.insurance_policy_2?details.insurance_policy_2:'-'
         document.getElementById('PatientFasting').innerHTML = details.fasting?"Checked":'Not Checked'
         document.getElementById('PatientStat').innerHTML = details.stat?"Checked":'Not Checked'
         document.getElementById('PatientTestPanels').innerHTML = details.test_panels?details.test_panels:'No Checked Boxes Detected'
@@ -47,6 +49,7 @@ async function getData(){
         document.getElementById('PatientMicroBiology').innerHTML = details.microbiology?details.microbiology:'No Checked Boxes Detected'
         document.getElementById('PatientCovid_19_Tests').innerHTML = details.covid_19_tests?details.covid_19_tests:'No Checked Boxes Detected'
         document.getElementById('PatientGynecology').innerHTML = details.gynecology?details.gynecology:'No Checked Boxes Detected'
+        document.getElementById('PatientDiagnosis').innerHTML = details.diagnosis?details.diagnosis:'No Diagnosis Detected'
 
         // document.getElementById("DocumentReview").innerHTML = `<embed src="${BackURL}/file/${formInfo.file_name}" type="application/pdf" width="100%" height="600px" />`
         document.getElementById('EditButton').href = `/forms/document/edit/?id=${formID}`
@@ -95,7 +98,9 @@ function StorePatientInfo(){
     const PatientDOS = document.getElementById('PatientDOS').innerHTML
     const PatientMobile = document.getElementById('PatientMobile').innerHTML
     const PatientInsurance = document.getElementById('PatientInsurance').innerHTML
+    const PatientInsurance2 = document.getElementById('PatientInsurance2').innerHTML
     const PatientPolicy = document.getElementById('PatientPolicy').innerHTML
+    const PatientPolicy2 = document.getElementById('PatientPolicy2').innerHTML
     const PatientFasting = document.getElementById('PatientFasting').innerHTML
     const PatientStat = document.getElementById('PatientStat').innerHTML
     const PatientTestPanels = document.getElementById('PatientTestPanels').innerHTML
@@ -104,7 +109,8 @@ function StorePatientInfo(){
     const PatientMicroBiology = document.getElementById('PatientMicroBiology').innerHTML
     const PatientCovid_19_Tests = document.getElementById('PatientCovid_19_Tests').innerHTML
     const PatientGynecology = document.getElementById('PatientGynecology').innerHTML
-
+    const PatientDiagnosis = document.getElementById('PatientDiagnosis').innerHTML
+    
 
     // Form name, status Date
     const FormName = document.getElementById('FormName').innerHTML
@@ -124,7 +130,9 @@ function StorePatientInfo(){
     localStorage.setItem('PatientDOS', PatientDOS)
     localStorage.setItem('PatientMobile', PatientMobile)
     localStorage.setItem('PatientInsurance', PatientInsurance)
+    localStorage.setItem('PatientInsurance2', PatientInsurance2)
     localStorage.setItem('PatientPolicy', PatientPolicy)
+    localStorage.setItem('PatientPolicy2', PatientPolicy2)
     localStorage.setItem('PatientFasting', PatientFasting)
     localStorage.setItem('PatientStat', PatientStat)
     localStorage.setItem('PatientTestPanels', PatientTestPanels !== "No Checked Boxes Detected"?PatientTestPanels:'')
@@ -133,6 +141,7 @@ function StorePatientInfo(){
     localStorage.setItem('PatientMicroBiology', PatientMicroBiology !== "No Checked Boxes Detected"?PatientMicroBiology:'')
     localStorage.setItem('PatientCovid_19_Tests', PatientCovid_19_Tests !== "No Checked Boxes Detected"?PatientCovid_19_Tests:'')
     localStorage.setItem('PatientGynecology', PatientGynecology !== "No Checked Boxes Detected"?PatientGynecology:'')
+    localStorage.setItem('PatientDiagnosis', PatientDiagnosis !== "No Diagnosis Detected"?PatientDiagnosis:'')
 
 }
 getData()

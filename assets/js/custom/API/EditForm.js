@@ -14,11 +14,14 @@ function loadFromLocalStorage(){
     document.querySelector('input[name="test_panels"]').value = localStorage.getItem('PatientTestPanels') === '-' ? '' : localStorage.getItem('PatientTestPanels')
     document.querySelector('input[name="Insurance"]').value = localStorage.getItem('PatientInsurance') === '-' ? '' : localStorage.getItem('PatientInsurance')
     document.querySelector('input[name="InsurancePolicy"]').value = localStorage.getItem('PatientPolicy') === '-' ? '' : localStorage.getItem('PatientPolicy')
+    document.querySelector('input[name="Insurance2"]').value = localStorage.getItem('PatientInsurance2') === '-' ? '' : localStorage.getItem('PatientInsurance2')
+    document.querySelector('input[name="InsurancePolicy2"]').value = localStorage.getItem('PatientPolicy2') === '-' ? '' : localStorage.getItem('PatientPolicy2')
     document.querySelector('input[name="test_requested"]').value = localStorage.getItem('PatientTestRequested') === '-' ? '' : localStorage.getItem('PatientTestRequested')
     document.querySelector('input[name="canser_markers"]').value = localStorage.getItem('PatientCanser_Markers') === '-' ? '' : localStorage.getItem('PatientCanser_Markers')
     document.querySelector('input[name="microbiology"]').value = localStorage.getItem('PatientMicroBiology') === '-' ? '' : localStorage.getItem('PatientMicroBiology')
     document.querySelector('input[name="covid_19_tests"]').value = localStorage.getItem('PatientCovid_19_Tests') === '-' ? '' : localStorage.getItem('PatientCovid_19_Tests')
     document.querySelector('input[name="gynecology"]').value = localStorage.getItem('PatientGynecology') === '-' ? '' : localStorage.getItem('PatientGynecology')
+    document.querySelector('input[name="diagnosis"]').value = localStorage.getItem('PatientDiagnosis') === '-' ? '' : localStorage.getItem('PatientDiagnosis')
     
     document.querySelector('input[name="Fasting"]').checked = localStorage.getItem('PatientFasting') === 'Checked'
     document.querySelector('input[name="Stat"]').checked = localStorage.getItem('PatientStat') === 'Checked' 
@@ -68,6 +71,8 @@ function SubmitEditedForm(e){
         mobile_number: document.querySelector('input[name="telephone"]').value,
         insurance: document.querySelector('input[name="Insurance"]').value,
         insurance_policy: document.querySelector('input[name="InsurancePolicy"]').value,
+        insurance_2: document.querySelector('input[name="Insurance2"]').value,
+        insurance_policy_2: document.querySelector('input[name="InsurancePolicy2"]').value,
         fasting: document.querySelector('input[name="Fasting"]').checked,
         stat: document.querySelector('input[name="Stat"]').checked,
         test_panels: document.querySelector('input[name="test_panels"]').value,
@@ -75,7 +80,8 @@ function SubmitEditedForm(e){
         canser_markers: document.querySelector('input[name="canser_markers"]').value,
         microbiology: document.querySelector('input[name="microbiology"]').value,
         covid_19_tests: document.querySelector('input[name="covid_19_tests"]').value,
-        gynecology: document.querySelector('input[name="gynecology"]').value
+        gynecology: document.querySelector('input[name="gynecology"]').value,
+        diagnosis: document.querySelector('input[name="diagnosis"]').value
     }
     console.log(data)
     const f = new FormData()
@@ -110,6 +116,7 @@ function SubmitEditedForm(e){
         localStorage.removeItem('PatientMicroBiology')
         localStorage.removeItem('PatientCovid_19_Tests')
         localStorage.removeItem('PatientGynecology')
+        localStorage.removeItem('PatientDiagnosis')
         localStorage.removeItem('FormName')
         localStorage.removeItem('FormStatus')
         localStorage.removeItem('FormDate')
