@@ -39,9 +39,9 @@ async function getData(){
         document.getElementById('PatientPolicy2').innerHTML = details.insurance_policy_2?details.insurance_policy_2:'-'
         document.getElementById('PatientFasting').innerHTML = details.fasting?"Checked":'Not Checked'
         document.getElementById('PatientStat').innerHTML = details.stat?"Checked":'Not Checked'
-        document.getElementById('PatientDiagnosis').innerHTML = details.diagnosis?details.diagnosis:'No Diagnosis Detected'
+        document.getElementById('PatientDiagnosis').innerHTML = details.diagnosis?details.diagnosis.replaceAll(" | ","<br/> "):'No Diagnosis Detected'
         if(formInfo.form_type === "accu_reference"){
-            document.getElementById('PatientTestRequested').innerHTML = details.test_requested?details.test_requested:'No Checked Boxes Detected'
+            document.getElementById('PatientTestRequested').innerHTML = details.test_requested?details.test_requested.replaceAll(" | ","<br/>"):'No Checked Boxes Detected'
             // document.getElementById('PatientTestPanels').innerHTML = details.test_panels?details.test_panels:'No Checked Boxes Detected'
             // document.getElementById('PatientCanser_Markers').innerHTML = details.canser_markers?details.canser_markers:'No Checked Boxes Detected'
             // document.getElementById('PatientMicroBiology').innerHTML = details.microbiology?details.microbiology:'No Checked Boxes Detected'
@@ -49,7 +49,7 @@ async function getData(){
             // document.getElementById('PatientGynecology').innerHTML = details.gynecology?details.gynecology:'No Checked Boxes Detected'
     
         } else{
-            document.getElementById('PatientTestRequested').innerHTML = details.test_requested?details.test_requested:'No Test Detected'
+            document.getElementById('PatientTestRequested').innerHTML = details.test_requested?details.test_requested.replaceAll(" | ","<br/>"):'No Test Detected'
         }
             document.getElementById('PatientTestPanelsContainer').style.display = "none"
             document.getElementById('PatientCanser_MarkersContainer').style.display = "none"
