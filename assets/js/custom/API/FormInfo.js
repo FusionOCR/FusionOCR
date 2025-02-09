@@ -112,12 +112,12 @@ function StorePatientInfo(){
     const PatientFasting = document.getElementById('PatientFasting').innerHTML
     const PatientStat = document.getElementById('PatientStat').innerHTML
     const PatientTestPanels = document.getElementById('PatientTestPanels').innerHTML
-    const PatientTests = document.getElementById('PatientTestRequested').innerHTML
+    const PatientTests = document.getElementById('PatientTestRequested').innerHTML.replaceAll(" &gt; ","").replaceAll("<br>"," | ")
     const PatientCanser_Markers = document.getElementById('PatientCanser_Markers').innerHTML
     const PatientMicroBiology = document.getElementById('PatientMicroBiology').innerHTML
     const PatientCovid_19_Tests = document.getElementById('PatientCovid_19_Tests').innerHTML
     const PatientGynecology = document.getElementById('PatientGynecology').innerHTML
-    const PatientDiagnosis = document.getElementById('PatientDiagnosis').innerHTML
+    const PatientDiagnosis = document.getElementById('PatientDiagnosis').innerHTML.replaceAll(" &gt; ","").replaceAll("<br>"," | ")
     
 
     // Form name, status Date
