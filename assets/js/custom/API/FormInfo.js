@@ -1,7 +1,3 @@
-
-const BackURL = "https://fusionocr.com/api"
-// const BackURL = "http://localhost:5000"
-
 async function getData(){
     // Get the current URL
     const currentUrl = window.location.href;
