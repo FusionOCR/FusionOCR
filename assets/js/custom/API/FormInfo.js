@@ -42,21 +42,22 @@ async function getData(){
         document.getElementById('PatientDiagnosis').innerHTML = details.diagnosis?details.diagnosis:'No Diagnosis Detected'
         if(formInfo.form_type === "accu_reference"){
             document.getElementById('PatientTestRequested').innerHTML = details.test_requested?details.test_requested:'No Checked Boxes Detected'
-            document.getElementById('PatientTestPanels').innerHTML = details.test_panels?details.test_panels:'No Checked Boxes Detected'
-            document.getElementById('PatientCanser_Markers').innerHTML = details.canser_markers?details.canser_markers:'No Checked Boxes Detected'
-            document.getElementById('PatientMicroBiology').innerHTML = details.microbiology?details.microbiology:'No Checked Boxes Detected'
-            document.getElementById('PatientCovid_19_Tests').innerHTML = details.covid_19_tests?details.covid_19_tests:'No Checked Boxes Detected'
-            document.getElementById('PatientGynecology').innerHTML = details.gynecology?details.gynecology:'No Checked Boxes Detected'
+            // document.getElementById('PatientTestPanels').innerHTML = details.test_panels?details.test_panels:'No Checked Boxes Detected'
+            // document.getElementById('PatientCanser_Markers').innerHTML = details.canser_markers?details.canser_markers:'No Checked Boxes Detected'
+            // document.getElementById('PatientMicroBiology').innerHTML = details.microbiology?details.microbiology:'No Checked Boxes Detected'
+            // document.getElementById('PatientCovid_19_Tests').innerHTML = details.covid_19_tests?details.covid_19_tests:'No Checked Boxes Detected'
+            // document.getElementById('PatientGynecology').innerHTML = details.gynecology?details.gynecology:'No Checked Boxes Detected'
     
         } else{
             document.getElementById('PatientTestRequested').innerHTML = details.test_requested?details.test_requested:'No Test Detected'
+        }
             document.getElementById('PatientTestPanelsContainer').style.display = "none"
             document.getElementById('PatientCanser_MarkersContainer').style.display = "none"
             document.getElementById('PatientMicroBiologyContainer').style.display = "none"
             document.getElementById('PatientCovid_19_TestsContainer').style.display = "none"
             document.getElementById('PatientGynecologyContainer').style.display = "none"
 
-        }       
+            
         
         // document.getElementById("DocumentReview").innerHTML = `<embed src="${BackURL}/file/${formInfo.file_name}" type="application/pdf" width="100%" height="600px" />`
         document.getElementById('EditButton').href = `/forms/document/edit/?id=${formID}`
