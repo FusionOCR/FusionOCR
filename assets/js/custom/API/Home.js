@@ -70,12 +70,12 @@ async function getformsData(){
             const uploadDate = new Date(form.uploaded_at)
             const formattedDate = `${uploadDate.getDate()} ${uploadDate.toLocaleString('default', { month: 'short' })} ${uploadDate.getFullYear()}, ${uploadDate.getHours() % 12 || 12}:${uploadDate.getMinutes().toString().padStart(2, '0')} ${uploadDate.getHours() >= 12 ? 'PM' : 'AM'}`;
             const link = 
-            (form.status !== "Proccessing" && form.status !== "Pending")?
+            (form.status !== "Processing" && form.status !== "Pending")?
                                 `<a href="./forms/document/?id=${form.form_id}" id="${form.form_id}" class="text-gray-800 text-hover-primary">${form.name}</a>`
                             :
                                 `<a  id="${form.form_id}"class="text-gray-800 text-hover-primary">${form.name}</a>`
             const subLink = 
-            (form.status !== "Proccessing" && form.status !== "Pending")?
+            (form.status !== "Processing" && form.status !== "Pending")?
                                 `<a href="./forms/document/?id=${form.form_id}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
                                     <i class="ki-duotone ki-arrow-right fs-2">
                                         <span class="path1"></span>
@@ -137,12 +137,12 @@ async function updateformsData(formsList){
             const uploadDate = new Date(form.uploaded_at)
             const formattedDate = `${uploadDate.getDate()} ${uploadDate.toLocaleString('default', { month: 'short' })} ${uploadDate.getFullYear()}, ${uploadDate.getHours() % 12 || 12}:${uploadDate.getMinutes().toString().padStart(2, '0')} ${uploadDate.getHours() >= 12 ? 'PM' : 'AM'}`;
             const link = 
-            (form.status !== "Proccessing" && form.status !== "Pending")?
+            (form.status !== "Processing" && form.status !== "Pending")?
                                 `<a href="./forms/document/?id=${form.form_id}" id="${form.form_id}" class="text-gray-800 text-hover-primary">${form.name}</a>`
                             :
                                 `<a  id="${form.form_id}"class="text-gray-800 text-hover-primary">${form.name}</a>`
             const subLink = 
-            (form.status !== "Proccessing" && form.status !== "Pending")?
+            (form.status !== "Processing" && form.status !== "Pending")?
                                 `<a href="./forms/document/?id=${form.form_id}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
                                     <i class="ki-duotone ki-arrow-right fs-2">
                                         <span class="path1"></span>
@@ -193,8 +193,8 @@ async function getStatusCount(){
         document.querySelector("#pending").innerHTML = statusCount.Pending;
         document.querySelector("#error").innerHTML = statusCount.Error;
         document.querySelector("#extracted").innerHTML = statusCount.Extracted;
-        document.querySelector("#processing").innerHTML = statusCount.Proccessing;
-        document.querySelector("#totalFormCount").innerHTML = statusCount.Pending + statusCount.Error + statusCount.Extracted + statusCount.Proccessing;
+        document.querySelector("#processing").innerHTML = statusCount.Processing;
+        document.querySelector("#totalFormCount").innerHTML = statusCount.Pending + statusCount.Error + statusCount.Extracted + statusCount.Processing;
     
         "use strict";
         console.log(Object.keys(statusCount).drop)
@@ -212,10 +212,10 @@ async function getStatusCount(){
                     type: 'doughnut',
                     data: {
                         datasets: [{
-                            data: [statusCount["Pending"], statusCount["Error"], statusCount["Extracted"], statusCount["Proccessing"]],
+                            data: [statusCount["Pending"], statusCount["Error"], statusCount["Extracted"], statusCount["Processing"]],
                             backgroundColor: ['#E4E6EF',"#f8285a",'#50CD89','#00A3FF']
                         }],
-                        labels: ['Pending', 'Error', 'Extracted', 'Proccessing']
+                        labels: ['Pending', 'Error', 'Extracted', 'Processing']
                     },
                     options: {
                         chart: {
