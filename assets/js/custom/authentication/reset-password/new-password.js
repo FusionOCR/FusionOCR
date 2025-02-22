@@ -79,7 +79,7 @@ var KTAuthNewPassword = function() {
 
             validator.revalidateField('password');
 
-            validator.validate().then(function(status) {
+            validator.validate().then(async function(status) {
                 if (status == 'Valid') {
                     // Show loading indication
                     submitButton.setAttribute('data-kt-indicator', 'on');
@@ -87,37 +87,62 @@ var KTAuthNewPassword = function() {
                     // Disable button to avoid multiple click
                     submitButton.disabled = true;
 
-                    // Simulate ajax request
-                    setTimeout(function() {
-                        // Hide loading indication
-                        submitButton.removeAttribute('data-kt-indicator');
+                    // Get The Params
+                    const email = form.querySelector('[name="email"]').value;
+                    const password = form.querySelector('[name="password"]').value;
+                    const formData = new FormData();
+                    formData.append('email', email);
+                    formData.append('newPassword', password);
 
-                        // Enable button
-                        submitButton.disabled = false;
+                    const response = await fetch(`${BackURL}/auth/reset-password`, {
+                        method: 'POST',
+                        body: formData
+                    });
 
-                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                    if (response.ok){
+                        // Simulate ajax request
+                        setTimeout(function() {
+                            // Hide loading indication
+                            submitButton.removeAttribute('data-kt-indicator');
+
+                            // Enable button
+                            submitButton.disabled = false;
+
+                            // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                            Swal.fire({
+                                text: "You have successfully reset your password!",
+                                icon: "success",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok, got it!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            }).then(function (result) {
+                                if (result.isConfirmed) {
+                                    form.querySelector('[name="password"]').value= "";
+                                    form.querySelector('[name="confirm-password"]').value= "";
+                                    passwordMeter.reset();  // reset password meter
+                                    //form.submit();
+
+                                    var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                                    if (redirectUrl) {
+                                        location.href = redirectUrl;
+                                    }
+                                }
+                            });
+                        }, 1500);
+                    } else {
+                        // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
-                            text: "You have successfully reset your password!",
-                            icon: "success",
+                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            icon: "error",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
-                        }).then(function (result) {
-                            if (result.isConfirmed) {
-                                form.querySelector('[name="password"]').value= "";
-                                form.querySelector('[name="confirm-password"]').value= "";
-                                passwordMeter.reset();  // reset password meter
-                                //form.submit();
-
-                                var redirectUrl = form.getAttribute('data-kt-redirect-url');
-                                if (redirectUrl) {
-                                    location.href = redirectUrl;
-                                }
-                            }
                         });
-                    }, 1500);
+                    }
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
