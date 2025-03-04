@@ -74,7 +74,7 @@ async function getData(){
 
 // Delete Forms
 async function deleteForms() {
-    const checkboxes = document.querySelectorAll('.form-check-input');
+    const checkboxes = document.querySelectorAll('.form-check-input-sub');
     const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
 
     if (checked.length === 0) {
@@ -102,10 +102,14 @@ async function deleteForms() {
             }
         }).then(function () {
             socket.emit('get_forms', { limit: limit, offset: page?page-1:0 });
-            document.getElementsByClassName('DownloadButtons')[0].classList.add('d-none');
-            document.getElementsByClassName('DownloadButtons')[1].classList.add('d-none');
-            document.getElementById('DeleteButton').classList.add('d-none');
-            document.getElementById('upButton').classList.remove('d-none');
+            // document.getElementsByClassName('DownloadButtons')[1].classList.add('d-none');
+            document.querySelector(".form-check-input-main").checked = false;
+            
+            document.querySelector(".NormalToolBar").classList.remove('d-none');
+
+            document.querySelector(".CheckedToolBar").classList.add('d-none');
+
+            document.querySelector(".dateExportForm").classList.remove('d-none');
         });
     }else{
 
@@ -126,7 +130,7 @@ async function deleteForms() {
 
 }
 async function downloadForms(fileType = 'xlsx') {
-    const checkboxes = document.querySelectorAll('.form-check-input');
+    const checkboxes = document.querySelectorAll('.form-check-input-sub');
     const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
 
     if (checked.length === 0) {
@@ -219,11 +223,19 @@ async function downloadFormsByDate(fileType = 'xlsx') {
     }
 }
 
+function CheckAll(){
+    var checkboxes = document.querySelectorAll('.form-check-input-sub');
+    checkboxes.forEach((checkbox)=>{
+        checkbox.click()
+    }
+    )
+    handleCheckboxChange()
+}
 // Function to handle checkbox change events
 function handleCheckboxChange() {
-    const checkboxes = document.querySelectorAll('.form-check-input');
-    const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
 
+    var checkboxes = document.querySelectorAll('.form-check-input-sub');
+    const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
     if (anyChecked) {
         // document.getElementsByClassName('DownloadButtons')[0].classList.remove('d-none');
         // document.getElementsByClassName('DownloadButtons')[1].classList.remove('d-none');
@@ -248,7 +260,7 @@ function handleCheckboxChange() {
 
 function updateUI(formsList, totalCount) {
     // Get Checked
-    const checkboxes = document.querySelectorAll('.form-check-input');
+    const checkboxes = document.querySelectorAll('.form-check-input-sub');
     const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
 
     if (formsList.length === 0 ){
@@ -284,7 +296,7 @@ function updateUI(formsList, totalCount) {
                 <tr>
                     <td>
                          <div class="form-check form-check-sm form-check-custom form-check-solid">
-                            <input class="form-check-input" type="checkbox" value="${form.form_id}" ${checked.includes((form.form_id).toString()) ? 'checked':''} onChange="handleCheckboxChange()"/>
+                            <input class="form-check-input form-check-input-sub " type="checkbox" value="${form.form_id}" ${checked.includes((form.form_id).toString()) ? 'checked':''} onChange="handleCheckboxChange()"/>
                         </div> 
                     </td>
                     <td>
