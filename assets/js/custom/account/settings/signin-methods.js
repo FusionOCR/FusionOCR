@@ -170,13 +170,13 @@ var KTAccountSettingsSigninMethods = function () {
             passwordForm,
             {
                 fields: {
-                    currentpassword: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Current Password is required'
-                            }
-                        }
-                    },
+                    // currentpassword: {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'Current Password is required'
+                    //         }
+                    //     }
+                    // },
 
                     newpassword: {
                         validators: {
@@ -217,17 +217,26 @@ var KTAccountSettingsSigninMethods = function () {
             validation.validate().then(function (status) {
                 if (status == 'Valid') {
                     // Send to Change Password to API
-                    const data = {
-                        current_password: passwordForm.querySelector('[name="currentpassword"]').value,
-                        new_password: passwordForm.querySelector('[name="newpassword"]').value
-                    }
-                    fetch(`${BackURL}/user/user_password/${localStorage.getItem('id')}`, {
+                    // const data = {
+                        // current_password: passwordForm.querySelector('[name="currentpassword"]').value,
+                        // new_password: passwordForm.querySelector('[name="newpassword"]').value
+                    // }
+                    // fetch(`${BackURL}/user/user_password/${localStorage.getItem('id')}`, {
+
+                    // Get The Params
+                    const email = localStorage.getItem("email");
+                    const password = passwordForm.querySelector('[name="newpassword"]').value;
+                    const data = new FormData();
+                    data.append('email', email);
+                    data.append('newPassword', password);
+
+                    fetch(`${BackURL}/auth/reset-password`, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json',
+                            // 'Content-Type': 'application/json',
                             authorization: `Bearer ${localStorage.getItem('token')}`
                         },
-                        body: JSON.stringify(data)
+                        body: data
                     }).then(async function(response){
                         if (response.ok) {
                             await response.json();
