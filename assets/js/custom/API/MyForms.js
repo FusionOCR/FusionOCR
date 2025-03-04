@@ -86,6 +86,11 @@ async function getData(){
                             <span class="badge ${statusStyle}">${form.status}</span>
 
                         </td>
+                        <td>
+                            ${form.valid? 
+                            '<span class="badge badge-light-success">Valid To Extract</span>'
+                            :'<span class="badge badge-light-danger">Need Supervision</span>'}
+                        </td>
                         
                     </tr>
                     `

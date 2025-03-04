@@ -304,6 +304,11 @@ function updateUI(formsList, totalCount) {
 
                     </td>
                     <td>
+                        ${form.valid? 
+                        '<span class="badge badge-light-success">Valid To Extract</span>'
+                        :'<span class="badge badge-light-danger">Need Supervision</span>'}
+                    </td>
+                    <td>
                         <button type="button" title="Re Proccess" class="btn btn-flex ${form.status !== 'Error'?"d-none":''}" data-id="${form.form_id}"  onclick="reProccess(this)" >	
                             <i class="ki-duotone ki-arrows-circle fs-2 text-danger">
                                 <span class="path1"></span>
@@ -311,6 +316,7 @@ function updateUI(formsList, totalCount) {
                             </i>
                         </button>
                     </td>
+                    
                 </tr>
                 `
         document.querySelector("#FilesTable").innerHTML += formDiv;
