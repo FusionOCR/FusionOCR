@@ -315,16 +315,86 @@ function updateUI(formsList, totalCount) {
                 `
         document.querySelector("#FilesTable").innerHTML += formDiv;
     }
-    // Setting the Navbar Pages
+    // Setting the Navbar Pages to Be Max 10 Pages Shown, and the Rest will be hidden
+    // const totalPages = Math.ceil(totalCount / limit);
+    // var pageNav =''
+    // for (let i = 1; i <= totalPages; i++) {
+    //     pageNav += `
+    //         <li class="dt-paging-button page-item ${page == i || (!page && i==1) ? 'active' : ''}">
+    //             <a class="page-link" aria-controls="kt_file_manager_list">${i}</a>
+    //         </li>
+    //     `
+    // }
+
     const totalPages = Math.ceil(totalCount / limit);
-    var pageNav =''
-    for (let i = 1; i <= totalPages; i++) {
-        pageNav += `
-            <li class="dt-paging-button page-item ${page == i || (!page && i==1) ? 'active' : ''}">
-                <a class="page-link" aria-controls="kt_file_manager_list">${i}</a>
-            </li>
-        `
+    var pageNav = '';
+    const maxVisiblePages = 10; // Number of visible pages before adding "..."
+    const activePage = Number(page) || 1;
+
+    // Always show first 10 pages if active page is within first 6
+    if (totalPages <= maxVisiblePages + 1) {
+        for (let i = 1; i <= totalPages; i++) {
+            pageNav += `
+                <li class="dt-paging-button page-item ${activePage == i ? 'active' : ''}">
+                    <a class="page-link" aria-controls="kt_file_manager_list">${i}</a>
+                </li>
+            `;
+        }
+    } else {
+        let startPage = Math.max(1, activePage - 5);
+        let endPage = Math.min(totalPages, activePage + 5);
+        // Always show first 10 pages if user is within first 6 pages
+        if (activePage <= 6) {
+            startPage = 2;
+            endPage = maxVisiblePages;
+        }
+
+        // Always show last 10 pages if user is within last 6 pages
+        if (activePage > totalPages - 6) {
+            startPage = totalPages - maxVisiblePages + 1;
+            endPage = totalPages;
+        }
+
+        // Always show the First page
+        // if (activePage > maxVisiblePages) {
+            pageNav += `
+                <li class="dt-paging-button page-item ${activePage == 1 ? 'active' : ''}">
+                    <a class="page-link" aria-controls="kt_file_manager_list">1</a>
+                </li>
+            `;
+        // }
+
+        // Add "..." if there's a gap before the last page
+        if (activePage > 7) {
+            pageNav += `<li class="dt-paging-button page-item disabled"><span class="page-link">...</span></li>`;
+        }
+
+        
+
+        // Render the first 10 pages or adjusted range
+        for (let i = startPage; i <= endPage; i++) {
+            pageNav += `
+                <li class="dt-paging-button page-item ${activePage == i ? 'active' : ''}">
+                    <a class="page-link" aria-controls="kt_file_manager_list">${i}</a>
+                </li>
+            `;
+        }
+
+        // Add "..." if there's a gap before the last page
+        if (endPage < totalPages - 1) {
+            pageNav += `<li class="dt-paging-button page-item disabled"><span class="page-link">...</span></li>`;
+        }
+
+        // Always show the last page
+        if (endPage < totalPages) {
+            pageNav += `
+                <li class="dt-paging-button page-item ${activePage == totalPages ? 'active' : ''}">
+                    <a class="page-link" aria-controls="kt_file_manager_list">${totalPages}</a>
+                </li>
+            `;
+        }
     }
+
     document.querySelector("#paginationNav").innerHTML = pageNav;
     document.querySelector("#kt_file_manager_items_counter").innerHTML = `${formsList.length} Forms`
     document.querySelector("#HeaderFormsCount").innerHTML = totalCount
