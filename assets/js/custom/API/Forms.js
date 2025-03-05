@@ -26,7 +26,136 @@ const today = new Date().toISOString().split('T')[0];
 document.getElementById('DateExportFrom').setAttribute('max', today);
 document.getElementById('DateExportTo').setAttribute('max', today);
 
+var orderByName = localStorage.getItem("orderByName") || null;
+var orderByUpload = localStorage.getItem("orderByUpload") || null;
+var orderStatus = localStorage.getItem("orderStatus") || null;
+var orderValid = localStorage.getItem("orderValid") || null;
+orderByName = orderByName ==='null'?null:orderByName
+orderByUpload = orderByUpload ==='null'?null:orderByUpload
+orderStatus = orderStatus ==='null'?null:orderStatus
+orderValid = orderValid ==='null'?null:orderValid
+document.querySelector(".NameFilter").innerHTML = orderByName === 'asc'?'<i class="fa-solid fa-arrow-down-short-wide"></i>':orderByName === 'desc'?'<i class="fa-solid fa-arrow-down-wide-short"></i>':''
+document.querySelector(".UploadFilter").innerHTML = orderByUpload === 'asc'?'<i class="fa-solid fa-arrow-down-short-wide"></i>':orderByUpload === 'desc'?'<i class="fa-solid fa-arrow-down-wide-short"></i>':''
+document.querySelector(".StatusFilter").innerHTML = orderStatus === 'asc'?'<i class="fa-solid fa-arrow-down-short-wide"></i>':orderStatus === 'desc'?'<i class="fa-solid fa-arrow-down-wide-short"></i>':''
+document.querySelector(".ValidFilter").innerHTML = orderValid === 'asc'?'<i class="fa-solid fa-arrow-down-short-wide"></i>':orderValid === 'desc'?'<i class="fa-solid fa-arrow-down-wide-short"></i>':''
+// change order by name to be asc then desc then null
+function changeOrderByName(){
+    // check other orders to be null
+    orderByUpload = null
+    orderStatus = null
+    orderValid = null
+    localStorage.setItem("orderByUpload", orderByUpload)
+    localStorage.setItem("orderStatus", orderStatus)
+    localStorage.setItem("orderValid", orderValid)
 
+    // Set UploadFilter,statusFilter,validFilter Empty
+    document.querySelector(".UploadFilter").innerHTML = ''
+    document.querySelector(".StatusFilter").innerHTML = ''
+    document.querySelector(".ValidFilter").innerHTML = ''
+
+    if (orderByName === null){
+        orderByName = 'asc'
+        document.querySelector(".NameFilter").innerHTML = '<i class="fa-solid fa-arrow-down-short-wide"></i>'
+    }else if(orderByName === 'asc'){
+        orderByName = 'desc'
+        document.querySelector(".NameFilter").innerHTML = '<i class="fa-solid fa-arrow-down-wide-short"></i>'
+
+    }else{
+        orderByName =  null
+        document.querySelector(".NameFilter").innerHTML = ''
+
+    }
+    localStorage.setItem("orderByName", orderByName)
+    getData()
+}
+// change order by upload to be asc then desc then null
+function changeOrderByUpload(){
+    // check other orders to be null
+    orderByName = null
+    orderStatus = null
+    orderValid = null
+    localStorage.setItem("orderByName", orderByName)
+    localStorage.setItem("orderStatus", orderStatus)
+    localStorage.setItem("orderValid", orderValid)
+
+    // Set NameFilter,statusFilter,validFilter Empty
+    document.querySelector(".NameFilter").innerHTML = ''
+    document.querySelector(".StatusFilter").innerHTML = ''
+    document.querySelector(".ValidFilter").innerHTML = ''
+
+    if (orderByUpload === null){
+        orderByUpload = 'asc'
+        document.querySelector(".UploadFilter").innerHTML = '<i class="fa-solid fa-arrow-down-short-wide"></i>'
+
+    }else if(orderByUpload === 'asc'){
+        orderByUpload = 'desc'
+        document.querySelector(".UploadFilter").innerHTML = '<i class="fa-solid fa-arrow-down-wide-short"></i>'
+
+    }else{
+        orderByUpload =  null
+        document.querySelector(".UploadFilter").innerHTML = ''
+
+    }
+    localStorage.setItem("orderByUpload", orderByUpload)
+    getData()
+}
+// change order status to be asc then desc then null
+function changeOrderStatus(){
+    // check other orders to be null
+    orderByName = null
+    orderByUpload = null
+    orderValid = null
+    localStorage.setItem("orderByName", orderByName)
+    localStorage.setItem("orderByUpload", orderByUpload)
+    localStorage.setItem("orderValid", orderValid)
+
+    // Set NameFilter,UploadFilter,validFilter Empty
+    document.querySelector(".NameFilter").innerHTML = ''
+    document.querySelector(".UploadFilter").innerHTML = ''
+    document.querySelector(".ValidFilter").innerHTML = ''
+
+    if (orderStatus === null){
+        orderStatus = 'asc'
+        document.querySelector(".StatusFilter").innerHTML = '<i class="fa-solid fa-arrow-down-short-wide"></i>'
+
+    }else if(orderStatus === 'asc'){
+        orderStatus = 'desc'
+        document.querySelector(".StatusFilter").innerHTML = '<i class="fa-solid fa-arrow-down-wide-short"></i>'
+    }else{
+        orderStatus =  null
+        document.querySelector(".StatusFilter").innerHTML = ''
+    }
+    localStorage.setItem("orderStatus", orderStatus)
+    getData()
+}
+
+// change order valid to be asc then desc then null
+function changeOrderValid(){
+    // check other orders to be null
+    orderByName = null
+    orderByUpload = null
+    orderStatus = null
+    localStorage.setItem("orderByName", orderByName)
+    localStorage.setItem("orderByUpload", orderByUpload)
+    localStorage.setItem("orderStatus", orderStatus)
+
+    // Set NameFilter,UploadFilter,statusFilter Empty
+    document.querySelector(".NameFilter").innerHTML = ''
+    document.querySelector(".UploadFilter").innerHTML = ''
+    document.querySelector(".StatusFilter").innerHTML = ''
+    if (orderValid === null){
+        orderValid = 'asc'
+        document.querySelector(".ValidFilter").innerHTML = '<i class="fa-solid fa-arrow-down-short-wide"></i>'
+    }else if(orderValid === 'asc'){
+        orderValid = 'desc'
+        document.querySelector(".ValidFilter").innerHTML = '<i class="fa-solid fa-arrow-down-wide-short"></i>'
+    }else{
+        orderValid =  null
+        document.querySelector(".ValidFilter").innerHTML = ''
+    }
+    localStorage.setItem("orderValid", orderValid)
+    getData()
+}
 async function getData(){
 
 
@@ -35,12 +164,12 @@ async function getData(){
         document.querySelector("#NotFoundForms").innerHTML ='Loading ...'
     }
 
+    var orderValid = localStorage.getItem('orderValid') || null;
 
     // Check for Search 
     const searchQuery = document.getElementById("FormsSearch").value
-    var endpoint = `forms_list?limit=${limit}&offset=${page?page-1:0}`
+    var endpoint = `forms_list?limit=${limit}&offset=${page?page-1:0}&orderValid=${orderValid}&orderByName=${orderByName}&orderByUpload=${orderByUpload}&orderStatus=${orderStatus}`
     document.querySelector("#paginationNav").style.display = 'flex'
-
     if (searchQuery){
         var endpoint = `forms_search_list?search_query=${searchQuery}&offset=${page?page-1:0}`
         document.querySelector("#paginationNav").style.display = 'none'
@@ -63,7 +192,7 @@ async function getData(){
             window.location.replace("/sign-in");
         }
     }else{
-        socket.emit('get_forms', { limit: limit, offset: page?page-1:0 });
+        socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid });
 
     }
     // KTFileManagerList.init();
@@ -101,7 +230,7 @@ async function deleteForms() {
                 confirmButton: "btn fw-bold btn-primary",
             }
         }).then(function () {
-            socket.emit('get_forms', { limit: limit, offset: page?page-1:0 });
+            socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid });
             // document.getElementsByClassName('DownloadButtons')[1].classList.add('d-none');
             document.querySelector(".form-check-input-main").checked = false;
             
@@ -482,7 +611,7 @@ function reProccess(event){
                     // }).then(function () {
                     //     window.location.replace("/forms");
                     // });
-                    socket.emit('get_forms', { limit: limit, offset: page?page-1:0 });
+                    socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid });
                     
                 } else if(response.status === 401){
                     window.location.replace("/sign-in");
@@ -646,7 +775,7 @@ socket.on('connect', () => {
     console.log('Connected to Socket.IO server');
     
     // Request forms list
-    socket.emit('get_forms', { limit: limit, offset: page?page-1:0 });
+    socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid });
 });
 // update_front
 socket.on('update_front', (data) => {

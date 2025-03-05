@@ -610,10 +610,10 @@
 														<input class="form-check-input form-check-input-main" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_file_manager_list .form-check-input" value="1"  onChange="CheckAll()"/>
 													</div>
 												</th>
-												<th class="min-w-250px">Name</th>
-												<th class="min-w-125px">Uploaded at</th>
-												<th class="min-w-125px">Status</th>
-												<th class="min-w-125px">Valid</th>
+												<th class="min-w-250px sortableName" onclick="changeOrderByName()">Name <span class="NameFilter"></span></th>
+												<th class="min-w-125px" onclick="changeOrderByUpload()">Uploaded at <span class="UploadFilter"></span></th>
+												<th class="min-w-125px" onclick="changeOrderStatus()">Status <span class="StatusFilter"></span></th>
+												<th class="min-w-125px" onclick="changeOrderValid()">Valid <span class="ValidFilter"></span></th>
 												<th></th>
 											</tr>
 										</thead>
