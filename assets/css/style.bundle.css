@@ -48563,3 +48563,10 @@ body {
 .bg-light-white{
   background-color: #ffffffa1;
 }
+
+.AppliedFilters{
+  color:var(--bs-primary)
+}
+.dt-paging-button a{
+  cursor: pointer;
+}

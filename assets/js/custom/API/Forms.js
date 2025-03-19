@@ -11,13 +11,27 @@ const urlParams = new URLSearchParams(new URL(currentUrl).search);
 
 // Get the value of the "page" parameter
 const page = urlParams.get('page');
-const limit = urlParams.get("limit") || 25;
+const limit = urlParams.get("limit") || 50;
 document.querySelector('[data-kt-filemanager-table-select="page_size"]').value = limit
+// Load Filters From Local Storage
+var filters = {}
 
-
+if (localStorage.getItem("fromDateFilter")){
+    addDateFromFilter({value:localStorage.getItem("fromDateFilter")})
+    filters['fromDate'] = localStorage.getItem("fromDateFilter")
+}
+if (localStorage.getItem("toDateFilter")){
+    addDateToFilter({value:localStorage.getItem("toDateFilter")})
+    filters['toDate'] = localStorage.getItem("toDateFilter")
+}
+if (localStorage.getItem("formTypeFilter")){
+    addFormTypeFilter({innerHTML:localStorage.getItem("formTypeFilter")})
+    filters['formType'] = localStorage.getItem("formTypeFilter")
+}
 // Get the elements
 const dateFromInput = document.getElementById('DateExportFrom');
 const dateToInput = document.getElementById('DateExportTo');
+const formTypeFilter = document.getElementById('FormTypeFilter');
 const exportButton = document.querySelector('.ExportButton');
 // Get the current date in YYYY-MM-DD format
 const today = new Date().toISOString().split('T')[0];
@@ -156,6 +170,102 @@ function changeOrderValid(){
     localStorage.setItem("orderValid", orderValid)
     getData()
 }
+// add date From Filter
+async function addDateFromFilter(event){
+    const val = event.value
+    const filterTitle = document.querySelector(".AppliedFilters .FiltersTitle")
+    const filter =  document.querySelector(".AppliedFilters .FromDateFilter")
+    if(val){
+        filter.querySelector(".value").innerHTML  = val
+        filter.classList.remove('d-none')
+        filters['fromDate'] = val
+        localStorage.setItem("fromDateFilter", val)
+        if (filterTitle.classList.contains('d-none')){
+            filterTitle.classList.remove('d-none')
+        }
+    }else{
+        filter.classList.add('d-none')
+        // If all .filterSpan spans has d-none, set title to d-none
+        const allFilters = document.querySelectorAll(".AppliedFilters .filterSpan")
+        var allHidden = true
+        allFilters.forEach((filter)=>{
+            if (!filter.classList.contains('d-none')){
+                allHidden = false
+            }
+        })
+        filters['fromDate'] = null
+        localStorage.removeItem("fromDateFilter")
+        if (allHidden){
+            filterTitle.classList.add('d-none')
+        }
+    }
+}
+
+// add date To Filter
+async function addDateToFilter(event){
+    const val = event.value
+    const filterTitle = document.querySelector(".AppliedFilters .FiltersTitle")
+    
+    const filter =  document.querySelector(".AppliedFilters .ToDateFilter")
+    if(val){
+        filter.querySelector(".value").innerHTML  = val
+        filters['toDate'] = val
+        localStorage.setItem("toDateFilter", val)
+        filter.classList.remove('d-none')
+        if (filterTitle.classList.contains('d-none')){
+            filterTitle.classList.remove('d-none')
+        }
+    }else{
+        filter.classList.add('d-none')
+        // If all .filterSpan spans has d-none, set title to d-none
+        const allFilters = document.querySelectorAll(".AppliedFilters .filterSpan")
+        var allHidden = true
+        filters['toDate'] = null
+        localStorage.removeItem("toDateFilter")
+        allFilters.forEach((filter)=>{
+            if (!filter.classList.contains('d-none')){
+                allHidden = false
+            }
+        })
+        if (allHidden){
+            filterTitle.classList.add('d-none')
+        }
+    }
+}
+
+// add Form Type To Filter
+async function addFormTypeFilter(event){
+    const val = event.innerHTML
+    console.log(val)
+    const filterTitle = document.querySelector(".AppliedFilters .FiltersTitle")
+    
+    const filter =  document.querySelector(".AppliedFilters .FormTypeFilter")
+    if(val){
+        filter.querySelector(".value").innerHTML  = val
+        filter.classList.remove('d-none')
+        filters['formType'] = val
+        localStorage.setItem("formTypeFilter", val)
+        if (filterTitle.classList.contains('d-none')){
+            filterTitle.classList.remove('d-none')
+        }
+    }else{
+        filter.classList.add('d-none')
+        // If all .filterSpan spans has d-none, set title to d-none
+        const allFilters = document.querySelectorAll(".AppliedFilters .filterSpan")
+        var allHidden = true
+        filters['formType'] = null
+        localStorage.removeItem("formTypeFilter")
+        allFilters.forEach((filter)=>{
+            if (!filter.classList.contains('d-none')){
+                allHidden = false
+            }
+        })
+        if (allHidden){
+            filterTitle.classList.add('d-none')
+        }
+    }
+    toggleExportButton()
+}
 async function getData(){
 
 
@@ -168,10 +278,10 @@ async function getData(){
 
     // Check for Search 
     const searchQuery = document.getElementById("FormsSearch").value
-    var endpoint = `forms_list?limit=${limit}&offset=${page?page-1:0}&orderValid=${orderValid}&orderByName=${orderByName}&orderByUpload=${orderByUpload}&orderStatus=${orderStatus}`
+    var endpoint = `forms_list?limit=${limit}&offset=${page?page-1:0}&orderValid=${orderValid}&orderByName=${orderByName}&orderByUpload=${orderByUpload}&orderStatus=${orderStatus}&filters=${filters}`
     document.querySelector("#paginationNav").style.display = 'flex'
     if (searchQuery){
-        var endpoint = `forms_search_list?search_query=${searchQuery}&offset=${page?page-1:0}`
+        var endpoint = `forms_search_list?search_query=${searchQuery}&offset=${page?page-1:0}&filters=${filters}`
         document.querySelector("#paginationNav").style.display = 'none'
     
         const response = await fetch(`${BackURL}/${endpoint}`, {
@@ -185,15 +295,16 @@ async function getData(){
             const res = await response.json();
             const formsList = res['forms'];
             const totalCount = res['total'];
-            
-            updateUI(formsList, totalCount,page)
+            const currentValue = res['selected']
+            updateUI(formsList, totalCount,page,currentValue)
 
         }else if(response.status === 401){
             window.location.replace("/sign-in");
         }
     }else{
-        socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid });
-
+        socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters });
+        console.log("Getting Data")
+        console.log(filters)
     }
     // KTFileManagerList.init();
     
@@ -304,54 +415,57 @@ async function downloadForms(fileType = 'xlsx') {
         alert('An error occurred while downloading the file.');
     }
 }
-async function downloadFormsByDate(fileType = 'xlsx') {
-    const fromValue = dateFromInput.value;
-    const toValue = dateToInput.value;
+// async function ApplyFilters(fileType = 'xlsx') {
+//     var fromValue = dateFromInput.value;
+//     var toValue = dateToInput.value;
+//     const formType = formTypeFilter.innerHTML
 
-    console.log(fromValue, toValue)
-    if (!fromValue || !toValue) {
-        alert('Please select From and To Date');
-        return;
-    }
+//     if (!toValue && fromValue){
+//         toValue = new Date().toISOString().split('T')[0];
+//     }
+//     else if (!fromValue && toValue){
+//         fromValue = toValue
+//     }
 
-    try {
+//     try {
         
-        const response = await fetch(`${BackURL}/download-${fileType}-date`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify({ from_date: fromValue, to_date: toValue }),
-        });
+//         const response = await fetch(`${BackURL}/filtered-list?${fromValue?`fromDate=${fromValue}&`:''}${toValue?`toDate=${toValue}&`:''}${formType?`formType=${formType}&`:''}`, {
+//             method: 'GET',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 authorization: `Bearer ${localStorage.getItem('token')}`,
+//             }
+//         });
 
-        if (!response.ok) {
-            Swal.fire({
-                text: "Error in Downloading Forms",
-                icon: "error",
-                buttonsStyling: false,
-                confirmButtonText: "Ok, got it!",
-                customClass: {
-                    confirmButton: "btn fw-bold btn-primary",
-                }
-            });
-            return
-        }
+//         if (!response.ok) {
+//             Swal.fire({
+//                 text: "Error in Downloading Forms",
+//                 icon: "error",
+//                 buttonsStyling: false,
+//                 confirmButtonText: "Ok, got it!",
+//                 customClass: {
+//                     confirmButton: "btn fw-bold btn-primary",
+//                 }
+//             });
+//             return
+//         }
 
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `forms.${fileType}`; // Set the downloaded file name
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-    } catch (err) {
-        console.error('Error during file download:', err);
-        alert('An error occurred while downloading the file.');
-    }
+//         const blob = await response.blob();
+//         const url = window.URL.createObjectURL(blob);
+//         const link = document.createElement('a');
+//         link.href = url;
+//         link.download = `forms.${fileType}`; // Set the downloaded file name
+//         document.body.appendChild(link);
+//         link.click();
+//         link.remove();
+//     } catch (err) {
+//         console.error('Error during file download:', err);
+//         alert('An error occurred while downloading the file.');
+//     }
+// }
+async function ApplyFilters(fileType = 'xlsx') {
+    getData()
 }
-
 function CheckAll(){
     var checkboxes = document.querySelectorAll('.form-check-input-sub');
     checkboxes.forEach((checkbox)=>{
@@ -387,7 +501,7 @@ function handleCheckboxChange() {
     }
 }
 
-function updateUI(formsList, totalCount) {
+function updateUI(formsList, totalCount,FilteredCount = null) {
     // Get Checked
     const checkboxes = document.querySelectorAll('.form-check-input-sub');
     const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
@@ -473,11 +587,13 @@ function updateUI(formsList, totalCount) {
     //     `
     // }
 
-    const totalPages = Math.ceil(totalCount / limit);
+    const totalPages = Math.ceil((FilteredCount !==null?FilteredCount:totalCount) / limit);
     var pageNav = '';
     const maxVisiblePages = 10; // Number of visible pages before adding "..."
     const activePage = Number(page) || 1;
-
+    if (activePage > totalPages && totalPages !== 0) {
+        window.location.replace(`/forms?page=${1}`);
+    }
     // Always show first 10 pages if active page is within first 6
     if (totalPages <= maxVisiblePages + 1) {
         for (let i = 1; i <= totalPages; i++) {
@@ -504,16 +620,23 @@ function updateUI(formsList, totalCount) {
 
         // Always show the First page
         // if (activePage > maxVisiblePages) {
+            if (activePage < 7){
             pageNav += `
                 <li class="dt-paging-button page-item ${activePage == 1 ? 'active' : ''}">
                     <a class="page-link" aria-controls="kt_file_manager_list">1</a>
                 </li>
             `;
+            }
         // }
 
         // Add "..." if there's a gap before the last page
         if (activePage > 7) {
-            pageNav += `<li class="dt-paging-button page-item disabled"><span class="page-link">...</span></li>`;
+            pageNav += `<li class="dt-paging-button page-item disabled"><span class="page-link"><</span></li>`;
+            // pageNav += `
+            //     <li class="dt-paging-button page-item}">
+            //         <a class="page-link" aria-controls="kt_file_manager_list">1</a>
+            //     </li>
+            // `;
         }
 
         
@@ -529,7 +652,7 @@ function updateUI(formsList, totalCount) {
 
         // Add "..." if there's a gap before the last page
         if (endPage < totalPages - 1) {
-            pageNav += `<li class="dt-paging-button page-item disabled"><span class="page-link">...</span></li>`;
+            pageNav += `<li class="dt-paging-button page-item disabled"><span class="page-link">></span></li>`;
         }
 
         // Always show the last page
@@ -553,7 +676,6 @@ function updateUI(formsList, totalCount) {
     // Add an event listener to the select element
     pagingNavs.forEach((navButton)=>{
         navButton.addEventListener('click', (event) => {
-            console.log("Heelo")
             // Get the selected value
             const selectedPage = event.target.innerHTML;
 
@@ -570,8 +692,21 @@ function updateUI(formsList, totalCount) {
             window.location.reload()
         })
     })
+    if (FilteredCount !==null && FilteredCount !== totalCount){
+        document.querySelector("#FilteredFormsContainer").classList.remove("d-none")
+        document.querySelector("#FilteredFormsCount").innerHTML = `${FilteredCount} Forms`
+    }else{
+        if (!document.querySelector("#FilteredFormsContainer").classList.contains("d-none")){
+            document.querySelector("#FilteredFormsContainer").classList.add("d-none")
+        }
+    }
 }
-
+function removeFiltersFromLocal(){
+    localStorage.removeItem("fromDateFilter")
+    localStorage.removeItem("toDateFilter")
+    localStorage.removeItem("formTypeFilter")
+    window.location.reload()
+}
 function reProccess(event){
     const formID = event.getAttribute('data-id')
     // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
@@ -646,9 +781,9 @@ function reProccess(event){
 function toggleExportButton() {
     const fromValue = dateFromInput.value;
     const toValue = dateToInput.value;
-
+    const formType = formTypeFilter.innerHTML
     // Enable the button if both dates are set; otherwise, disable it
-    if (fromValue && toValue) {
+    if ((fromValue && toValue ) || formType) {
         exportButton.disabled = false;
     } else {
         exportButton.disabled = true;
@@ -775,7 +910,7 @@ socket.on('connect', () => {
     console.log('Connected to Socket.IO server');
     
     // Request forms list
-    socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid });
+    socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters });
 });
 // update_front
 socket.on('update_front', (data) => {
@@ -787,7 +922,7 @@ socket.on('update_front', (data) => {
 socket.on('forms_update', (data) => {
 
     console.log('Received forms update:', data);
-    updateUI(data.forms,data.total);
+    updateUI(data.forms,data.total,data.selected);
 });
 
 socket.on('disconnect', () => {
