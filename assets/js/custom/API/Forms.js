@@ -12,6 +12,7 @@ const urlParams = new URLSearchParams(new URL(currentUrl).search);
 // Get the value of the "page" parameter
 const page = urlParams.get('page');
 const limit = urlParams.get("limit") || 50;
+const url = new URL(currentUrl);
 document.querySelector('[data-kt-filemanager-table-select="page_size"]').value = limit
 // Load Filters From Local Storage
 var filters = {}
@@ -52,6 +53,10 @@ document.querySelector(".NameFilter").innerHTML = orderByName === 'asc'?'<i clas
 document.querySelector(".UploadFilter").innerHTML = orderByUpload === 'asc'?'<i class="fa-solid fa-arrow-down-short-wide"></i>':orderByUpload === 'desc'?'<i class="fa-solid fa-arrow-down-wide-short"></i>':''
 document.querySelector(".StatusFilter").innerHTML = orderStatus === 'asc'?'<i class="fa-solid fa-arrow-down-short-wide"></i>':orderStatus === 'desc'?'<i class="fa-solid fa-arrow-down-wide-short"></i>':''
 document.querySelector(".ValidFilter").innerHTML = orderValid === 'asc'?'<i class="fa-solid fa-arrow-down-short-wide"></i>':orderValid === 'desc'?'<i class="fa-solid fa-arrow-down-wide-short"></i>':''
+
+
+document.getElementById("FormsSearch").value = url.searchParams.get('search_query')
+var searchQuery =  url.searchParams.get('search_query')
 // change order by name to be asc then desc then null
 function changeOrderByName(){
     // check other orders to be null
@@ -277,12 +282,11 @@ async function getData(){
     var orderValid = localStorage.getItem('orderValid') || null;
 
     // Check for Search 
-    const searchQuery = document.getElementById("FormsSearch").value
-    var endpoint = `forms_list?limit=${limit}&offset=${page?page-1:0}&orderValid=${orderValid}&orderByName=${orderByName}&orderByUpload=${orderByUpload}&orderStatus=${orderStatus}&filters=${filters}`
+    searchQuery = document.getElementById("FormsSearch").value
     document.querySelector("#paginationNav").style.display = 'flex'
     if (searchQuery){
-        var endpoint = `forms_search_list?search_query=${searchQuery}&offset=${page?page-1:0}&filters=${filters}`
-        document.querySelector("#paginationNav").style.display = 'none'
+        var endpoint = `forms_search_list?search_query=${searchQuery}&offset=${page?page-1:0}&limit=${limit}&filters=${JSON.stringify(filters)}`
+        // document.querySelector("#paginationNav").style.display = 'none'
     
         const response = await fetch(`${BackURL}/${endpoint}`, {
             method: 'GET',
@@ -296,7 +300,7 @@ async function getData(){
             const formsList = res['forms'];
             const totalCount = res['total'];
             const currentValue = res['selected']
-            updateUI(formsList, totalCount,page,currentValue)
+            updateUI(formsList, totalCount,currentValue)
 
         }else if(response.status === 401){
             window.location.replace("/sign-in");
@@ -341,7 +345,7 @@ async function deleteForms() {
                 confirmButton: "btn fw-bold btn-primary",
             }
         }).then(function () {
-            socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid });
+            socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters });
             // document.getElementsByClassName('DownloadButtons')[1].classList.add('d-none');
             document.querySelector(".form-check-input-main").checked = false;
             
@@ -683,7 +687,6 @@ function updateUI(formsList, totalCount,FilteredCount = null) {
             const currentUrl = window.location.href;
 
             // Parse the URL to modify query parameters
-            const url = new URL(currentUrl);
             url.searchParams.set('page', selectedPage); // Set or update the "limit" parameter
 
             // Update the browser URL without reloading the page
@@ -891,6 +894,8 @@ pageSizeSelect.addEventListener('change', (event) => {
 
 document.getElementById("FormsSearch")?.addEventListener("keyup", async function(event) {
     console.log(event.currentTarget.value)
+    url.searchParams.set('search_query', event.currentTarget.value);
+    window.history.pushState({}, '', url);
     getData()
 })
 
@@ -910,7 +915,10 @@ socket.on('connect', () => {
     console.log('Connected to Socket.IO server');
     
     // Request forms list
-    socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters });
+    if (!searchQuery){
+
+        socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters });
+    }
 });
 // update_front
 socket.on('update_front', (data) => {
