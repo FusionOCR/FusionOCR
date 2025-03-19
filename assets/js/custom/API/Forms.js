@@ -357,7 +357,7 @@ async function deleteForms() {
 
 
 }
-async function downloadForms(fileType = 'xlsx') {
+async function downloadForms(option = 'labgen') {
     const checkboxes = document.querySelectorAll('.form-check-input-sub');
     const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
 
@@ -368,13 +368,13 @@ async function downloadForms(fileType = 'xlsx') {
 
     try {
         
-        const response = await fetch(`${BackURL}/download-${fileType}`, {
+        const response = await fetch(`${BackURL}/download-csv`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 authorization: `Bearer ${localStorage.getItem('token')}`,
             },
-            body: JSON.stringify({ form_ids: checked, file_type: fileType }),
+            body: JSON.stringify({ form_ids: checked, option: option }),
         });
 
         if (!response.ok) {
@@ -394,7 +394,7 @@ async function downloadForms(fileType = 'xlsx') {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `forms.${fileType}`; // Set the downloaded file name
+        link.download = `forms.csv`; // Set the downloaded file name
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -444,7 +444,7 @@ async function DownloadAllExportFiltered(option = "labgen"){
         alert('An error occurred while downloading the file.');
     }
 }
-async function ApplyFilters(fileType = 'xlsx') {
+async function ApplyFilters() {
     getData()
 }
 function CheckAll(){
