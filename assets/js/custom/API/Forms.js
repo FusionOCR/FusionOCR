@@ -484,7 +484,7 @@ function handleCheckboxChange() {
     }
 }
 
-function updateUI(formsList, totalCount,FilteredCount = null) {
+function updateUI(formsList, totalCount,FilteredCount = null,FilteredExtracted = null) {
     // Get Checked
     const checkboxes = document.querySelectorAll('.form-check-input-sub');
     const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
@@ -677,9 +677,9 @@ function updateUI(formsList, totalCount,FilteredCount = null) {
     if (FilteredCount !==null && FilteredCount !== totalCount){
         document.querySelector("#FilteredFormsContainer").classList.remove("d-none")
         document.querySelector("#FilteredFormsCount").innerHTML = `${FilteredCount} Forms`
-        if (FilteredCount !== 0){
+        if (FilteredCount !== 0 && FilteredExtracted !== 0){
             document.querySelector("#ExportFilteredContainer").classList.remove("d-none")
-            document.querySelector("#ExportFilteredCount").innerHTML = FilteredCount
+            document.querySelector("#ExportFilteredCount").innerHTML = FilteredExtracted
         }else{
             if (!document.querySelector("#ExportFilteredContainer").classList.contains("d-none")){
                 document.querySelector("#ExportFilteredContainer").classList.add("d-none")
@@ -920,7 +920,7 @@ socket.on('update_front', (data) => {
 socket.on('forms_update', (data) => {
 
     console.log('Received forms update:', data);
-    updateUI(data.forms,data.total,data.selected);
+    updateUI(data.forms,data.total,data.selected,data.filtered_extracted);
 });
 
 socket.on('disconnect', () => {
