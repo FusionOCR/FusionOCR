@@ -489,7 +489,44 @@
 									<div class="card-toolbar">
 										<!--begin::Toolbar-->
 										<div class="d-flex justify-content-end" data-kt-filemanager-table-toolbar="base">
-											
+											<!--begin::Menu-->
+
+											<div class="me-0 NormalToolBar1 d-none" id="ExportFilteredContainer">
+													
+												<button class="btn btn-flex btn-success" id="upButton" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" >	
+													<i class="ki-duotone ki-folder-up fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+													</i>
+													<span id="ButtonStatus">Export <span id="ExportFilteredCount">234</span> Forms</span>
+												</button>
+												<!--end::Add customer-->
+	
+													
+												<!--begin::Menu 3-->
+												<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
+													<!--begin::Heading-->
+													<div class="menu-item px-3">
+														<div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">Export Options</div>
+													</div>
+													<!--end::Heading-->
+													<!--begin::Menu item-->
+													<div class="menu-item px-3">
+														<a class="menu-link px-3" lab-template="accu_reference" onclick="DownloadAllExportFiltered('labgen')">For LabGen</a>
+													</div>
+													<!--end::Menu item-->
+												
+													<!--begin::Menu item-->
+													<div class="menu-item px-3">
+														<a class="menu-link px-3" lab-template="fusion_diagnostics" onclick="DownloadAllExportFiltered('web')">For Web</a>
+													</div>
+													<!--end::Menu item-->
+													
+													
+												</div>
+												<!--end::Menu 3-->
+											</div>
+											<!--end::Menu-->
 											<!-- Begin Date From to Select -->
 											<div class="d-flex justify-content-center align-items-center dateExportForm">
 												
@@ -566,7 +603,8 @@
 													<!--end::Menu 3-->
 												</div>
 												<!--end::Menu-->
-												<button type="button" class="btn btn-flex btn-success mx-1 ExportButton " onclick="ApplyFilters('csv')">	
+												
+												<button type="button" class="btn btn-flex btn-primary mx-1 ExportButton " onclick="ApplyFilters()">	
 													<i class="ki-duotone ki-folder-down fs-2">
 														<span class="path1"></span>
 														<span class="path2"></span>

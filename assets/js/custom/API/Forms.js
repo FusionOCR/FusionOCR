@@ -285,28 +285,11 @@ async function getData(){
     searchQuery = document.getElementById("FormsSearch").value
     document.querySelector("#paginationNav").style.display = 'flex'
     if (searchQuery){
-        var endpoint = `forms_search_list?search_query=${searchQuery}&offset=${page?page-1:0}&limit=${limit}&filters=${JSON.stringify(filters)}`
         // document.querySelector("#paginationNav").style.display = 'none'
-    
-        const response = await fetch(`${BackURL}/${endpoint}`, {
-            method: 'GET',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        });
+        socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters,searchQuery:searchQuery });
         
-        if (response.ok) {
-            const res = await response.json();
-            const formsList = res['forms'];
-            const totalCount = res['total'];
-            const currentValue = res['selected']
-            updateUI(formsList, totalCount,currentValue)
-
-        }else if(response.status === 401){
-            window.location.replace("/sign-in");
-        }
     }else{
-        socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters });
+        socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters,searchQuery:searchQuery });
         console.log("Getting Data")
         console.log(filters)
     }
@@ -345,11 +328,12 @@ async function deleteForms() {
                 confirmButton: "btn fw-bold btn-primary",
             }
         }).then(function () {
-            socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters });
+            socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters,searchQuery:searchQuery });
             // document.getElementsByClassName('DownloadButtons')[1].classList.add('d-none');
             document.querySelector(".form-check-input-main").checked = false;
             
             document.querySelector(".NormalToolBar").classList.remove('d-none');
+            document.querySelector(".NormalToolBar1").classList.remove('d-none');
 
             document.querySelector(".CheckedToolBar").classList.add('d-none');
 
@@ -419,54 +403,47 @@ async function downloadForms(fileType = 'xlsx') {
         alert('An error occurred while downloading the file.');
     }
 }
-// async function ApplyFilters(fileType = 'xlsx') {
-//     var fromValue = dateFromInput.value;
-//     var toValue = dateToInput.value;
-//     const formType = formTypeFilter.innerHTML
+async function DownloadAllExportFiltered(option = "labgen"){
+    
 
-//     if (!toValue && fromValue){
-//         toValue = new Date().toISOString().split('T')[0];
-//     }
-//     else if (!fromValue && toValue){
-//         fromValue = toValue
-//     }
-
-//     try {
+    try {
         
-//         const response = await fetch(`${BackURL}/filtered-list?${fromValue?`fromDate=${fromValue}&`:''}${toValue?`toDate=${toValue}&`:''}${formType?`formType=${formType}&`:''}`, {
-//             method: 'GET',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 authorization: `Bearer ${localStorage.getItem('token')}`,
-//             }
-//         });
+        // Endpoint With Filters
+        const response = await fetch(`${BackURL}/download-all-filtered`, {
+            method: 'POST',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({filters:filters, option: option }),
+        });
 
-//         if (!response.ok) {
-//             Swal.fire({
-//                 text: "Error in Downloading Forms",
-//                 icon: "error",
-//                 buttonsStyling: false,
-//                 confirmButtonText: "Ok, got it!",
-//                 customClass: {
-//                     confirmButton: "btn fw-bold btn-primary",
-//                 }
-//             });
-//             return
-//         }
-
-//         const blob = await response.blob();
-//         const url = window.URL.createObjectURL(blob);
-//         const link = document.createElement('a');
-//         link.href = url;
-//         link.download = `forms.${fileType}`; // Set the downloaded file name
-//         document.body.appendChild(link);
-//         link.click();
-//         link.remove();
-//     } catch (err) {
-//         console.error('Error during file download:', err);
-//         alert('An error occurred while downloading the file.');
-//     }
-// }
+        if (!response.ok) {
+            Swal.fire({
+                text: "Error in Downloading Forms",
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-primary",
+                }
+            });
+            return
+        }
+        const blob = await response.blob();
+        console.log(blob)
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `forms.csv`; // Set the downloaded file name
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    } catch (err) {
+        console.error('Error during file download:', err);
+        alert('An error occurred while downloading the file.');
+    }
+}
 async function ApplyFilters(fileType = 'xlsx') {
     getData()
 }
@@ -489,6 +466,7 @@ function handleCheckboxChange() {
         // document.getElementById('DeleteButton').classList.remove('d-none');
         // document.getElementById('upButton').classList.add('d-none');
         document.querySelector(".NormalToolBar").classList.add('d-none');
+        document.querySelector(".NormalToolBar1").classList.add('d-none');
         document.querySelector(".CheckedToolBar").classList.remove('d-none');
         document.querySelector(".dateExportForm").classList.add('d-none');
 
@@ -496,6 +474,7 @@ function handleCheckboxChange() {
 
         // document.getElementById('upButton').classList.remove('d-none');
         document.querySelector(".NormalToolBar").classList.remove('d-none');
+        document.querySelector(".NormalToolBar1").classList.remove('d-none');
 
         document.querySelector(".CheckedToolBar").classList.add('d-none');
 
@@ -698,9 +677,20 @@ function updateUI(formsList, totalCount,FilteredCount = null) {
     if (FilteredCount !==null && FilteredCount !== totalCount){
         document.querySelector("#FilteredFormsContainer").classList.remove("d-none")
         document.querySelector("#FilteredFormsCount").innerHTML = `${FilteredCount} Forms`
+        if (FilteredCount !== 0){
+            document.querySelector("#ExportFilteredContainer").classList.remove("d-none")
+            document.querySelector("#ExportFilteredCount").innerHTML = FilteredCount
+        }else{
+            if (!document.querySelector("#ExportFilteredContainer").classList.contains("d-none")){
+                document.querySelector("#ExportFilteredContainer").classList.add("d-none")
+            }
+        }
     }else{
         if (!document.querySelector("#FilteredFormsContainer").classList.contains("d-none")){
             document.querySelector("#FilteredFormsContainer").classList.add("d-none")
+        }
+        if (!document.querySelector("#ExportFilteredContainer").classList.contains("d-none")){
+            document.querySelector("#ExportFilteredContainer").classList.add("d-none")
         }
     }
 }
@@ -749,7 +739,7 @@ function reProccess(event){
                     // }).then(function () {
                     //     window.location.replace("/forms");
                     // });
-                    socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid });
+                    socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters,searchQuery:searchQuery });
                     
                 } else if(response.status === 401){
                     window.location.replace("/sign-in");
@@ -917,7 +907,7 @@ socket.on('connect', () => {
     // Request forms list
     if (!searchQuery){
 
-        socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters });
+        socket.emit('get_forms', { limit: limit, offset: page?page-1:0,orderByName:orderByName,orderByUpload,orderByUpload,orderStatus,orderStatus,orderValid:orderValid,filters:filters,searchQuery:searchQuery });
     }
 });
 // update_front
