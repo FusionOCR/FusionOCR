@@ -444,9 +444,9 @@
 											</li>
 											<!--end::Nav item-->
 											<!--begin::Nav item-->
-											<li class="nav-item">
+											<!-- <li class="nav-item">
 												<a class="nav-link text-active-primary me-6" href="./forms/myforms">My Forms</a>
-											</li>
+											</li> -->
 											<!--end::Nav item-->
 											<!--begin::Nav item-->
 											<!-- <li class="nav-item">
@@ -479,6 +479,7 @@
 											<span class="FromDateFilter filterSpan d-none">From:<span class="value"></span></span>
 											<span class="ToDateFilter filterSpan d-none">To:<span class="value"></span></span>
 											<span class="FormTypeFilter filterSpan d-none">Type:<span class="value" id="FormTypeFilter"></span></span>
+											<span class="MyFormsFilter filterSpan d-none">MyForms, ID:<span class="value" id="MyFormsFilter"></span></span>
 										</div>
 										<div id="FilteredFormsContainer" class="d-none">
 											Filtered Forms: <span id="FilteredFormsCount">-</span> 
@@ -498,7 +499,7 @@
 														<span class="path1"></span>
 														<span class="path2"></span>
 													</i>
-													<span id="ButtonStatus">Export <span id="ExportFilteredCount">234</span> Forms</span>
+													<span id="ButtonStatus">Export <span id="ExportFilteredCount"></span> Forms</span>
 												</button>
 												<!--end::Add customer-->
 	
@@ -554,7 +555,14 @@
 														</div>
 														<!--end::Menu item-->
 														
-														
+														<!--begin::Menu item-->
+														<div class="menu-item px-3">
+															<!-- <span class="menu-title px-3">MyForms</span> -->
+															<div class="menu-item px-3">
+																<a class="menu-link px-3" onclick="addMyFormsFilter(this)">My Forms</a>
+															</div>
+														</div>
+														<!--end::Menu item-->
 														<!--begin::Menu item-->
 														<div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-end">
 															<a href="#" class="menu-link px-3">
@@ -593,6 +601,9 @@
 															<!--end::Menu sub-->
 														</div>
 														<!--end::Menu item-->
+														
+
+
 														<div class="separator my-2"></div>
 														<!--begin::Menu item-->
 														<div class="menu-item px-3 my-1">

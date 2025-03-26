@@ -29,10 +29,16 @@ if (localStorage.getItem("formTypeFilter")){
     addFormTypeFilter({innerHTML:localStorage.getItem("formTypeFilter")})
     filters['formType'] = localStorage.getItem("formTypeFilter")
 }
+if (localStorage.getItem("myFormsFilter")){
+    addMyFormsFilter(localStorage.getItem("myFormsFilter"))
+    filters['myForms'] = localStorage.getItem("id")
+}
+
 // Get the elements
 const dateFromInput = document.getElementById('DateExportFrom');
 const dateToInput = document.getElementById('DateExportTo');
 const formTypeFilter = document.getElementById('FormTypeFilter');
+const myFormsFilter = document.getElementById('MyFormsFilter');
 const exportButton = document.querySelector('.ExportButton');
 // Get the current date in YYYY-MM-DD format
 const today = new Date().toISOString().split('T')[0];
@@ -271,6 +277,42 @@ async function addFormTypeFilter(event){
     }
     toggleExportButton()
 }
+
+async function addMyFormsFilter(event){
+    const val = localStorage.getItem("id")
+    if (!val){
+        return
+    }
+
+    const filterTitle = document.querySelector(".AppliedFilters .FiltersTitle")
+    
+    const filter =  document.querySelector(".AppliedFilters .MyFormsFilter")
+    if(val){
+        filter.querySelector(".value").innerHTML  = val
+        filter.classList.remove('d-none')
+        filters['myForms'] = val
+        localStorage.setItem("myFormsFilter", val)
+        if (filterTitle.classList.contains('d-none')){
+            filterTitle.classList.remove('d-none')
+        }
+    }else{
+        filter.classList.add('d-none')
+        // If all .filterSpan spans has d-none, set title to d-none
+        const allFilters = document.querySelectorAll(".AppliedFilters .filterSpan")
+        var allHidden = true
+        filters['myForms'] = null
+        localStorage.removeItem("myFormsFilter")
+        allFilters.forEach((filter)=>{
+            if (!filter.classList.contains('d-none')){
+                allHidden = false
+            }
+        })
+        if (allHidden){
+            filterTitle.classList.add('d-none')
+        }
+    }
+    toggleExportButton()
+}
 async function getData(){
 
 
@@ -460,26 +502,53 @@ function handleCheckboxChange() {
 
     var checkboxes = document.querySelectorAll('.form-check-input-sub');
     const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+    const NormalToolBar = document.querySelector(".NormalToolBar")
+    const CheckedToolBar = document.querySelector(".CheckedToolBar")
+    const dateExportForm = document.querySelector(".dateExportForm")
+
     if (anyChecked) {
         // document.getElementsByClassName('DownloadButtons')[0].classList.remove('d-none');
         // document.getElementsByClassName('DownloadButtons')[1].classList.remove('d-none');
         // document.getElementById('DeleteButton').classList.remove('d-none');
         // document.getElementById('upButton').classList.add('d-none');
-        document.querySelector(".NormalToolBar").classList.add('d-none');
-        document.querySelector(".NormalToolBar1").classList.add('d-none');
-        document.querySelector(".CheckedToolBar").classList.remove('d-none');
-        document.querySelector(".dateExportForm").classList.add('d-none');
+
+        if (!NormalToolBar.classList.contains('d-none')){
+            NormalToolBar.classList.add('d-none');
+        }
+        
+        if (CheckedToolBar.classList.contains('d-none')){
+            CheckedToolBar.classList.remove('d-none');
+        }
+        if (!dateExportForm.classList.contains('d-none')){
+            dateExportForm.classList.add('d-none');
+        }
+        // document.querySelector(".NormalToolBar").classList.add('d-none');
+        // document.querySelector(".CheckedToolBar").classList.remove('d-none');
+        // document.querySelector(".dateExportForm").classList.add('d-none');
+        
 
     } else {
 
         // document.getElementById('upButton').classList.remove('d-none');
-        document.querySelector(".NormalToolBar").classList.remove('d-none');
-        document.querySelector(".NormalToolBar1").classList.remove('d-none');
+        if (NormalToolBar.classList.contains('d-none')){
+            NormalToolBar.classList.remove('d-none');
+        }
+        if (!CheckedToolBar.classList.contains('d-none')){
+            CheckedToolBar.classList.add('d-none');
+        }
+        if (dateExportForm.classList.contains('d-none')){
+            dateExportForm.classList.remove('d-none');
+        }
 
-        document.querySelector(".CheckedToolBar").classList.add('d-none');
+        // document.querySelector(".NormalToolBar").classList.remove('d-none');
 
-        document.querySelector(".dateExportForm").classList.remove('d-none');
 
+        // document.querySelector(".CheckedToolBar").classList.add('d-none');
+
+        // document.querySelector(".dateExportForm").classList.remove('d-none');
+
+
+        
         console.log("none Checked");
     }
 }
@@ -698,6 +767,7 @@ function removeFiltersFromLocal(){
     localStorage.removeItem("fromDateFilter")
     localStorage.removeItem("toDateFilter")
     localStorage.removeItem("formTypeFilter")
+    localStorage.removeItem("myFormsFilter")
     window.location.reload()
 }
 function reProccess(event){
@@ -775,8 +845,9 @@ function toggleExportButton() {
     const fromValue = dateFromInput.value;
     const toValue = dateToInput.value;
     const formType = formTypeFilter.innerHTML
+    const myForms = myFormsFilter.innerHTML
     // Enable the button if both dates are set; otherwise, disable it
-    if ((fromValue && toValue ) || formType) {
+    if ((fromValue && toValue ) || formType || myForms) {
         exportButton.disabled = false;
     } else {
         exportButton.disabled = true;
