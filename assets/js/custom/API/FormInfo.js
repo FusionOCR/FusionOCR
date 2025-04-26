@@ -19,6 +19,7 @@ async function getData(){
         const details = formInfo.details
         document.getElementById('FormName').innerHTML = formInfo.name
         document.getElementById('FormStatus').innerHTML = formInfo.status
+        document.getElementById('FormTemplate').innerHTML = formInfo.form_type
         // Date in From of from Tue, 31 Dec 2024 06:09:51 GMT to  28/12/2024
         const date = new Date(formInfo.uploaded_at)
         const formattedDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
@@ -123,10 +124,13 @@ function StorePatientInfo(){
     // Form name, status Date
     const FormName = document.getElementById('FormName').innerHTML
     const FormStatus = document.getElementById('FormStatus').innerHTML
+    const FormTemplate = document.getElementById('FormTemplate').innerHTML
+    
     const FormDate = document.getElementById('FormDate').innerHTML
 
     localStorage.setItem('FormName', FormName)
     localStorage.setItem('FormStatus', FormStatus)
+    localStorage.setItem('FormTemplate', FormTemplate)
     localStorage.setItem('FormDate', FormDate)
 
     localStorage.setItem('PatientName', PatientName)
