@@ -1,4 +1,17 @@
 
+// Check Token For Login
+fetch(`${BackURL}/user/token-validate`, {
+    method: 'GET',
+    headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+}).then((response) => {
+    if(response.status === 401){
+        window.location.replace("/sign-in");
+    }
+})
+
+
 function loadFromLocalStorage(){
     // Input [Names]: lname, fname, sex:malle-female-other, date_of_birth, address, city, DOS, telephone, test_panels, tests
     document.querySelector('input[name="patientName"]').value = localStorage.getItem('PatientName') ==='-' ? '' : localStorage.getItem('PatientName')

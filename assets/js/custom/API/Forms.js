@@ -1,3 +1,14 @@
+// Check Token For Login
+fetch(`${BackURL}/user/token-validate`, {
+    method: 'GET',
+    headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+}).then((response) => {
+    if(response.status === 401){
+        window.location.replace("/sign-in");
+    }
+})
 
 
 
