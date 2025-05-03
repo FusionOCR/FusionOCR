@@ -28,6 +28,7 @@ async function getData(){
 
         document.getElementById('PatientName').innerHTML = details.patient_name?details.patient_name:'-'
         document.getElementById('PatientID').innerHTML = details.patient_id?details.patient_id:'-'
+        document.getElementById('ClientID').innerHTML = details.client_id?details.client_id:'-'
         document.getElementById('PatientGender').innerHTML = details.gender?details.gender:'-'  
         document.getElementById('PatientDOB').innerHTML = details.date_of_birth?details.date_of_birth:'-'
         document.getElementById('PatientAddress').innerHTML = details.address?details.address:'-'
@@ -100,6 +101,7 @@ function StorePatientInfo(){
     // Store Patient Info in Local Storage
     const PatientName = document.getElementById('PatientName').innerHTML
     const PatientID  = document.getElementById('PatientID').innerHTML
+    const ClientID = document.getElementById('ClientID').innerHTML
     const PatientGender = document.getElementById('PatientGender').innerHTML
     const PatientDOB = document.getElementById('PatientDOB').innerHTML
     const PatientAddress = document.getElementById('PatientAddress').innerHTML
@@ -135,6 +137,7 @@ function StorePatientInfo(){
 
     localStorage.setItem('PatientName', PatientName)
     localStorage.setItem('PatientID', PatientID)
+    localStorage.setItem('ClientID', ClientID)
     localStorage.setItem('PatientGender', PatientGender)
     localStorage.setItem('PatientDOB', PatientDOB)
     localStorage.setItem('PatientAddress', PatientAddress)

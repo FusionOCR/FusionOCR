@@ -16,6 +16,8 @@ function loadFromLocalStorage(){
     // Input [Names]: lname, fname, sex:malle-female-other, date_of_birth, address, city, DOS, telephone, test_panels, tests
     document.querySelector('input[name="patientName"]').value = localStorage.getItem('PatientName') ==='-' ? '' : localStorage.getItem('PatientName')
     document.querySelector('input[name="patientID"]').value = localStorage.getItem('PatientID') === '-' ? '' : localStorage.getItem('PatientID')
+    document.querySelector('input[name="ClientID"]').value = localStorage.getItem('ClientID') === '-' ? '' : localStorage.getItem('ClientID')
+
     document.querySelector('select[name=sex').value = localStorage.getItem('PatientGender').toLowerCase()
     document.querySelector('input[name="date_of_birth"]').value = localStorage.getItem('PatientDOB') === '-' ? '' : localStorage.getItem('PatientDOB')
     document.querySelector('input[name="address"]').value = localStorage.getItem('PatientAddress') === '-' ? '' : localStorage.getItem('PatientAddress')
@@ -74,6 +76,7 @@ function SubmitEditedForm(e){
         form_id: formID,
         patient_name: document.querySelector('input[name="patientName"]').value,
         patient_id: document.querySelector('input[name="patientID"]').value,
+        client_id: document.querySelector('input[name="ClientID"]').value,
         gender: document.querySelector('select[name]').value,
         date_of_birth: document.querySelector('input[name="date_of_birth"]').value,
         address: document.querySelector('input[name="address"]').value,
