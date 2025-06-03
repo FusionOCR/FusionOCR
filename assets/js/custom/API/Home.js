@@ -303,6 +303,7 @@ socket.on('update_front', (data) => {
     console.log("update")
     // Request forms list
     socket.emit('get_forms', { limit: 10, offset: 0 });
+    getStatusCount()
 });
 // Handle forms update from server
 socket.on('forms_update', (data) => {
