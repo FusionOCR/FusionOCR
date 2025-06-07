@@ -913,14 +913,18 @@ fileInput?.addEventListener('change', async () => {
 
             document.getElementById('ProccessButton').classList.add("d-none");
             document.getElementById('upButton').classList.remove("d-none");
-
+            // Reset Input Value to Empty
+            fileInput.value = ''; // Reset the file input value
         }else if(response.status === 401){
             window.location.replace("/sign-in");
         } else {
             alert('File upload failed.');
+            fileInput.value = ''; // Reset the file input value
+
         }
     } catch (error) {
         console.error('Error uploading file:', error);
+        fileInput.value = ''; // Reset the file input value
         alert('An error occurred while uploading.');
     } finally {
         // Reset uploading state
